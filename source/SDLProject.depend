@@ -358,3 +358,35 @@
 	<OpenGL/glu.h>
 	<GL/glu.h>
 
+1415787396 source:d:\soft\c\sdlproject\source\bootstrap.cpp
+	"RuntimeException.cpp"
+	"Engine/Game.h"
+
+1415787525 d:\soft\c\sdlproject\source\engine\game.h
+	<SDL.h>
+	<glew.h>
+	<SDL_opengl.h>
+	<gl\glu.h>
+	<stdio.h>
+	<string>
+
+1415787213 source:d:\soft\c\sdlproject\source\errors\initializationerror.cpp
+	<stdio.h>
+	<exception>
+
+1415787158 source:d:\soft\c\sdlproject\source\engine\game.cpp
+	"Game.h"
+	"InitializationError.cpp"
+
+1415787213 d:\soft\c\sdlproject\source\errors\initializationerror.cpp
+	<stdio.h>
+	<exception>
+
+1415787340 d:\soft\c\sdlproject\source\errors\runtimeexception.cpp
+	<stdio.h>
+	<exception>
+
+1415787340 source:d:\soft\c\sdlproject\source\errors\runtimeexception.cpp
+	<stdio.h>
+	<exception>
+

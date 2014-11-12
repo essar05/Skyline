@@ -1,17 +1,66 @@
-/*This source code copyrighted by Lazy Foo' Productions (2004-2014)
-and may not be redistributed without written permission.*/
+#include "Game.h"
+#include "RuntimeException.cpp"
 
-//Using SDL, SDL OpenGL, GLEW, standard IO, and strings
-#include <SDL.h>
-#include <glew.h>
-#include <SDL_opengl.h>
-#include <gl\glu.h>
-#include <stdio.h>
-#include <string>
+using namespace Pixeltwo;
 
+CGame::CGame() {}
+
+CGame::~CGame() {
+
+}
+
+void CGame::boot() {
+  if(SDL_Init(SDL_INIT_VIDEO) < 0) {
+    throw ERuntimeException(SDL_GetError());
+	}
+
+  /*SDL_DisplayMode* current = new SDL_DisplayMode;
+
+  int should_be_zero = SDL_GetCurrentDisplayMode(0, current);
+
+  if(should_be_zero != 0)
+    // In case of error...
+    SDL_Log("Could not get display mode for video display #%d: %s", 0, SDL_GetError());
+
+  else
+    // On success, print the current display mode.
+    SDL_Log("Display #%d: current display mode is %dx%dpx @ %dhz. \n", 0, current->w, current->h, current->refresh_rate);
+  */
+
+  SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, 3 );
+  SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, 1 );
+  SDL_GL_SetAttribute( SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE );
+
+  this->gWindow = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN_DESKTOP );
+  if(this->gWindow == NULL) {
+    throw ERuntimeException(SDL_GetError());
+  }
+
+  this->gContext = SDL_GL_CreateContext(this->gWindow);
+  if(this->gContext == NULL) {
+    throw ERuntimeException(SDL_GetError());
+  }
+
+  glewExperimental = GL_TRUE;
+  GLenum glewError = glewInit();
+  if(glewError != GLEW_OK) {
+    throw ERuntimeException(reinterpret_cast<const char*>(glewGetErrorString(glewError)));
+  }
+
+  if(SDL_GL_SetSwapInterval( 1 ) < 0) {
+    throw ERuntimeException(SDL_GetError());
+  }
+
+  //if( !initGL() )
+
+}
+
+bool CGame::run() {
+  return false;
+}
+/*
 //Screen dimension constants
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+
 
 //Starts up SDL, creates window, and initializes OpenGL
 bool init();
@@ -36,79 +85,12 @@ void printProgramLog( GLuint program );
 void printShaderLog( GLuint shader );
 
 //The window we'll be rendering to
-SDL_Window* gWindow = NULL;
 
-//OpenGL context
-SDL_GLContext gContext;
-
-//Render flag
-bool gRenderQuad = true;
-
-//Graphics program
-GLuint gProgramID = 0;
-GLint gVertexPos2DLocation = -1;
-GLuint gVBO = 0;
-GLuint gIBO = 0;
 
 bool init()
 {
 	//Initialization flag
-	bool success = true;
 
-	//Initialize SDL
-	if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
-	{
-		printf( "SDL could not initialize! SDL Error: %s\n", SDL_GetError() );
-		success = false;
-	}
-	else
-	{
-		//Use OpenGL 3.1 core
-		SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, 3 );
-		SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, 1 );
-		SDL_GL_SetAttribute( SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE );
-
-		//Create window
-		gWindow = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN );
-		if( gWindow == NULL )
-		{
-			printf( "Window could not be created! SDL Error: %s\n", SDL_GetError() );
-			success = false;
-		}
-		else
-		{
-			//Create context
-			gContext = SDL_GL_CreateContext( gWindow );
-			if( gContext == NULL )
-			{
-				printf( "OpenGL context could not be created! SDL Error: %s\n", SDL_GetError() );
-				success = false;
-			}
-			else
-			{
-				//Initialize GLEW
-				glewExperimental = GL_TRUE;
-				GLenum glewError = glewInit();
-				if( glewError != GLEW_OK )
-				{
-					printf( "Error initializing GLEW! %s\n", glewGetErrorString( glewError ) );
-				}
-
-				//Use Vsync
-				if( SDL_GL_SetSwapInterval( 1 ) < 0 )
-				{
-					printf( "Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError() );
-				}
-
-				//Initialize OpenGL
-				if( !initGL() )
-				{
-					printf( "Unable to initialize OpenGL!\n" );
-					success = false;
-				}
-			}
-		}
-	}
 
 	return success;
 }
@@ -411,3 +393,5 @@ int main( int argc, char* args[] )
 
 	return 0;
 }
+
+*/
