@@ -1,8 +1,11 @@
+#ifndef CGAME_H
+#define CGAME_H
+
 #include <stdio.h>
 #include <exception>
 using namespace std;
 
-namespace Pixeltwo {
+namespace Engine {
   class ERuntimeException: public exception {
 
     private:
@@ -26,3 +29,4 @@ namespace Pixeltwo {
   };
 }
 
+#endif

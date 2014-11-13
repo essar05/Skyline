@@ -1,19 +1,26 @@
+#include <SDL.h>
+#include <glew.h>
+#include <SDL_opengl.h>
+#include <gl\glu.h>
+#include <stdio.h>
+#include <string>
 #include "RuntimeException.cpp"
-#include "Engine/Game.h"
+#include "Game.h"
 
-using namespace Pixeltwo;
+using namespace Engine;
 
 int main( int argc, char* args[] ) {
-  CGame* theInstance = new CGame;
+  CGame* theInstance = CGame::GetInstance();
 
   try {
-    theInstance->boot();
+    theInstance->Boot();
+
+    theInstance->Run();
+
+    theInstance->Destroy();
   } catch(ERuntimeException& anException) {
     printf(anException.what());
   }
-  theInstance->run();
-
-  delete theInstance;
 
 	return 0;
 }

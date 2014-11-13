@@ -358,9 +358,15 @@
 	<OpenGL/glu.h>
 	<GL/glu.h>
 
-1415787396 source:d:\soft\c\sdlproject\source\bootstrap.cpp
+1415891960 source:d:\soft\c\sdlproject\source\bootstrap.cpp
+	<SDL.h>
+	<glew.h>
+	<SDL_opengl.h>
+	<gl\glu.h>
+	<stdio.h>
+	<string>
 	"RuntimeException.cpp"
-	"Engine/Game.h"
+	"Game.h"
 
 1415787525 d:\soft\c\sdlproject\source\engine\game.h
 	<SDL.h>
@@ -389,4 +395,46 @@
 1415787340 source:d:\soft\c\sdlproject\source\errors\runtimeexception.cpp
 	<stdio.h>
 	<exception>
+
+1415826959 d:\soft\c\sdlproject\source\errors\implementation\runtimeexception.cpp
+	<stdio.h>
+	<exception>
+
+1415826959 source:d:\soft\c\sdlproject\source\errors\implementation\runtimeexception.cpp
+	<stdio.h>
+	<exception>
+
+1415893639 d:\soft\c\sdlproject\source\engine\declaration\game.h
+	<SDL.h>
+	<glew.h>
+	<SDL_opengl.h>
+	<gl\glu.h>
+	<stdio.h>
+	<string>
+	"RuntimeException.cpp"
+	"SDLW.h"
+	"GLW.h"
+
+1415892303 source:d:\soft\c\sdlproject\source\engine\implementation\game.cpp
+	"Game.h"
+
+1415893426 d:\soft\c\sdlproject\source\engine\declaration\sdlw.h
+	<SDL.h>
+
+1415890410 d:\soft\c\sdlproject\source\engine\declaration\glw.h
+	<glew.h>
+
+1415890429 source:d:\soft\c\sdlproject\source\engine\implementation\glw.cpp
+	"GLW.h"
+	"RuntimeException.cpp"
+
+1415893485 source:d:\soft\c\sdlproject\source\engine\implementation\sdlw.cpp
+	"SDLW.h"
+	"RuntimeException.cpp"
+	<SDL.h>
+	<glew.h>
+	<SDL_opengl.h>
+	<gl\glu.h>
+	<stdio.h>
+	<string>
 
