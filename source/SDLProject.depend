@@ -358,7 +358,7 @@
 	<OpenGL/glu.h>
 	<GL/glu.h>
 
-1415908289 source:d:\soft\c\sdlproject\source\bootstrap.cpp
+1415913289 source:d:\soft\c\sdlproject\source\bootstrap.cpp
 	<SDL.h>
 	<glew.h>
 	<SDL_opengl.h>

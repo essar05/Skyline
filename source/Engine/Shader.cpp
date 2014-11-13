@@ -17,48 +17,49 @@ using namespace Engine;
 Shader::Shader() {}
 
 GLuint Shader::Load(const char* aVertexFilePath, const char* aFragmentFilePath) {
-	GLuint theVertexShaderId = GLW::CreateShader(GL_VERTEX_SHADER);
-	GLuint theFragmentShaderId = GLW::CreateShader(GL_FRAGMENT_SHADER);
+  GLuint theVertexShaderId = GLW::CreateShader(GL_VERTEX_SHADER);
+  GLuint theFragmentShaderId = GLW::CreateShader(GL_FRAGMENT_SHADER);
 
-	std::string theVertexShaderCode;
-	std::ifstream theVertexShaderStream(aVertexFilePath, std::ios::in);
+  std::string theVertexShaderCode;
+  std::ifstream theVertexShaderStream(aVertexFilePath, std::ios::in);
 
-	if(theVertexShaderStream.is_open()){
-		std::string theLine = "";
-		while(getline(theVertexShaderStream, theLine)) {
-			theVertexShaderCode += "\n" + theLine;
+  if(theVertexShaderStream.is_open()) {
+    std::string theLine = "";
+    while(getline(theVertexShaderStream, theLine)) {
+      theVertexShaderCode += "\n" + theLine;
     }
-		theVertexShaderStream.close();
-	} else {
-	  char* theError = NULL;
-	  sprintf(theError, "Impossible to open %s. Are you in the right directory ? Don't forget to read the FAQ !", aVertexFilePath);
-	  throw ERuntimeException(theError);
-	}
+    theVertexShaderStream.close();
+  } else {
+    char* theError = NULL;
+    sprintf(theError, "Impossible to open %s. Are you in the right directory ? Don't forget to read the FAQ !", aVertexFilePath);
+    throw ERuntimeException(theError);
+  }
 
-	std::string theFragmentShaderCode;
-	std::ifstream theFragmentShaderStream(aFragmentFilePath, std::ios::in);
-	if(theFragmentShaderStream.is_open()){
-		std::string theLine = "";
-		while(getline(theFragmentShaderStream, theLine))
-			theFragmentShaderCode += "\n" + theLine;
-		theFragmentShaderStream.close();
-	}
+  std::string theFragmentShaderCode;
+  std::ifstream theFragmentShaderStream(aFragmentFilePath, std::ios::in);
+  if(theFragmentShaderStream.is_open()){
+    std::string theLine = "";
+    while(getline(theFragmentShaderStream, theLine)) {
+      theFragmentShaderCode += "\n" + theLine;
+    }
+    theFragmentShaderStream.close();
+  }
 
-	char const* theVertexSourcePointer = theVertexShaderCode.c_str();
-	GLW::ShaderSource(theVertexShaderId, 1, &theVertexSourcePointer , NULL);
-	GLW::CompileShader(theVertexShaderId);
+  char const* theVertexSourcePointer = theVertexShaderCode.c_str();
+  GLW::ShaderSource(theVertexShaderId, 1, &theVertexSourcePointer , NULL);
+  GLW::CompileShader(theVertexShaderId);
 
-	char const * theFragmentSourcePointer = theFragmentShaderCode.c_str();
-	GLW::ShaderSource(theFragmentShaderId, 1, &theFragmentSourcePointer , NULL);
-	GLW::CompileShader(theFragmentShaderId);
+  char const * theFragmentSourcePointer = theFragmentShaderCode.c_str();
+  GLW::ShaderSource(theFragmentShaderId, 1, &theFragmentSourcePointer , NULL);
+  GLW::CompileShader(theFragmentShaderId);
 
-	GLuint theProgramId = GLW::CreateProgram();
-	GLW::AttachShader(theProgramId, theVertexShaderId);
-	GLW::AttachShader(theProgramId, theFragmentShaderId);
-	GLW::LinkProgram(theProgramId);
+  GLuint theProgramId = GLW::CreateProgram();
+  GLW::AttachShader(theProgramId, theVertexShaderId);
+  GLW::AttachShader(theProgramId, theFragmentShaderId);
+  GLW::LinkProgram(theProgramId);
 
-	GLW::DeleteShader(theVertexShaderId);
-	GLW::DeleteShader(theFragmentShaderId);
+  GLW::DeleteShader(theVertexShaderId);
+  GLW::DeleteShader(theFragmentShaderId);
 
-	return theProgramId;
+  return theProgramId;
 }

@@ -20,24 +20,6 @@ GLuint GLW::CreateShader(GLuint aShader) {
   return glCreateShader(aShader);
 }
 
-const GLchar** GLW::GetVertexShaderSource() {
-  const GLchar** theVertexShaderSource = new const GLchar*[1];
-  theVertexShaderSource[0] = {
-    "#version 140\nin vec2 LVertexPos2D; void main() { gl_Position = vec4( LVertexPos2D.x, LVertexPos2D.y, 0.9f, 1 ); }"
-  };
-
-	return theVertexShaderSource;
-}
-
-const GLchar** GLW::GetFragmentShaderSource() {
-  const GLchar** theFragmentShaderSource = new const GLchar*[1];
-  theFragmentShaderSource[0] =
-  {
-    "#version 140\nout vec4 LFragment; void main() { LFragment = vec4( 1.0, 1.0, 1.0, 1.0 ); }"
-  };
-  return theFragmentShaderSource;
-}
-
 void GLW::ShaderSource(GLuint aShader, GLsizei aCount, const GLchar ** aSource, const GLint* aLength) {
   glShaderSource(aShader, aCount, aSource, aLength);
 }
@@ -45,12 +27,12 @@ void GLW::ShaderSource(GLuint aShader, GLsizei aCount, const GLchar ** aSource, 
 void GLW::CompileShader(GLuint aShader) {
   glCompileShader(aShader);
   GLint isShaderCompiled = GL_FALSE;
-	GLW::GetShaderiv( aShader, GL_COMPILE_STATUS, &isShaderCompiled );
-	if(isShaderCompiled != GL_TRUE) {
-	  char* theError = NULL;
+  GLW::GetShaderiv( aShader, GL_COMPILE_STATUS, &isShaderCompiled );
+  if(isShaderCompiled != GL_TRUE) {
+    char* theError = NULL;
     sprintf(theError, "Unable to compile vertex shader %d!\n", aShader);
-	  throw ERuntimeException(theError);
-	}
+    throw ERuntimeException(theError);
+  }
 }
 
 void GLW::GetShaderiv(GLuint aShader, GLenum aParameterName, GLint* aParameter) {
@@ -65,11 +47,10 @@ void GLW::LinkProgram(GLuint aProgram) {
   glLinkProgram(aProgram);
   GLint isLinkValid = GL_TRUE;
   GLW::GetProgramiv(aProgram, GL_LINK_STATUS, &isLinkValid );
-  if(isLinkValid != GL_TRUE)
-  {
+  if(isLinkValid != GL_TRUE) {
     char* theError = NULL;
     sprintf(theError, "Error linking program %d!\n", aProgram);
-	  throw ERuntimeException(theError);
+    throw ERuntimeException(theError);
   }
 }
 
@@ -79,8 +60,7 @@ void GLW::GetProgramiv(GLuint aProgram, GLenum aParameterName, GLint* aParameter
 
 GLint GLW::GetAttribLocation(GLuint aProgram, const GLchar* aName) {
   GLint theAttribLocation = glGetAttribLocation(aProgram, aName);
-  if(theAttribLocation == -1)
-  {
+  if(theAttribLocation == -1) {
     throw ERuntimeException("LVertexPos2D is not a valid glsl program variable!\n");
   }
   return theAttribLocation;

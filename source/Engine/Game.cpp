@@ -16,11 +16,11 @@ using namespace Engine;
 CGame::CGame() {}
 
 CGame::~CGame() {
-	GLW::DeleteProgram(this->programId);
+  GLW::DeleteProgram(this->programId);
 
-	SDLW::DestroyWindow_(this->window);
+  SDLW::DestroyWindow_(this->window);
 
-	SDLW::Quit();
+  SDLW::Quit();
 }
 
 CGame* CGame::instance = NULL;
@@ -51,12 +51,15 @@ void CGame::Boot() {
   SDLW::GLEWInit();
   SDLW::GLSetSwapInterval(1);
 
-	this->programId = Shader::Load("Shaders/Vertex.shader", "Shaders/Fragment.shader");
+  this->programId = Shader::Load("Shaders/Vertex.shader", "Shaders/Fragment.shader");
 
   this->vertexPos2DLocation = glGetAttribLocation(this->programId, "vertexPosition_modelspace");
 
+  /*
+  TODO:
   GLW::Enable(GL_BLEND);
-  GLW::BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  GLW::BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);*/
+
   GLW::ClearColor(0.f, 0.f, 0.f, 1.f);
 
 
@@ -92,11 +95,11 @@ void CGame::Destroy() {
 }
 
 void CGame::Render() {
-	GLW::Clear(GL_COLOR_BUFFER_BIT);
+  GLW::Clear(GL_COLOR_BUFFER_BIT);
 
-	if(!this->renderQuad) {
-	  return;
-	}
+  if(!this->renderQuad) {
+    return;
+  }
 
   GLW::UseProgram(this->programId);
 
@@ -126,8 +129,7 @@ void CGame::doRun(SDL_Event* anEvent) {
     if(anEvent->type == SDL_QUIT) {
       return;
     }
-    else if(anEvent->type == SDL_TEXTINPUT)
-    {
+    else if(anEvent->type == SDL_TEXTINPUT) {
       /*
       int x = 0, y = 0;
       SDL_GetMouseState( &x, &y );

@@ -58,7 +58,7 @@ void SDLW::GLSwapWindow(SDL_Window* aWindow) {
 void SDLW::Init(Uint32 someFlags) {
   if(SDL_Init(someFlags) < 0) {
     throw ERuntimeException(SDLW::GetError());
-	}
+  }
 }
 
 int SDLW::PollEvent(SDL_Event* anEvent) {
