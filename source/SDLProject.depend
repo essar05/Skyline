@@ -358,7 +358,7 @@
 	<OpenGL/glu.h>
 	<GL/glu.h>
 
-1415891960 source:d:\soft\c\sdlproject\source\bootstrap.cpp
+1415908289 source:d:\soft\c\sdlproject\source\bootstrap.cpp
 	<SDL.h>
 	<glew.h>
 	<SDL_opengl.h>
@@ -368,31 +368,35 @@
 	"RuntimeException.cpp"
 	"Game.h"
 
-1415787525 d:\soft\c\sdlproject\source\engine\game.h
+1415909553 d:\soft\c\sdlproject\source\engine\game.h
+
+1415787213 source:d:\soft\c\sdlproject\source\errors\initializationerror.cpp
+	<stdio.h>
+	<exception>
+
+1415911714 source:d:\soft\c\sdlproject\source\engine\game.cpp
 	<SDL.h>
 	<glew.h>
 	<SDL_opengl.h>
 	<gl\glu.h>
 	<stdio.h>
 	<string>
-
-1415787213 source:d:\soft\c\sdlproject\source\errors\initializationerror.cpp
-	<stdio.h>
-	<exception>
-
-1415787158 source:d:\soft\c\sdlproject\source\engine\game.cpp
+	<glm.hpp>
+	"RuntimeException.cpp"
+	"SDLW.h"
+	"GLW.h"
+	"Shader.h"
 	"Game.h"
-	"InitializationError.cpp"
 
 1415787213 d:\soft\c\sdlproject\source\errors\initializationerror.cpp
 	<stdio.h>
 	<exception>
 
-1415787340 d:\soft\c\sdlproject\source\errors\runtimeexception.cpp
+1415826959 d:\soft\c\sdlproject\source\errors\runtimeexception.cpp
 	<stdio.h>
 	<exception>
 
-1415787340 source:d:\soft\c\sdlproject\source\errors\runtimeexception.cpp
+1415826959 source:d:\soft\c\sdlproject\source\errors\runtimeexception.cpp
 	<stdio.h>
 	<exception>
 
@@ -437,4 +441,407 @@
 	<gl\glu.h>
 	<stdio.h>
 	<string>
+
+1415893426 d:\soft\c\sdlproject\source\engine\sdlw.h
+	<SDL.h>
+
+1415910200 d:\soft\c\sdlproject\source\engine\glw.h
+
+1415910222 source:d:\soft\c\sdlproject\source\engine\glw.cpp
+	<glew.h>
+	"RuntimeException.cpp"
+	"GLW.h"
+
+1415893485 source:d:\soft\c\sdlproject\source\engine\sdlw.cpp
+	"SDLW.h"
+	"RuntimeException.cpp"
+	<SDL.h>
+	<glew.h>
+	<SDL_opengl.h>
+	<gl\glu.h>
+	<stdio.h>
+	<string>
+
+1389479879 d:\soft\c\sdlproject\lib\glm\glm.hpp
+	"detail/_fixes.hpp"
+	<cmath>
+	<climits>
+	<cfloat>
+	<limits>
+	<cassert>
+	"fwd.hpp"
+	"vec2.hpp"
+	"vec3.hpp"
+	"vec4.hpp"
+	"mat2x2.hpp"
+	"mat2x3.hpp"
+	"mat2x4.hpp"
+	"mat3x2.hpp"
+	"mat3x3.hpp"
+	"mat3x4.hpp"
+	"mat4x2.hpp"
+	"mat4x3.hpp"
+	"mat4x4.hpp"
+	"trigonometric.hpp"
+	"exponential.hpp"
+	"common.hpp"
+	"packing.hpp"
+	"geometric.hpp"
+	"matrix.hpp"
+	"vector_relational.hpp"
+	"integer.hpp"
+
+1389479879 d:\soft\c\sdlproject\lib\glm\detail\_fixes.hpp
+	<cmath>
+
+1389479879 d:\soft\c\sdlproject\lib\glm\fwd.hpp
+	"detail/type_int.hpp"
+	"detail/type_float.hpp"
+	"detail/type_vec.hpp"
+	"detail/type_mat.hpp"
+
+1389479879 d:\soft\c\sdlproject\lib\glm\detail\type_int.hpp
+	"setup.hpp"
+	<cstdint>
+
+1403361214 d:\soft\c\sdlproject\lib\glm\detail\setup.hpp
+	<cassert>
+	<cuda.h>
+	<intrin.h>
+	<immintrin.h>
+	<immintrin.h>
+	<smmintrin.h>
+	<pmmintrin.h>
+	<emmintrin.h>
+
+1389479879 d:\soft\c\sdlproject\lib\glm\detail\type_float.hpp
+	"setup.hpp"
+
+1389479879 d:\soft\c\sdlproject\lib\glm\detail\type_vec.hpp
+	"precision.hpp"
+	"type_int.hpp"
+
+1389479879 d:\soft\c\sdlproject\lib\glm\detail\precision.hpp
+
+1389479879 d:\soft\c\sdlproject\lib\glm\detail\type_mat.hpp
+	"precision.hpp"
+
+1389479879 d:\soft\c\sdlproject\lib\glm\vec2.hpp
+	"detail/type_vec2.hpp"
+
+1403361214 d:\soft\c\sdlproject\lib\glm\detail\type_vec2.hpp
+	"type_vec.hpp"
+	"_swizzle.hpp"
+	"_swizzle_func.hpp"
+	<cstddef>
+	"type_vec2.inl"
+
+1389479879 d:\soft\c\sdlproject\lib\glm\detail\_swizzle.hpp
+
+1389479879 d:\soft\c\sdlproject\lib\glm\detail\_swizzle_func.hpp
+
+1393354077 d:\soft\c\sdlproject\lib\glm\detail\type_vec2.inl
+
+1389479879 d:\soft\c\sdlproject\lib\glm\vec3.hpp
+	"detail/type_vec3.hpp"
+
+1403361214 d:\soft\c\sdlproject\lib\glm\detail\type_vec3.hpp
+	"type_vec.hpp"
+	"_swizzle.hpp"
+	"_swizzle_func.hpp"
+	<cstddef>
+	"type_vec3.inl"
+
+1393354077 d:\soft\c\sdlproject\lib\glm\detail\type_vec3.inl
+
+1389479879 d:\soft\c\sdlproject\lib\glm\vec4.hpp
+	"detail/type_vec4.hpp"
+
+1403361214 d:\soft\c\sdlproject\lib\glm\detail\type_vec4.hpp
+	"setup.hpp"
+	"type_vec.hpp"
+	"_swizzle.hpp"
+	"_swizzle_func.hpp"
+	<cstddef>
+	"type_vec4.inl"
+
+1403361214 d:\soft\c\sdlproject\lib\glm\detail\type_vec4.inl
+
+1389479879 d:\soft\c\sdlproject\lib\glm\mat2x2.hpp
+	"detail/type_mat2x2.hpp"
+
+1403361214 d:\soft\c\sdlproject\lib\glm\detail\type_mat2x2.hpp
+	"../fwd.hpp"
+	"type_vec2.hpp"
+	"type_mat.hpp"
+	<limits>
+	"type_mat2x2.inl"
+
+1403361214 d:\soft\c\sdlproject\lib\glm\detail\type_mat2x2.inl
+
+1389479879 d:\soft\c\sdlproject\lib\glm\mat2x3.hpp
+	"detail/type_mat2x3.hpp"
+
+1403361214 d:\soft\c\sdlproject\lib\glm\detail\type_mat2x3.hpp
+	"../fwd.hpp"
+	"type_vec2.hpp"
+	"type_vec3.hpp"
+	"type_mat.hpp"
+	<limits>
+	"type_mat2x3.inl"
+
+1393351993 d:\soft\c\sdlproject\lib\glm\detail\type_mat2x3.inl
+
+1389479879 d:\soft\c\sdlproject\lib\glm\mat2x4.hpp
+	"detail/type_mat2x4.hpp"
+
+1403361214 d:\soft\c\sdlproject\lib\glm\detail\type_mat2x4.hpp
+	"../fwd.hpp"
+	"type_vec2.hpp"
+	"type_vec4.hpp"
+	"type_mat.hpp"
+	<limits>
+	"type_mat2x4.inl"
+
+1393351993 d:\soft\c\sdlproject\lib\glm\detail\type_mat2x4.inl
+
+1389479879 d:\soft\c\sdlproject\lib\glm\mat3x2.hpp
+	"detail/type_mat3x2.hpp"
+
+1403361214 d:\soft\c\sdlproject\lib\glm\detail\type_mat3x2.hpp
+	"../fwd.hpp"
+	"type_vec2.hpp"
+	"type_vec3.hpp"
+	"type_mat.hpp"
+	<limits>
+	"type_mat3x2.inl"
+
+1393351993 d:\soft\c\sdlproject\lib\glm\detail\type_mat3x2.inl
+
+1389479879 d:\soft\c\sdlproject\lib\glm\mat3x3.hpp
+	"detail/type_mat3x3.hpp"
+
+1403361214 d:\soft\c\sdlproject\lib\glm\detail\type_mat3x3.hpp
+	"../fwd.hpp"
+	"type_vec3.hpp"
+	"type_mat.hpp"
+	<limits>
+	"type_mat3x3.inl"
+
+1403361214 d:\soft\c\sdlproject\lib\glm\detail\type_mat3x3.inl
+
+1389479879 d:\soft\c\sdlproject\lib\glm\mat3x4.hpp
+	"detail/type_mat3x4.hpp"
+
+1403361214 d:\soft\c\sdlproject\lib\glm\detail\type_mat3x4.hpp
+	"../fwd.hpp"
+	"type_vec3.hpp"
+	"type_vec4.hpp"
+	"type_mat.hpp"
+	<limits>
+	"type_mat3x4.inl"
+
+1393351993 d:\soft\c\sdlproject\lib\glm\detail\type_mat3x4.inl
+
+1389479879 d:\soft\c\sdlproject\lib\glm\mat4x2.hpp
+	"detail/type_mat4x2.hpp"
+
+1403361214 d:\soft\c\sdlproject\lib\glm\detail\type_mat4x2.hpp
+	"../fwd.hpp"
+	"type_vec2.hpp"
+	"type_vec4.hpp"
+	"type_mat.hpp"
+	<limits>
+	"type_mat4x2.inl"
+
+1393351993 d:\soft\c\sdlproject\lib\glm\detail\type_mat4x2.inl
+
+1389479879 d:\soft\c\sdlproject\lib\glm\mat4x3.hpp
+	"detail/type_mat4x3.hpp"
+
+1403361214 d:\soft\c\sdlproject\lib\glm\detail\type_mat4x3.hpp
+	"../fwd.hpp"
+	"type_vec3.hpp"
+	"type_vec4.hpp"
+	"type_mat.hpp"
+	<limits>
+	"type_mat4x3.inl"
+
+1393351993 d:\soft\c\sdlproject\lib\glm\detail\type_mat4x3.inl
+
+1389479879 d:\soft\c\sdlproject\lib\glm\mat4x4.hpp
+	"detail/type_mat4x4.hpp"
+
+1403361214 d:\soft\c\sdlproject\lib\glm\detail\type_mat4x4.hpp
+	"../fwd.hpp"
+	"type_vec4.hpp"
+	"type_mat.hpp"
+	<limits>
+	<cstddef>
+	"type_mat4x4.inl"
+
+1393351993 d:\soft\c\sdlproject\lib\glm\detail\type_mat4x4.inl
+
+1389479879 d:\soft\c\sdlproject\lib\glm\trigonometric.hpp
+	"detail/func_trigonometric.hpp"
+
+1389479879 d:\soft\c\sdlproject\lib\glm\detail\func_trigonometric.hpp
+	"func_trigonometric.inl"
+
+1389479879 d:\soft\c\sdlproject\lib\glm\detail\func_trigonometric.inl
+	"_vectorize.hpp"
+	<cmath>
+	<limits>
+
+1393351993 d:\soft\c\sdlproject\lib\glm\detail\_vectorize.hpp
+	"type_vec1.hpp"
+	"type_vec2.hpp"
+	"type_vec3.hpp"
+	"type_vec4.hpp"
+
+1403361214 d:\soft\c\sdlproject\lib\glm\detail\type_vec1.hpp
+	"../fwd.hpp"
+	"type_vec.hpp"
+	"_swizzle.hpp"
+	"_swizzle_func.hpp"
+	<cstddef>
+	"type_vec1.inl"
+
+1393354077 d:\soft\c\sdlproject\lib\glm\detail\type_vec1.inl
+
+1389479879 d:\soft\c\sdlproject\lib\glm\exponential.hpp
+	"detail/func_exponential.hpp"
+
+1393351993 d:\soft\c\sdlproject\lib\glm\detail\func_exponential.hpp
+	"type_vec1.hpp"
+	"type_vec2.hpp"
+	"type_vec3.hpp"
+	"type_vec4.hpp"
+	<cmath>
+	"func_exponential.inl"
+
+1396394862 d:\soft\c\sdlproject\lib\glm\detail\func_exponential.inl
+	"func_vector_relational.hpp"
+	"_vectorize.hpp"
+	<limits>
+	<cassert>
+
+1389479879 d:\soft\c\sdlproject\lib\glm\detail\func_vector_relational.hpp
+	"precision.hpp"
+	"setup.hpp"
+	"func_vector_relational.inl"
+
+1389479879 d:\soft\c\sdlproject\lib\glm\detail\func_vector_relational.inl
+	<limits>
+
+1389479879 d:\soft\c\sdlproject\lib\glm\common.hpp
+	"detail/func_common.hpp"
+
+1403361214 d:\soft\c\sdlproject\lib\glm\detail\func_common.hpp
+	"setup.hpp"
+	"precision.hpp"
+	"type_int.hpp"
+	"_fixes.hpp"
+	"func_common.inl"
+
+1403287823 d:\soft\c\sdlproject\lib\glm\detail\func_common.inl
+	"func_vector_relational.hpp"
+	"type_vec2.hpp"
+	"type_vec3.hpp"
+	"type_vec4.hpp"
+	"_vectorize.hpp"
+	<limits>
+
+1389479879 d:\soft\c\sdlproject\lib\glm\packing.hpp
+	"detail/func_packing.hpp"
+
+1389479879 d:\soft\c\sdlproject\lib\glm\detail\func_packing.hpp
+	"type_vec2.hpp"
+	"type_vec4.hpp"
+	"func_packing.inl"
+
+1403287823 d:\soft\c\sdlproject\lib\glm\detail\func_packing.inl
+	"func_common.hpp"
+	"type_half.hpp"
+	"../fwd.hpp"
+
+1389479879 d:\soft\c\sdlproject\lib\glm\detail\type_half.hpp
+	"setup.hpp"
+	"type_half.inl"
+
+1403287823 d:\soft\c\sdlproject\lib\glm\detail\type_half.inl
+
+1389479879 d:\soft\c\sdlproject\lib\glm\geometric.hpp
+	"detail/func_geometric.hpp"
+
+1389479879 d:\soft\c\sdlproject\lib\glm\detail\func_geometric.hpp
+	"type_vec3.hpp"
+	"func_geometric.inl"
+
+1403287823 d:\soft\c\sdlproject\lib\glm\detail\func_geometric.inl
+	"func_exponential.hpp"
+	"func_common.hpp"
+	"type_vec2.hpp"
+	"type_vec4.hpp"
+	"type_float.hpp"
+
+1389479879 d:\soft\c\sdlproject\lib\glm\matrix.hpp
+	"detail/func_matrix.hpp"
+
+1389479879 d:\soft\c\sdlproject\lib\glm\detail\func_matrix.hpp
+	"../detail/precision.hpp"
+	"../detail/setup.hpp"
+	"../detail/type_mat.hpp"
+	"../vec2.hpp"
+	"../vec3.hpp"
+	"../vec4.hpp"
+	"../mat2x2.hpp"
+	"../mat2x3.hpp"
+	"../mat2x4.hpp"
+	"../mat3x2.hpp"
+	"../mat3x3.hpp"
+	"../mat3x4.hpp"
+	"../mat4x2.hpp"
+	"../mat4x3.hpp"
+	"../mat4x4.hpp"
+	"func_matrix.inl"
+
+1403361214 d:\soft\c\sdlproject\lib\glm\detail\func_matrix.inl
+	"../geometric.hpp"
+	<limits>
+
+1389479879 d:\soft\c\sdlproject\lib\glm\vector_relational.hpp
+	"detail/func_vector_relational.hpp"
+
+1389479879 d:\soft\c\sdlproject\lib\glm\integer.hpp
+	"detail/func_integer.hpp"
+
+1389479879 d:\soft\c\sdlproject\lib\glm\detail\func_integer.hpp
+	"setup.hpp"
+	"func_integer.inl"
+
+1396394862 d:\soft\c\sdlproject\lib\glm\detail\func_integer.inl
+	"type_vec2.hpp"
+	"type_vec3.hpp"
+	"type_vec4.hpp"
+	"type_int.hpp"
+	"_vectorize.hpp"
+	<intrin.h>
+	<limits>
+
+1415910253 source:d:\soft\c\sdlproject\source\engine\shader.cpp
+	<stdio.h>
+	<string>
+	<vector>
+	<iostream>
+	<fstream>
+	<algorithm>
+	<stdlib.h>
+	<string.h>
+	<glew.h>
+	"GLW.h"
+	"RuntimeException.cpp"
+	"Shader.h"
+
+1415910152 d:\soft\c\sdlproject\source\engine\shader.h
 
