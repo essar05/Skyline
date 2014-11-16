@@ -20,6 +20,11 @@
 					<Add directory="Engine" />
 					<Add directory="Terrain" />
 				</Compiler>
+				<ExtraCommands>
+					<Add after='cmd /c xcopy &quot;.\Resources\Textures&quot; &quot;$(TARGET_OUTPUT_DIR)Textures\&quot;' />
+					<Add after='cmd /c xcopy &quot;.\Resources\Shaders&quot; &quot;$(TARGET_OUTPUT_DIR)Shaders\&quot;' />
+					<Mode after="always" />
+				</ExtraCommands>
 			</Target>
 			<Target title="Release">
 				<Option output="bin/Release/SDLProject" prefix_auto="1" extension_auto="1" />
@@ -57,6 +62,10 @@
 			<Add directory="../lib/freeglut/lib" />
 			<Add directory="../lib/glew/lib" />
 		</Linker>
+		<ExtraCommands>
+			<Add after='cmd /c copy &quot;.\Textures&quot; &quot;$(TARGET_OUTPUT_DIR)\Textures\&quot;' />
+			<Add after='cmd /c copy &quot;.\Shaders&quot; &quot;$(TARGET_OUTPUT_DIR)\Shaders\&quot;' />
+		</ExtraCommands>
 		<Unit filename="Bootstrap.cpp" />
 		<Unit filename="Engine/GLW.cpp" />
 		<Unit filename="Engine/GLW.h" />
@@ -73,10 +82,10 @@
 		<Unit filename="Engine/Texture.cpp" />
 		<Unit filename="Engine/Texture.h" />
 		<Unit filename="Errors/RuntimeException.cpp" />
+		<Unit filename="Resources/Shaders/Fragment.shader" />
+		<Unit filename="Resources/Shaders/Vertex.shader" />
 		<Unit filename="Terrain/Grass.cpp" />
 		<Unit filename="Terrain/Grass.h" />
-		<Unit filename="bin/Debug/Shaders/Fragment.shader" />
-		<Unit filename="bin/Debug/Shaders/Vertex.shader" />
 		<Extensions>
 			<code_completion />
 			<envvars />
