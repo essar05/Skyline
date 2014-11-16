@@ -73,10 +73,10 @@
 		<Unit filename="Engine/Texture.cpp" />
 		<Unit filename="Engine/Texture.h" />
 		<Unit filename="Errors/RuntimeException.cpp" />
-		<Unit filename="Shaders/Fragment.shader" />
-		<Unit filename="Shaders/Vertex.shader" />
 		<Unit filename="Terrain/Grass.cpp" />
 		<Unit filename="Terrain/Grass.h" />
+		<Unit filename="bin/Debug/Shaders/Fragment.shader" />
+		<Unit filename="bin/Debug/Shaders/Vertex.shader" />
 		<Extensions>
 			<code_completion />
 			<envvars />
