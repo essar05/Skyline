@@ -21,8 +21,8 @@
 					<Add directory="Terrain" />
 				</Compiler>
 				<ExtraCommands>
-					<Add after='cmd /c xcopy &quot;.\Resources\Textures&quot; &quot;$(TARGET_OUTPUT_DIR)Textures\&quot;' />
-					<Add after='cmd /c xcopy &quot;.\Resources\Shaders&quot; &quot;$(TARGET_OUTPUT_DIR)Shaders\&quot;' />
+					<Add after='cmd /c xcopy &quot;.\Resources\Textures&quot; &quot;$(TARGET_OUTPUT_DIR)Textures\&quot; /y' />
+					<Add after='cmd /c xcopy &quot;.\Resources\Shaders&quot; &quot;$(TARGET_OUTPUT_DIR)Shaders\&quot; /y' />
 					<Mode after="always" />
 				</ExtraCommands>
 			</Target>
@@ -63,8 +63,8 @@
 			<Add directory="../lib/glew/lib" />
 		</Linker>
 		<ExtraCommands>
-			<Add after='cmd /c xcopy &quot;.\Resources\Textures&quot; &quot;$(TARGET_OUTPUT_DIR)Textures\&quot;' />
-			<Add after='cmd /c xcopy &quot;.\Resources\Shaders&quot; &quot;$(TARGET_OUTPUT_DIR)Shaders\&quot;' />
+			<Add after='cmd /c xcopy &quot;.\Resources\Textures&quot; &quot;$(TARGET_OUTPUT_DIR)Textures\&quot; /y' />
+			<Add after='cmd /c xcopy &quot;.\Resources\Shaders&quot; &quot;$(TARGET_OUTPUT_DIR)Shaders\&quot; /y' />
 		</ExtraCommands>
 		<Unit filename="Bootstrap.cpp" />
 		<Unit filename="Engine/GLW.cpp" />
