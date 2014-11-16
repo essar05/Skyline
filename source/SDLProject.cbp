@@ -63,8 +63,8 @@
 			<Add directory="../lib/glew/lib" />
 		</Linker>
 		<ExtraCommands>
-			<Add after='cmd /c copy &quot;.\Textures&quot; &quot;$(TARGET_OUTPUT_DIR)\Textures\&quot;' />
-			<Add after='cmd /c copy &quot;.\Shaders&quot; &quot;$(TARGET_OUTPUT_DIR)\Shaders\&quot;' />
+			<Add after='cmd /c xcopy &quot;.\Resources\Textures&quot; &quot;$(TARGET_OUTPUT_DIR)Textures\&quot;' />
+			<Add after='cmd /c xcopy &quot;.\Resources\Shaders&quot; &quot;$(TARGET_OUTPUT_DIR)Shaders\&quot;' />
 		</ExtraCommands>
 		<Unit filename="Bootstrap.cpp" />
 		<Unit filename="Engine/GLW.cpp" />
