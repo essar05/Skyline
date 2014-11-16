@@ -1,30 +1,33 @@
+#ifndef GAME_H
+#define GAME_H
+
+#include <SDL.h>
+#include <glew.h>
+#include "RuntimeException.cpp"
+#include "SDLW.h"
+#include "GLW.h"
+#include "Shader.h"
+#include "Renderer.h"
+
 namespace Engine {
-
-  class CGame {
-
+  class Renderer;
+  class Game {
     public:
       void Boot();
-      static CGame* GetInstance();
+      static Game* GetInstance();
       void Destroy();
       void Render();
       void Run();
 
     private:
-      CGame();
-      ~CGame();
-      void doRun(SDL_Event* e);
+      Game();
+      ~Game();
+      void doRun(SDL_Event* anEvent);
 
-      SDL_GLContext context;
-      static CGame* instance;
-      GLuint IBO = 0;
-      GLuint programId = 0;
-      bool renderQuad = true;
-      GLint vertexPos2DLocation = -1;
-      GLuint VBO = 0;
-      SDL_Window* window = NULL;
-
+      static Game* instance;
+      Renderer* renderer;
   };
 
 };
 
-
+#endif // GAME_H

@@ -1,11 +1,4 @@
 #include "SDLW.h"
-#include "RuntimeException.cpp"
-#include <SDL.h>
-#include <glew.h>
-#include <SDL_opengl.h>
-#include <gl\glu.h>
-#include <stdio.h>
-#include <string>
 
 using namespace Engine;
 
@@ -23,6 +16,10 @@ SDL_Window* SDLW::CreateWindow_(const char* aTitle, int X, int Y, int aWidth, in
 
 void SDLW::DestroyWindow_(SDL_Window* aWindow) {
   SDL_DestroyWindow(aWindow);
+}
+
+void SDLW::FreeSurface(SDL_Surface* aSurface) {
+  SDL_FreeSurface(aSurface);
 }
 
 const char* SDLW::GetError() {
@@ -53,6 +50,16 @@ void SDLW::GLSetSwapInterval(int anInterval) {
 
 void SDLW::GLSwapWindow(SDL_Window* aWindow) {
   SDL_GL_SwapWindow(aWindow);
+}
+
+SDL_Surface* SDLW::ImageLoad(const char* aFilePath) {
+  SDL_Surface* theSurface = IMG_Load(aFilePath);
+  if(!theSurface) {
+    char* theError = new char[200];
+    sprintf(theError, "Image file could not be loaded: %s", aFilePath);
+    throw ERuntimeException(theError);
+  }
+  return theSurface;
 }
 
 void SDLW::Init(Uint32 someFlags) {

@@ -1,6 +1,9 @@
 #ifndef GLW_H
 #define GLW_H
 
+#include <glew.h>
+#include "RuntimeException.cpp"
+
 namespace Engine {
   class GLW {
     public:
@@ -30,6 +33,12 @@ namespace Engine {
       static void UseProgram(GLuint aProgram);
       static void DeleteProgram(GLuint aProgram);
       static void DeleteShader(GLuint aShaderId);
+      static void GenTextures(GLsizei aSize, GLuint* someTextures);
+      static void BindTexture(GLenum aTarget, GLuint aTexture);
+      static void TexImage2D(GLenum aTarget, GLint aLevel, GLint anInternalFormat, GLsizei aWidth, GLsizei aHeight, GLint aBorder, GLenum aFormat, GLenum aType, const GLvoid* aData);
+      static void TexParameteri(GLenum aTarget, GLenum aParameterName, GLint aParameter);
+      static void Enable(GLenum aCap);
+      static void BlendFunc(GLenum anSFactor, GLenum aDFactor);
 
       //Properties
 

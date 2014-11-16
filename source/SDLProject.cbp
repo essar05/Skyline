@@ -9,16 +9,16 @@
 		<Build>
 			<Target title="Debug">
 				<Option output="bin/Debug/SDLProject" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/Debug" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Option projectIncludeDirsRelation="2" />
 				<Compiler>
 					<Add option="-g" />
-					<Add directory="Errors/Implementation" />
-					<Add directory="include" />
-					<Add directory="Engine/Declaration" />
-					<Add directory="Engine/Implementation" />
+					<Add directory="Errors" />
+					<Add directory="Engine" />
+					<Add directory="Terrain" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -31,6 +31,8 @@
 					<Add directory="Errors" />
 					<Add directory="include" />
 					<Add directory="Engine/Declaration" />
+					<Add directory="Engine" />
+					<Add directory="Terrain" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -45,6 +47,7 @@
 			<Add directory="../lib/SDL2_ttf/include/SDL2" />
 			<Add directory="../lib/freeglut/include/GL" />
 			<Add directory="../lib/glew/include/GL" />
+			<Add directory="../lib/glm" />
 		</Compiler>
 		<Linker>
 			<Add option="-lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lfreeglut -lopengl32 -lglew32" />
@@ -55,13 +58,25 @@
 			<Add directory="../lib/glew/lib" />
 		</Linker>
 		<Unit filename="Bootstrap.cpp" />
-		<Unit filename="Engine/Declaration/GLW.h" />
-		<Unit filename="Engine/Declaration/Game.h" />
-		<Unit filename="Engine/Declaration/SDLW.h" />
-		<Unit filename="Engine/Implementation/GLW.cpp" />
-		<Unit filename="Engine/Implementation/Game.cpp" />
-		<Unit filename="Engine/Implementation/SDLW.cpp" />
-		<Unit filename="Errors/Implementation/RuntimeException.cpp" />
+		<Unit filename="Engine/GLW.cpp" />
+		<Unit filename="Engine/GLW.h" />
+		<Unit filename="Engine/Game.cpp" />
+		<Unit filename="Engine/Game.h" />
+		<Unit filename="Engine/Model.cpp" />
+		<Unit filename="Engine/Model.h" />
+		<Unit filename="Engine/Renderer.cpp" />
+		<Unit filename="Engine/Renderer.h" />
+		<Unit filename="Engine/SDLW.cpp" />
+		<Unit filename="Engine/SDLW.h" />
+		<Unit filename="Engine/Shader.cpp" />
+		<Unit filename="Engine/Shader.h" />
+		<Unit filename="Engine/Texture.cpp" />
+		<Unit filename="Engine/Texture.h" />
+		<Unit filename="Errors/RuntimeException.cpp" />
+		<Unit filename="Shaders/Fragment.shader" />
+		<Unit filename="Shaders/Vertex.shader" />
+		<Unit filename="Terrain/Grass.cpp" />
+		<Unit filename="Terrain/Grass.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

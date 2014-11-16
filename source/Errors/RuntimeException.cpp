@@ -14,17 +14,17 @@ namespace Engine {
     public:
 
       ERuntimeException(const char* anErrorMessage) throw() {
-        this->ErrorMessage = anErrorMessage;
+        char* theError = new char[200];
+        sprintf(theError, "Runtime Exception: %s", anErrorMessage);
+        this->ErrorMessage = theError;
       }
 
       ~ERuntimeException() throw() {
-        delete this->ErrorMessage;
+
       };
 
       virtual const char* what() const throw() {
-        char* error = new char[100];
-        sprintf(error, "Runtime Exception: %s\n", this->ErrorMessage);
-        return error;
+        return this->ErrorMessage;
       }
   };
 }

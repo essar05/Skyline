@@ -1,11 +1,9 @@
-#include <glew.h>
-#include "RuntimeException.cpp"
 #include "GLW.h"
 
 using namespace Engine;
 
 GLW::GLW() {
-  throw ERuntimeException("You cannot directly initialize OpenGL Wrapper class (Engine::GLLW)");
+  throw ERuntimeException("You cannot directly initialize OpenGL Wrapper class (Engine::GLW)");
 }
 
 void GLW::test() {
@@ -20,7 +18,7 @@ GLuint GLW::CreateShader(GLuint aShader) {
   return glCreateShader(aShader);
 }
 
-void GLW::ShaderSource(GLuint aShader, GLsizei aCount, const GLchar ** aSource, const GLint* aLength) {
+void GLW::ShaderSource(GLuint aShader, GLsizei aCount, const GLchar** aSource, const GLint* aLength) {
   glShaderSource(aShader, aCount, aSource, aLength);
 }
 
@@ -29,7 +27,7 @@ void GLW::CompileShader(GLuint aShader) {
   GLint isShaderCompiled = GL_FALSE;
   GLW::GetShaderiv( aShader, GL_COMPILE_STATUS, &isShaderCompiled );
   if(isShaderCompiled != GL_TRUE) {
-    char* theError = NULL;
+    char* theError = new char[200];
     sprintf(theError, "Unable to compile vertex shader %d!\n", aShader);
     throw ERuntimeException(theError);
   }
@@ -48,7 +46,7 @@ void GLW::LinkProgram(GLuint aProgram) {
   GLint isLinkValid = GL_TRUE;
   GLW::GetProgramiv(aProgram, GL_LINK_STATUS, &isLinkValid );
   if(isLinkValid != GL_TRUE) {
-    char* theError = NULL;
+    char* theError = new char[200];
     sprintf(theError, "Error linking program %d!\n", aProgram);
     throw ERuntimeException(theError);
   }
@@ -112,4 +110,28 @@ void GLW::DeleteProgram(GLuint aProgram) {
 
 void GLW::DeleteShader(GLuint aShaderId) {
   glDeleteShader(aShaderId);
+}
+
+void GLW::GenTextures(GLsizei aSize, GLuint* someTextures) {
+  glGenTextures(aSize, someTextures);
+}
+
+void GLW::BindTexture(GLenum aTarget, GLuint aTexture) {
+  glBindTexture(aTarget, aTexture);
+}
+
+void GLW::TexImage2D(GLenum aTarget, GLint aLevel, GLint anInternalFormat, GLsizei aWidth, GLsizei aHeight, GLint aBorder, GLenum aFormat, GLenum aType, const GLvoid* aData) {
+  glTexImage2D(aTarget, aLevel, anInternalFormat, aWidth, aHeight, aBorder, aFormat, aType, aData);
+}
+
+void GLW::TexParameteri(GLenum aTarget, GLenum aParameterName, GLint aParameter) {
+  glTexParameteri(aTarget, aParameterName, aParameter);
+}
+
+void GLW::Enable(GLenum aCap) {
+  glEnable(aCap);
+}
+
+void GLW::BlendFunc(GLenum anSFactor, GLenum aDFactor) {
+  glBlendFunc(anSFactor, aDFactor);
 }
