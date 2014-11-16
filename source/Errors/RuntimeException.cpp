@@ -15,7 +15,7 @@ namespace Engine {
 
       ERuntimeException(const char* anErrorMessage) throw() {
         char* theError = new char[200];
-        sprintf(theError, "Runtime Exception: %s", anErrorMessage);
+		sprintf_s(theError, sizeof(theError) + 23, "Runtime Exception: %s\n", anErrorMessage);
         this->ErrorMessage = theError;
       }
 

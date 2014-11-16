@@ -56,7 +56,7 @@ SDL_Surface* SDLW::ImageLoad(const char* aFilePath) {
   SDL_Surface* theSurface = IMG_Load(aFilePath);
   if(!theSurface) {
     char* theError = new char[200];
-    sprintf(theError, "Image file could not be loaded: %s", aFilePath);
+	sprintf_s(theError, sizeof(theError) + 30, "Image file could not be loaded: %s", aFilePath);
     throw ERuntimeException(theError);
   }
   return theSurface;

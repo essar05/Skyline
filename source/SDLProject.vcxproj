@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{C56B8AC1-1F1B-4DF8-831B-618236525615}</ProjectGuid>
+    <RootNamespace>SDLProject</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>..\lib\SDL2\include;..\lib\SDL2_Image\include;..\lib\glew\include\GL;..\lib\freeglut\include;..\lib\glm;Terrain;Errors;Engine;$(IncludePath)</IncludePath>
+    <LibraryPath>..\lib\freeglut\lib;..\lib\glew\lib;..\lib\SDL2_Image\lib;..\lib\SDL2\lib;$(LibraryPath)</LibraryPath>
+    <IntDir>$(SolutionDir)\obj</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <AdditionalDependencies>freeglut.lib;glew32.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <EntryPointSymbol>main</EntryPointSymbol>
+    </Link>
+    <PostBuildEvent>
+      <Command>cmd /c xcopy ".\Resources\Textures" "$(TargetDir)Textures\" /y
+cmd /c xcopy ".\Resources\Shaders" "$(TargetDir)Shaders\" /y</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Bootstrap.cpp" />
+    <ClCompile Include="Engine\Game.cpp" />
+    <ClCompile Include="Engine\GLW.cpp" />
+    <ClCompile Include="Engine\Model.cpp" />
+    <ClCompile Include="Engine\Renderer.cpp" />
+    <ClCompile Include="Engine\SDLW.cpp" />
+    <ClCompile Include="Engine\Shader.cpp" />
+    <ClCompile Include="Engine\Texture.cpp" />
+    <ClCompile Include="Errors\RuntimeException.cpp" />
+    <ClCompile Include="Terrain\Grass.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Engine\Game.h" />
+    <ClInclude Include="Engine\GLW.h" />
+    <ClInclude Include="Engine\Model.h" />
+    <ClInclude Include="Engine\Renderer.h" />
+    <ClInclude Include="Engine\SDLW.h" />
+    <ClInclude Include="Engine\Shader.h" />
+    <ClInclude Include="Engine\Texture.h" />
+    <ClInclude Include="Terrain\Grass.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

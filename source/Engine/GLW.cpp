@@ -28,7 +28,7 @@ void GLW::CompileShader(GLuint aShader) {
   GLW::GetShaderiv( aShader, GL_COMPILE_STATUS, &isShaderCompiled );
   if(isShaderCompiled != GL_TRUE) {
     char* theError = new char[200];
-    sprintf(theError, "Unable to compile vertex shader %d!\n", aShader);
+	sprintf_s(theError, sizeof(theError) + 30, "Unable to compile vertex shader %d", aShader);
     throw ERuntimeException(theError);
   }
 }
@@ -47,7 +47,7 @@ void GLW::LinkProgram(GLuint aProgram) {
   GLW::GetProgramiv(aProgram, GL_LINK_STATUS, &isLinkValid );
   if(isLinkValid != GL_TRUE) {
     char* theError = new char[200];
-    sprintf(theError, "Error linking program %d!\n", aProgram);
+	sprintf_s(theError, sizeof(theError) + 30, "Error linking program %d", aProgram);
     throw ERuntimeException(theError);
   }
 }

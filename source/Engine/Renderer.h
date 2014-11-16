@@ -9,10 +9,10 @@
 #include "Model.h"
 #include "Grass.h"
 #include "Game.h"
-#include "glm.hpp"
-#include "ext.hpp"
-#include "gtc/matrix_transform.hpp"
-#include "gtx/transform.hpp"
+#include "glm/glm.hpp"
+#include "glm/ext.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtx/transform.hpp"
 #include <map>
 #include <string>
 

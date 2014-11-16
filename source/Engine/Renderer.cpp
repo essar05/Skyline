@@ -32,7 +32,7 @@ Renderer::Renderer(Game* aGameInstance) {
 
   GLW::Enable(GL_BLEND);
   GLW::BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-  GLW::ClearColor(0.f, 0.f, 0.f, 1.f);
+  GLW::ClearColor(1.f, 1.f, 1.f, 1.f);
 
   this->textureAtlas = new Texture("Textures/grass_tile.png");
   this->models = new modelMap();
@@ -55,7 +55,6 @@ Renderer::Renderer(Game* aGameInstance) {
 	this->matrixId = glGetUniformLocation(this->programId, "MVP");
 
 	glm::mat4 Projection = glm::ortho(0.0f, 640.0f, 480.0f, 0.0f);
-	this->MVP = Projection;
 	this->MVP = (Projection) * glm::translate(glm::mat4(1.0f), glm::vec3(100.0f, 100.0f, 0.0f));
 
 	this->textureId = glGetUniformLocation(this->programId, "textureSampler");
@@ -77,6 +76,38 @@ void Renderer::Render() {
   GLW::UseProgram(this->programId);
 
   glUniformMatrix4fv(this->matrixId, 1, GL_FALSE, &this->MVP[0][0]);
+  // Bind our texture in Texture Unit 0
+  glActiveTexture(GL_TEXTURE0);
+
+  glBindTexture(GL_TEXTURE_2D, this->textureAtlas->GetId());
+  // Set our "myTextureSampler" sampler to user Texture Unit 0
+  glUniform1i(this->textureId, 0);
+
+  GLW::EnableVertexAttribArray(0);
+  GLW::EnableVertexAttribArray(1);
+
+  GLW::BindBuffer(GL_ARRAY_BUFFER, this->VBO[0]);
+  GLW::VertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, NULL);
+
+  glBindBuffer(GL_ARRAY_BUFFER, this->UBO[0]);
+  glVertexAttribPointer(
+    1,                                // attribute. No particular reason for 1, but must match the layout in the shader.
+    2,                                // size : U+V => 2
+    GL_FLOAT,                         // type
+    GL_FALSE,                         // normalized?
+    0,                                // stride
+    (void*)0                          // array buffer offset
+  );
+
+  glDrawArrays(GL_QUADS, 0, 4);
+
+  GLW::DisableVertexAttribArray(0);
+  GLW::DisableVertexAttribArray(1);
+
+  glm::mat4 newMVP = this->MVP * glm::translate(glm::mat4(1.0f), glm::vec3(64.0f, 32.0f, 0.0f));
+
+  glUniformMatrix4fv(this->matrixId, 1, GL_FALSE, &newMVP[0][0]);
+
   // Bind our texture in Texture Unit 0
   glActiveTexture(GL_TEXTURE0);
 
