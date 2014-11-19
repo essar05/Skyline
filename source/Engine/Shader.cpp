@@ -30,8 +30,9 @@ GLuint Shader::Load(const char* aVertexFilePath, const char* aFragmentFilePath) 
     }
     theVertexShaderStream.close();
   } else {
-    char* theError = new char[200];
-	sprintf_s(theError, sizeof(theError) + 30, "Cannot load shader file %s", aVertexFilePath);
+    char* theFormat = "Cannot load shader file %s";
+    char* theError = new char[strlen(theFormat) + strlen(aVertexFilePath)];
+    _snprintf_s(theError, strlen(theError), 200, theFormat, aVertexFilePath);
     throw ERuntimeException(theError);
   }
 

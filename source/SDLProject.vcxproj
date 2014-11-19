@@ -41,7 +41,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>..\lib\SDL2\include;..\lib\SDL2_Image\include;..\lib\glew\include\GL;..\lib\freeglut\include;..\lib\glm;Terrain;Errors;Engine;$(IncludePath)</IncludePath>
     <LibraryPath>..\lib\freeglut\lib;..\lib\glew\lib;..\lib\SDL2_Image\lib;..\lib\SDL2\lib;$(LibraryPath)</LibraryPath>
-    <IntDir>$(SolutionDir)\obj</IntDir>
+    <IntDir>$(SolutionDir)\obj\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -50,7 +50,7 @@
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
-      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>freeglut.lib;glew32.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>main</EntryPointSymbol>
     </Link>
@@ -77,22 +77,26 @@ cmd /c xcopy ".\Resources\Shaders" "$(TargetDir)Shaders\" /y</Command>
     <ClCompile Include="Bootstrap.cpp" />
     <ClCompile Include="Engine\Game.cpp" />
     <ClCompile Include="Engine\GLW.cpp" />
+    <ClCompile Include="Engine\MapParser.cpp" />
     <ClCompile Include="Engine\Model.cpp" />
     <ClCompile Include="Engine\Renderer.cpp" />
     <ClCompile Include="Engine\SDLW.cpp" />
     <ClCompile Include="Engine\Shader.cpp" />
     <ClCompile Include="Engine\Texture.cpp" />
     <ClCompile Include="Errors\RuntimeException.cpp" />
+    <ClCompile Include="Engine\Map.cpp" />
     <ClCompile Include="Terrain\Grass.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Game.h" />
     <ClInclude Include="Engine\GLW.h" />
+    <ClInclude Include="Engine\MapParser.h" />
     <ClInclude Include="Engine\Model.h" />
     <ClInclude Include="Engine\Renderer.h" />
     <ClInclude Include="Engine\SDLW.h" />
     <ClInclude Include="Engine\Shader.h" />
     <ClInclude Include="Engine\Texture.h" />
+    <ClInclude Include="Engine\Map.h" />
     <ClInclude Include="Terrain\Grass.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

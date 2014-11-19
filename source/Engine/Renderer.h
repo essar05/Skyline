@@ -1,8 +1,6 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
-
-
 #include "SDLW.h"
 #include "GLW.h"
 #include "Texture.h"
@@ -20,7 +18,7 @@ using namespace std;
 using namespace Engine;
 using namespace Terrain;
 
-typedef map<string, Model*> modelMap;
+typedef map<int, Model*> modelMap;
 
 namespace Engine {
   class Game;

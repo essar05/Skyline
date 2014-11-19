@@ -8,6 +8,8 @@
 #include "GLW.h"
 #include "Shader.h"
 #include "Renderer.h"
+#include "Map.h"
+#include "MapParser.h"
 
 namespace Engine {
   class Renderer;
@@ -23,9 +25,12 @@ namespace Engine {
       Game();
       ~Game();
       void doRun(SDL_Event* anEvent);
+      void generateTempMap();
 
       static Game* instance;
       Renderer* renderer;
+      Map* map;
+      MapParser* parser;
   };
 
 };
