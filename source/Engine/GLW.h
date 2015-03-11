@@ -39,6 +39,11 @@ namespace Engine {
       static void TexParameteri(GLenum aTarget, GLenum aParameterName, GLint aParameter);
       static void Enable(GLenum aCap);
       static void BlendFunc(GLenum anSFactor, GLenum aDFactor);
+	  static GLint GetUniformLocation(GLuint aProgramId, const GLchar *aName);
+	  static void ActiveTexture(GLenum aTexture);
+	  static void Uniform1i(GLint aLocation, GLint aValue);
+	  static void UniformMatrix4fv(GLint aLocation, GLsizei aCount, GLboolean aTranspose, const GLfloat *aValue);
+	  static void DrawArrays(GLenum aMode, GLint aStart, GLsizei aCount);
 
       //Properties
 
