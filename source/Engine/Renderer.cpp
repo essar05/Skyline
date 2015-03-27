@@ -105,8 +105,6 @@ void Renderer::Render() {
 
   glUniformMatrix4fv(this->matrixId, 1, GL_FALSE, &newMVP[0][0]);
 
-  // Bind our texture in Texture Unit 0
-
   glDrawArrays(GL_QUADS, 0, 4);
 
   GLW::DisableVertexAttribArray(0);

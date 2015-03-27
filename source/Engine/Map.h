@@ -7,8 +7,8 @@ namespace Engine {
       Map();
 	  Map(int aTileWidth, int aTileHeight);
       ~Map();
-      Tile**** Tiles;
-      bool** Walkable;
+      Tile**** Tiles; //array of layer width height [pointer to object]
+	  bool** Walkable; //height width
       bool** Passable;
       int GetWidth();
       int GetHeight();

@@ -83,6 +83,8 @@ cmd /c xcopy ".\Resources\Shaders" "$(TargetDir)Shaders\" /y</Command>
     <ClCompile Include="Engine\SDLW.cpp" />
     <ClCompile Include="Engine\Shader.cpp" />
     <ClCompile Include="Engine\Texture.cpp" />
+    <ClCompile Include="Engine\Tile.cpp" />
+    <ClCompile Include="Engine\Timer.cpp" />
     <ClCompile Include="Errors\RuntimeException.cpp" />
     <ClCompile Include="Engine\Map.cpp" />
     <ClCompile Include="Terrain\Grass.cpp" />
@@ -97,6 +99,8 @@ cmd /c xcopy ".\Resources\Shaders" "$(TargetDir)Shaders\" /y</Command>
     <ClInclude Include="Engine\Shader.h" />
     <ClInclude Include="Engine\Texture.h" />
     <ClInclude Include="Engine\Map.h" />
+    <ClInclude Include="Engine\Tile.h" />
+    <ClInclude Include="Engine\Timer.h" />
     <ClInclude Include="Terrain\Grass.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

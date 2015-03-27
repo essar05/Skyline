@@ -55,7 +55,7 @@ void MapParser::Parse(Map* aMap, const char* aMapFile) {
     delete aMap->Passable;
   }
 
-  aMap->Tiles = new int**[aMap->GetLayersCount()];
+  aMap->Tiles = new Tile***[aMap->GetLayersCount()];
   aMap->Walkable = new bool*[aMap->GetWidth()];
   aMap->Passable = new bool*[aMap->GetWidth()];
 
@@ -65,13 +65,14 @@ void MapParser::Parse(Map* aMap, const char* aMapFile) {
   }
 
   for(int i = 0; i < aMap->GetLayersCount(); i++) {
-    aMap->Tiles[i] = new int*[aMap->GetWidth()];
+    aMap->Tiles[i] = new Tile**[aMap->GetWidth()];
     
-    for(int j = 0; j < aMap->GetLayersCount(); j++) {
-      aMap->Tiles[i][j] = new int[aMap->GetHeight()];
+	for (int j = 0; j < aMap->GetHeight(); j++) {
+      aMap->Tiles[i][j] = new Tile*[aMap->GetHeight()];
       
-      for(int k = 0; k < aMap->GetLayersCount(); k++) {
-        aMap->Tiles[i][j][k] = this->ParseU8();
+      for(int k = 0; k < aMap->GetWidth(); k++) {
+		aMap->Tiles[i][j][k] = new Tile;
+        aMap->Tiles[i][j][k]->SetId(this->ParseU8());
         char theFlags = this->ParseU8();
         bool isWalkable = (((theFlags >> 7) & 0x01) == 1);
         bool isPassable = (((theFlags >> 6) & 0x01) == 1);
@@ -109,7 +110,7 @@ void MapParser::Write(Map* aMap, const char* aMapFile) {
   for(int i = 0; i < aMap->GetLayersCount(); i++) {
     for(int j = 0; j < aMap->GetLayersCount(); j++) {
       for(int k = 0; k < aMap->GetLayersCount(); k++) {
-        this->WriteU8(aMap->Tiles[i][j][k]); //1B TILE ID
+        this->WriteU8(aMap->Tiles[i][j][k]->GetId()); //1B TILE ID
         char theFlags = 0x00;
         if(aMap->Walkable[j][k] == true) {
           theFlags = theFlags | (0x01 << 7);

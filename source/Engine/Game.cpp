@@ -72,6 +72,8 @@ bool Game::doRun(SDL_Event* anEvent) {
 
 	this->renderer->Render();
 
+	this->renderer->SwapWindow();
+
 	return true;
 }
 
@@ -102,6 +104,7 @@ void Game::SetHeight(int aHeight) {
 void Game::SetWidth(int aWidth) {
 	this->width = aWidth;
 }
+
 
 void Game::generateTempMap() {
 	this->map->SetLayersCount(1);
