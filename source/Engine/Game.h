@@ -43,6 +43,8 @@ namespace Engine {
 		int height;
 		int viewportOffsetX = 0;
 		int viewportOffsetY = 0;
+		signed int maxOffsetX = 0;
+		signed int maxOffsetY = 0;
 		int countedFrames = 0;
 		LTimer* fpsTimer;
 		int isMouseLeftDown = false;

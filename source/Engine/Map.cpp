@@ -1,6 +1,7 @@
 #include "Map.h"
 #include <math.h>
 #include <stdio.h>
+#include <ctime>
 
 using namespace Engine;
 
@@ -41,6 +42,14 @@ int Map::GetOffsetJ() {
 	return this->offsetJ;
 }
 
+int Map::GetTileWidth() {
+	return this->tileWidth;
+}
+
+int Map::GetTileHeight() {
+	return this->tileHeight;
+}
+
 void Map::SetWidth(int aWidth) {
 	this->width = aWidth;
 }
@@ -53,8 +62,19 @@ void Map::SetLayersCount(int aLayersCount) {
 	this->layersCount = aLayersCount;
 }
 
+void Map::ComputeVisibleTiles(int anXOffset, int aYOffset, int aScreenWidth, int aScreenHeight) {
+	float dx, dy;
+	for (int i = 0; i < this->height; i++) {
+		for (int j = 0; j < this->width; j++) {
+			dx = static_cast<float>(j * this->tileWidth + ((i) % 2) * (this->tileWidth / 2));
+			dy = static_cast<float>(i * (this->tileHeight / 2));
+			this->Tiles[0][i][j]->Translate(dx, dy);
+		}
+	}
+}
+
 void Map::ComputeTilePositions(int anXOffset, int aYOffset, int aScreenWidth, int aScreenHeight) {
-	this->offsetWidth = static_cast<int>(
+	/*this->offsetWidth = static_cast<int>(
 		floor(
 		(float)(aScreenWidth / this->tileWidth)
 		)
@@ -79,11 +99,11 @@ void Map::ComputeTilePositions(int anXOffset, int aYOffset, int aScreenWidth, in
 		this->offsetJ = 0;
 	}
 
-	printf("w: %d", this->offsetWidth);
+	/*printf("w: %d", this->offsetWidth);
 	printf("h: %d", this->offsetHeight);
 	printf("i: %d", this->offsetI);
-	printf("j: %d", this->offsetJ);
-
+	printf("j: %d", this->offsetJ);*/
+	/*
 	float dx, dy;
 	for (int i = 0; i < this->offsetHeight; i++) {
 		for (int j = 0; j < this->offsetWidth; j++) {
@@ -91,6 +111,6 @@ void Map::ComputeTilePositions(int anXOffset, int aYOffset, int aScreenWidth, in
 			dy = static_cast<float>(i * (this->tileHeight / 2)) + offsetY;
 			this->Tiles[0][i + this->offsetI][j + this->offsetJ]->Translate(dx, dy);
 		}
-	}
+	}*/
 
 }

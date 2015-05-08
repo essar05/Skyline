@@ -39,8 +39,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>..\lib\SDL2\include;..\lib\SDL2_Image\include;..\lib\glew\include\GL;..\lib\freeglut\include;..\lib\glm;Terrain;Errors;Engine;$(IncludePath)</IncludePath>
-    <LibraryPath>..\lib\freeglut\lib;..\lib\glew\lib;..\lib\SDL2_Image\lib;..\lib\SDL2\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\lib\SDL2\include;..\lib\SDL2_Image\include;..\lib\glew\include\GL;..\lib\freeglut\include;..\lib\glm;Terrain;Errors;Engine;..\lib\freetype\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\lib\freetype\lib;..\lib\freeglut\lib;..\lib\glew\lib;..\lib\SDL2_Image\lib;..\lib\SDL2\lib;$(LibraryPath)</LibraryPath>
     <IntDir>$(SolutionDir)\obj\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -51,7 +51,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>freeglut.lib;glew32.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>freeglut.lib;glew32.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;opengl32.lib;freetype255d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>main</EntryPointSymbol>
     </Link>
     <PostBuildEvent>

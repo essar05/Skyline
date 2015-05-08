@@ -19,6 +19,7 @@ using namespace Engine;
 using namespace Terrain;
 
 typedef map<int, Model*> modelMap;
+typedef map<int, GLuint> buffersMap;
 
 namespace Engine {
   class Game;
@@ -28,11 +29,14 @@ namespace Engine {
       virtual ~Renderer();
       void Render();
       void SwapWindow();
+	  GLuint GetWidth();
+	  GLuint GetHeight();
     protected:
     private:
       Game* game;
       Texture* textureAtlas;
       modelMap* models;
+	  buffersMap* buffers;
       GLuint* UBO;
       GLuint* VBO;
       bool renderQuad = true;

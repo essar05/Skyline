@@ -19,8 +19,11 @@ void Game::Boot() {
 	//this->parser->Parse(this->map, "Maps/aSample.emp");
 
 	this->renderer = new Renderer(this);
+	
+	this->maxOffsetX = -static_cast<signed int>(this->map->GetWidth() * this->map->GetTileWidth() - this->renderer->GetWidth() - this->map->GetTileWidth() / 2);
+	this->maxOffsetY = -static_cast<signed int>((this->map->GetHeight() * this->map->GetTileHeight() / 2) - this->renderer->GetHeight() - this->map->GetTileHeight() / 2);
 
-	this->map->ComputeTilePositions(this->viewportOffsetX, this->viewportOffsetY, this->width, this->height);
+	this->map->ComputeVisibleTiles(this->viewportOffsetX, this->viewportOffsetY, this->width, this->height);
 }
 
 Game* Game::GetInstance() {
@@ -59,14 +62,15 @@ bool Game::doRun(SDL_Event* anEvent) {
 			}
 		}
 		else if (anEvent->type == SDL_MOUSEMOTION && this->isMouseLeftDown) {
-			if (this->viewportOffsetX - anEvent->motion.xrel > 0 && (this->map->GetOffsetJ() + 1 <= this->map->GetWidth() - this->map->GetOffsetWidth() || this->viewportOffsetX > this->viewportOffsetX - anEvent->motion.xrel)) {
-				this->viewportOffsetX -= anEvent->motion.xrel;
-			}
-			if (this->viewportOffsetY + anEvent->motion.yrel < 0 && (this->map->GetOffsetI() + 1 <= this->map->GetHeight() - this->map->GetOffsetHeight() || this->viewportOffsetY < this->viewportOffsetY + anEvent->motion.yrel)) {
-				this->viewportOffsetY += anEvent->motion.yrel;
-			}
-			printf(" (%d, %d)\n", this->viewportOffsetX, this->viewportOffsetY);
-			this->map->ComputeTilePositions(this->viewportOffsetX, this->viewportOffsetY, this->width, this->height);
+			this->viewportOffsetX += anEvent->motion.xrel;
+			this->viewportOffsetY += anEvent->motion.yrel;
+
+			if (this->viewportOffsetX > 0) { this->viewportOffsetX = 0; }
+			if (this->viewportOffsetY > 0) { this->viewportOffsetY = 0; }
+			if (this->viewportOffsetX < this->maxOffsetX) { this->viewportOffsetX = this->maxOffsetX; }
+			if (this->viewportOffsetY < this->maxOffsetY) { this->viewportOffsetY = this->maxOffsetY; }
+			printf("%d\n", this->viewportOffsetY);
+			this->map->ComputeVisibleTiles(this->viewportOffsetX, this->viewportOffsetY, this->width, this->height);
 		}
 	}
 

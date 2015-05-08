@@ -16,9 +16,12 @@ namespace Engine {
       void SetWidth(int aWidth);
       void SetHeight(int aHeight);
       void SetLayersCount(int aLayersCount);
+	  void ComputeVisibleTiles(int anXOffset, int aYOffset, int aScreenWidth, int aScreenHeight);
 	  void ComputeTilePositions(int anXOffset, int aYOffset, int aScreenWidth, int aScreenHeight);
 	  int GetOffsetWidth();
 	  int GetOffsetHeight();
+	  int GetTileWidth();
+	  int GetTileHeight();
 	  int GetOffsetI();
 	  int GetOffsetJ();
     private:
