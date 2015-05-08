@@ -103,6 +103,10 @@ cmd /c xcopy ".\Resources\Shaders" "$(TargetDir)Shaders\" /y</Command>
     <ClInclude Include="Engine\Timer.h" />
     <ClInclude Include="Terrain\Grass.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Shaders\FontFragment.shader" />
+    <None Include="Resources\Shaders\FontVertex.shader" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

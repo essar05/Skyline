@@ -32,6 +32,7 @@ Renderer::Renderer(Game* aGameInstance) {
   SDLW::GLSetSwapInterval(1);
 
   this->programId = Shader::Load("Shaders/Vertex.shader", "Shaders/Fragment.shader");
+  this->fontShaderId = Shader::Load("Shaders/FontVertex.shader", "Shaders/FontFragment.shader");
 
   GLW::Enable(GL_BLEND);
   GLW::BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -76,6 +77,46 @@ Renderer::Renderer(Game* aGameInstance) {
 	  }
   }
 
+  if (FT_Init_FreeType(&this->ft)) {
+	  fprintf(stderr, "Could not init freetype library\n");
+  }
+
+  
+
+  if (FT_New_Face(ft, "Candara.ttf", 0, &this->face)) {
+	  fprintf(stderr, "Could not open font\n");
+  }
+
+  FT_Set_Pixel_Sizes(this->face, 0, 48);
+
+  if (FT_Load_Char(this->face, 'X', FT_LOAD_RENDER)) {
+	  fprintf(stderr, "Could not load character 'X'\n");
+  }
+
+  
+  this->glyph = this->face->glyph;
+
+  this->fontTextureLocation = glGetUniformLocation(this->fontShaderId, "textureSampler");
+  this->fontColorLocation = glGetUniformLocation(this->fontShaderId, "fontColor");
+  this->fontMVPLocation = glGetUniformLocation(this->fontShaderId, "MVP");
+
+  glActiveTexture(GL_TEXTURE0);
+  glGenTextures(1, &this->fontTextureId);
+  glBindTexture(GL_TEXTURE_2D, this->fontTextureId);
+  glUniform1i(this->fontTextureLocation, 0);
+  
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+  glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+  glGenBuffers(1, &this->fontVBO);
+  
+  //glBindBuffer(GL_ARRAY_BUFFER, vbo);
+  
 }
 
 Renderer::~Renderer() {
@@ -114,7 +155,7 @@ void Renderer::Render() {
   for (int k = 0; k < this->game->GetMap()->GetLayersCount(); k++) {
 	  for (int i = 0; i < this->game->GetMap()->GetHeight(); i++) {
 		  for (int j = 0; j < this->game->GetMap()->GetWidth(); j++) {
-
+			  
 			  Tile* theTile = this->game->GetMap()->Tiles[k][i][j];
 
 
@@ -146,8 +187,77 @@ void Renderer::Render() {
   GLW::DisableVertexAttribArray(0);
   GLW::DisableVertexAttribArray(1);
 
+  this->RenderText('a', 100, 100);
+  this->RenderText('d', 150, 100);
+  this->RenderText('v', 200, 100);
+  this->RenderText('e', 250, 100);
+  this->RenderText('r', 300, 100);
+  this->RenderText('s', 350, 100);
+  this->RenderText('u', 400, 100);
+  this->RenderText('s', 450, 100);
   GLW::UseProgram(0);
  
+}
+
+void Renderer::RenderText(char aChar, float x, float y) {
+  GLW::UseProgram(this->fontShaderId);
+
+  GLW::EnableVertexAttribArray(0);
+  glm::mat4 theMVP = this->MVP;
+
+  if (FT_Load_Char(this->face, aChar, FT_LOAD_RENDER)) {
+    fprintf(stderr, "Could not load character 'X'\n");
+  }
+
+  glUniformMatrix4fv(this->fontMVPLocation, 1, GL_FALSE, &theMVP[0][0]);
+
+  GLfloat black[4] = { 1, 1, 1, 1 };
+  glUniform4fv(this->fontColorLocation, 1, black);
+
+  glActiveTexture(GL_TEXTURE0);
+
+  glBindTexture(GL_TEXTURE_2D, this->fontTextureId);
+  glTexImage2D(
+    GL_TEXTURE_2D,
+    0,
+    GL_RED,
+    this->glyph->bitmap.width,
+    this->glyph->bitmap.rows,
+    0,
+    GL_RED,
+    GL_UNSIGNED_BYTE,
+    this->glyph->bitmap.buffer
+    );
+  // Set our "myTextureSampler" sampler to user Texture Unit 0
+  glUniform1i(this->textureId, 0);
+
+  
+  /*
+  x2, -y2                    x2 + w, - y2
+  0, 0                       1,0
+
+  x2, -y2 + h                x2 + w, -y2 + h
+  0,1                        1,1
+  */
+
+  float x2 = x + this->glyph->bitmap_left;
+  float y2 = y - this->glyph->bitmap_top;
+  float w = this->glyph->bitmap.width;
+  float h = this->glyph->bitmap.rows;
+  GLfloat box[4][4] = {
+    { x2, y2, 0, 0 },
+    { x2 + w, y2, 1, 0 },
+    { x2, y2 + h, 0,  1 },
+    { x2 + w, y2 + h, 1, 1 }
+  };
+
+  GLW::BindBuffer(GL_ARRAY_BUFFER, this->fontVBO);
+  glBufferData(GL_ARRAY_BUFFER, sizeof box, box, GL_DYNAMIC_DRAW);
+  GLW::VertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
+
+  glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+  GLW::DisableVertexAttribArray(0);
+
 }
 
 void Renderer::SwapWindow() {
@@ -155,9 +265,9 @@ void Renderer::SwapWindow() {
 }
 
 GLuint Renderer::GetWidth() {
-	return this->screenWidth;
+  return this->screenWidth;
 }
 
 GLuint Renderer::GetHeight() {
-	return this->screenHeight;
+  return this->screenHeight;
 }

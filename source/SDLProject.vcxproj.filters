@@ -96,4 +96,8 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Shaders\FontVertex.shader" />
+    <None Include="Resources\Shaders\FontFragment.shader" />
+  </ItemGroup>
 </Project>

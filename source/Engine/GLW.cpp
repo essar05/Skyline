@@ -1,4 +1,5 @@
 #include "GLW.h"
+#include <vector>
 
 using namespace Engine;
 
@@ -28,6 +29,10 @@ void GLW::CompileShader(GLuint aShader) {
 	GLW::GetShaderiv(aShader, GL_COMPILE_STATUS, &isShaderCompiled);
 	if (isShaderCompiled != GL_TRUE) {
 		char* theError = new char[200];
+		GLint logSize = 0;
+		GLW::GetShaderiv(aShader, GL_INFO_LOG_LENGTH, &logSize);
+		std::vector<GLchar> errorLog(logSize);
+		glGetShaderInfoLog(aShader, logSize, &logSize, &errorLog[0]);
 		sprintf_s(theError, sizeof(theError) + 30, "Unable to compile vertex shader %d", aShader);
 		throw ERuntimeException(theError);
 	}

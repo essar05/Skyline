@@ -13,6 +13,8 @@
 #include "glm/gtx/transform.hpp"
 #include <map>
 #include <string>
+#include <ft2build.h>
+#include FT_FREETYPE_H
 
 using namespace std;
 using namespace Engine;
@@ -31,6 +33,7 @@ namespace Engine {
       void SwapWindow();
 	  GLuint GetWidth();
 	  GLuint GetHeight();
+    void RenderText(char aChar, float x, float y);
     protected:
     private:
       Game* game;
@@ -49,6 +52,15 @@ namespace Engine {
       glm::mat4 MVP;
       GLuint screenWidth;
       GLuint screenHeight;
+      GLuint fontShaderId = 0;
+      GLuint fontColorLocation = 0;
+      GLuint fontTextureLocation = 0;
+      GLuint fontMVPLocation = 0;
+      FT_Library ft;
+      GLuint fontVBO;
+      FT_GlyphSlot glyph;
+      GLuint fontTextureId;
+      FT_Face face;
   };
 };
 
