@@ -23,6 +23,19 @@ using namespace Terrain;
 typedef map<int, Model*> modelMap;
 typedef map<int, GLuint> buffersMap;
 
+struct character_info {
+  float ax; // advance.x
+  float ay; // advance.y
+
+  float bw; // bitmap.width;
+  float bh; // bitmap.rows;
+
+  float bl; // bitmap_left;
+  float bt; // bitmap_top;
+
+  float tx; // x offset of glyph in texture coordinates
+};
+
 namespace Engine {
   class Game;
   class Renderer {
@@ -34,25 +47,30 @@ namespace Engine {
 	  GLuint GetWidth();
 	  GLuint GetHeight();
     void RenderText(char aChar, float x, float y);
+    void RenderString(const char* aString, float x, float y);
+
     protected:
     private:
       Game* game;
       Texture* textureAtlas;
       modelMap* models;
-	  buffersMap* buffers;
+	    buffersMap* buffers;
       GLuint* UBO;
       GLuint* VBO;
       bool renderQuad = true;
       GLint vertexPos2DLocation = -1;
       SDL_GLContext context;
-      GLuint programId = 0;
+
+      GLuint mainProgramId = 0;
+      GLuint fontProgramId = 0;
+
       SDL_Window* window = NULL;
       GLuint textureId;
       GLuint matrixId;
       glm::mat4 MVP;
       GLuint screenWidth;
       GLuint screenHeight;
-      GLuint fontShaderId = 0;
+      
       GLuint fontColorLocation = 0;
       GLuint fontTextureLocation = 0;
       GLuint fontMVPLocation = 0;
@@ -61,6 +79,9 @@ namespace Engine {
       FT_GlyphSlot glyph;
       GLuint fontTextureId;
       FT_Face face;
+      character_info chars[128];
+      GLuint fontAtlasWidth = 0;
+      GLuint fontAtlasHeight = 0;
   };
 };
 

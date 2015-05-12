@@ -22,6 +22,7 @@ Renderer::Renderer(Game* aGameInstance) {
   SDLW::SetGLAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
   SDLW::SetGLAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
+  //fixed resolution for now.
   this->screenWidth = 640;
   this->screenHeight = 480;
 
@@ -31,13 +32,15 @@ Renderer::Renderer(Game* aGameInstance) {
   SDLW::GLEWInit();
   SDLW::GLSetSwapInterval(1);
 
-  this->programId = Shader::Load("Shaders/Vertex.shader", "Shaders/Fragment.shader");
-  this->fontShaderId = Shader::Load("Shaders/FontVertex.shader", "Shaders/FontFragment.shader");
+  //load up the shaders and store their name/id;
+  this->mainProgramId = Shader::Load("Shaders/Vertex.shader", "Shaders/Fragment.shader");
+  this->fontProgramId = Shader::Load("Shaders/FontVertex.shader", "Shaders/FontFragment.shader");
 
   GLW::Enable(GL_BLEND);
   GLW::BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   GLW::ClearColor(1.f, 1.f, 1.f, 1.f);
 
+  //Initialize drawing stuff.
   this->textureAtlas = new Texture("Textures/grass_tile.png");
   this->models = new modelMap();
   this->buffers = new buffersMap();
@@ -48,7 +51,6 @@ Renderer::Renderer(Game* aGameInstance) {
   int k = 0;
   for (modelMap::iterator it = this->models->begin(); it != this->models->end(); ++it) {
 	this->buffers->insert(std::pair<int, int>(it->first, k));
-
     GLW::GenBuffers(1, &this->VBO[k]);
     GLW::BindBuffer(GL_ARRAY_BUFFER, this->VBO[k]);
     GLW::BufferData(GL_ARRAY_BUFFER, 2 * 4 * sizeof(GLfloat), this->models->at(1)->getVertices(), GL_STATIC_DRAW);
@@ -58,13 +60,16 @@ Renderer::Renderer(Game* aGameInstance) {
     GLW::BufferData(GL_ARRAY_BUFFER, 2 * 4 * sizeof(GLfloat), this->models->at(1)->getUV(), GL_STATIC_DRAW);
   }
 
-  this->matrixId = glGetUniformLocation(this->programId, "MVP");
+  //get the location of MVP from our main shader.
+  this->matrixId = glGetUniformLocation(this->mainProgramId, "MVP");
 
   glm::mat4 Projection = glm::ortho(0.0f, 640.0f, 480.0f, 0.0f);
   this->MVP = (Projection) * glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
 
-  this->textureId = glGetUniformLocation(this->programId, "textureSampler");
+  //texture sampler location from main fragmnet shader
+  this->textureId = glGetUniformLocation(this->mainProgramId, "textureSampler");
 
+  //at the momemnt it's not really used, but used to calculate the I and J to start from when drawing.
   for (int k = 0; k < this->game->GetMap()->GetLayersCount(); k++) {
 	  for (int i = 0; i < this->game->GetMap()->GetOffsetHeight(); i++) {
 		  for (int j = 0; j < this->game->GetMap()->GetOffsetWidth(); j++) {
@@ -76,11 +81,12 @@ Renderer::Renderer(Game* aGameInstance) {
 		  }
 	  }
   }
+  
+  //Temporary font init code (will be moved)
 
   if (FT_Init_FreeType(&this->ft)) {
 	  fprintf(stderr, "Could not init freetype library\n");
   }
-
   
 
   if (FT_New_Face(ft, "Candara.ttf", 0, &this->face)) {
@@ -88,22 +94,37 @@ Renderer::Renderer(Game* aGameInstance) {
   }
 
   FT_Set_Pixel_Sizes(this->face, 0, 48);
-
-  if (FT_Load_Char(this->face, 'X', FT_LOAD_RENDER)) {
-	  fprintf(stderr, "Could not load character 'X'\n");
-  }
-
+  
+  //Load up the ASCII characters 32 - 127 (95 chars)
   
   this->glyph = this->face->glyph;
 
-  this->fontTextureLocation = glGetUniformLocation(this->fontShaderId, "textureSampler");
-  this->fontColorLocation = glGetUniformLocation(this->fontShaderId, "fontColor");
-  this->fontMVPLocation = glGetUniformLocation(this->fontShaderId, "MVP");
+  int w = 0;
+  int h = 0;
+  
+  for (int i = 32; i < 128; i++) {
+    if (FT_Load_Char(this->face, i, FT_LOAD_RENDER)) {
+      fprintf(stderr, "Could not load character %c\n", i);
+      continue;
+    }
+
+    w += this->glyph->bitmap.width;
+    if (i == 65) {
+      printf("%f \n", (float)w);
+    }
+    h = (h < this->glyph->bitmap.rows) ? this->glyph->bitmap.rows : h;
+  }
+  
+  this->fontAtlasWidth = w;
+  this->fontAtlasHeight = h;
+
+  this->fontTextureLocation = glGetUniformLocation(this->fontProgramId, "textureSampler");
+  this->fontColorLocation = glGetUniformLocation(this->fontProgramId, "fontColor");
+  this->fontMVPLocation = glGetUniformLocation(this->fontProgramId, "MVP");
 
   glActiveTexture(GL_TEXTURE0);
   glGenTextures(1, &this->fontTextureId);
   glBindTexture(GL_TEXTURE_2D, this->fontTextureId);
-  glUniform1i(this->fontTextureLocation, 0);
   
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
@@ -112,15 +133,37 @@ Renderer::Renderer(Game* aGameInstance) {
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
   glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, w, h, 0, GL_RED, GL_UNSIGNED_BYTE, 0);
+
+  int x = 0;
+
+  for (int i = 32; i < 128; i++) {
+    if (FT_Load_Char(face, i, FT_LOAD_RENDER)) {
+      continue;
+    }
+
+    glTexSubImage2D(GL_TEXTURE_2D, 0, x, 0, this->glyph->bitmap.width, this->glyph->bitmap.rows, GL_RED, GL_UNSIGNED_BYTE, this->glyph->bitmap.buffer);
+
+    this->chars[i - 32].ax = this->glyph->advance.x >> 6;
+    this->chars[i - 32].ay = this->glyph->advance.y >> 6;
+
+    this->chars[i - 32].bw = this->glyph->bitmap.width;
+    this->chars[i - 32].bh = this->glyph->bitmap.rows;
+
+    this->chars[i - 32].bl = this->glyph->bitmap_left;
+    this->chars[i - 32].bt = this->glyph->bitmap_top;
+
+    this->chars[i - 32].tx = (float) x / w;
+
+    x += this->glyph->bitmap.width;
+  }
 
   glGenBuffers(1, &this->fontVBO);
-  
-  //glBindBuffer(GL_ARRAY_BUFFER, vbo);
-  
 }
 
 Renderer::~Renderer() {
-  GLW::DeleteProgram(this->programId);
+  GLW::DeleteProgram(this->mainProgramId);
+  GLW::DeleteProgram(this->fontProgramId);
   SDLW::DestroyWindow_(this->window);
   SDLW::Quit();
 }
@@ -134,7 +177,7 @@ void Renderer::Render() {
     return;
   }
 
-  GLW::UseProgram(this->programId);
+  GLW::UseProgram(this->mainProgramId);
 
   glm::mat4 Projection = glm::ortho(0.0f, 640.0f, 480.0f, 0.0f);
   this->MVP = (Projection)* glm::translate(glm::mat4(1.0f), glm::vec3(this->game->GetViewportOffsetX(), this->game->GetViewportOffsetY(), 0.0f));
@@ -187,20 +230,12 @@ void Renderer::Render() {
   GLW::DisableVertexAttribArray(0);
   GLW::DisableVertexAttribArray(1);
 
-  this->RenderText('a', 100, 100);
-  this->RenderText('d', 150, 100);
-  this->RenderText('v', 200, 100);
-  this->RenderText('e', 250, 100);
-  this->RenderText('r', 300, 100);
-  this->RenderText('s', 350, 100);
-  this->RenderText('u', 400, 100);
-  this->RenderText('s', 450, 100);
+  this->RenderString("ASDADASD !", 100, 100);
   GLW::UseProgram(0);
- 
 }
 
 void Renderer::RenderText(char aChar, float x, float y) {
-  GLW::UseProgram(this->fontShaderId);
+  GLW::UseProgram(this->fontProgramId);
 
   GLW::EnableVertexAttribArray(0);
   glm::mat4 theMVP = this->MVP;
@@ -229,7 +264,7 @@ void Renderer::RenderText(char aChar, float x, float y) {
     this->glyph->bitmap.buffer
     );
   // Set our "myTextureSampler" sampler to user Texture Unit 0
-  glUniform1i(this->textureId, 0);
+  glUniform1i(this->fontTextureLocation, 0);
 
   
   /*
@@ -256,6 +291,75 @@ void Renderer::RenderText(char aChar, float x, float y) {
   GLW::VertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
 
   glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+  GLW::DisableVertexAttribArray(0);
+
+}
+
+void Renderer::RenderString(const char* aString, float x, float y) {
+  GLW::UseProgram(this->fontProgramId);
+  GLW::EnableVertexAttribArray(0);
+
+  glm::mat4 theMVP = this->MVP;
+  glUniformMatrix4fv(this->fontMVPLocation, 1, GL_FALSE, &theMVP[0][0]);
+
+  GLfloat black[4] = { 0.4, 0.5, 1, 1 };
+  glUniform4fv(this->fontColorLocation, 1, black);
+
+  glActiveTexture(GL_TEXTURE0);
+  glBindTexture(GL_TEXTURE_2D, this->fontTextureId);
+  glUniform1i(this->fontTextureLocation, 0);
+
+  int strl = strlen(aString) * 6;
+  
+  struct point {
+    GLfloat x;
+    GLfloat y;
+    GLfloat s;
+    GLfloat t;
+  };
+
+  point* coords = new point[strl];
+
+  int n = 0;
+  
+  for (int i = 0; i < strlen(aString); i++) {
+    int p = (int) aString[i] - 32;
+
+    float x2 = x + this->chars[p].bl;
+    float y2 = y - this->chars[p].bt;
+    float w = this->chars[p].bw;
+    float h = this->chars[p].bh;
+
+    x += this->chars[p].ax;
+    y += this->chars[p].ay;
+
+    if (!w || !h)
+      continue;
+    
+    coords[n] = { x2, y2, this->chars[p].tx, 0 };
+    n++;
+    
+    coords[n] = { x2 + w, y2, this->chars[p].tx + this->chars[p].bw / this->fontAtlasWidth, 0 };
+    n++;
+
+    coords[n] = { x2, y2 + h, this->chars[p].tx, this->chars[p].bh / this->fontAtlasHeight };
+    n++;
+    
+    coords[n] = { x2 + w, y2, this->chars[p].tx + this->chars[p].bw / this->fontAtlasWidth, 0 };
+    n++;
+    
+    coords[n] = { x2, y2 + h, this->chars[p].tx, this->chars[p].bh / this->fontAtlasHeight };
+    n++;
+    
+    coords[n] = { x2 + w, y2 + h, this->chars[p].tx + this->chars[p].bw / this->fontAtlasWidth, this->chars[p].bh / this->fontAtlasHeight };
+    n++;
+  }
+  
+  GLW::BindBuffer(GL_ARRAY_BUFFER, this->fontVBO);
+  glBufferData(GL_ARRAY_BUFFER, sizeof GLfloat * 4 * n, coords, GL_DYNAMIC_DRAW);
+  GLW::VertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
+
+  glDrawArrays(GL_TRIANGLES, 0, n);
   GLW::DisableVertexAttribArray(0);
 
 }
