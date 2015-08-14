@@ -299,7 +299,7 @@ void Renderer::RenderString(const char* aString, float x, float y) {
   GLW::UseProgram(this->fontProgramId);
   GLW::EnableVertexAttribArray(0);
 
-  glm::mat4 theMVP = this->MVP;
+  glm::mat4 theMVP = glm::ortho(0.0f, 640.0f, 480.0f, 0.0f) * glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
   glUniformMatrix4fv(this->fontMVPLocation, 1, GL_FALSE, &theMVP[0][0]);
 
   GLfloat black[4] = { 0.4, 0.5, 1, 1 };
