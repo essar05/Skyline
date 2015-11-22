@@ -1,0 +1,56 @@
+﻿Build started 11/15/2015 3:16:55 AM.
+     1>Project "E:\C++\Skyline\source\Skyline\Skyline.vcxproj" on node 2 (Build target(s)).
+     1>Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\C++\Skyline\source\Skyline\Debug\Skyline.exe" /INCREMENTAL /NOLOGO freeglut.lib glew32.lib SDL2.lib SDL2main.lib SDL2_image.lib opengl32.lib freetype255d.lib Essengine.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\C++\Skyline\source\Skyline\Debug\Skyline.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /ENTRY:"main" /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\C++\Skyline\source\Skyline\Debug\Skyline.lib" /MACHINE:X86 Debug\Bootstrap.obj
+     1>msvcprtd.lib(locale0_implib.obj) : warning LNK4210: .CRT section exists; there may be unhandled static initializers or terminators
+     1>Bootstrap.obj : warning LNK4210: .CRT section exists; there may be unhandled static initializers or terminators
+     1>Essengine.lib(Game.obj) : warning LNK4210: .CRT section exists; there may be unhandled static initializers or terminators
+     1>Essengine.lib(SDLW.obj) : warning LNK4210: .CRT section exists; there may be unhandled static initializers or terminators
+     1>Essengine.lib(Renderer.obj) : warning LNK4210: .CRT section exists; there may be unhandled static initializers or terminators
+     1>Essengine.lib(MapParser.obj) : warning LNK4210: .CRT section exists; there may be unhandled static initializers or terminators
+     1>Essengine.lib(GLW.obj) : warning LNK4210: .CRT section exists; there may be unhandled static initializers or terminators
+     1>Essengine.lib(Texture.obj) : warning LNK4210: .CRT section exists; there may be unhandled static initializers or terminators
+     1>Essengine.lib(Shader.obj) : warning LNK4210: .CRT section exists; there may be unhandled static initializers or terminators
+     1>msvcprtd.lib(locale0_implib.obj) : warning LNK4210: .CRT section exists; there may be unhandled static initializers or terminators
+     1>MSVCRTD.lib(atonexit.obj) : warning LNK4210: .CRT section exists; there may be unhandled static initializers or terminators
+     1>freetype255d.lib(autofit.obj) : warning LNK4099: PDB 'freetype255d.pdb' was not found with 'freetype255d.lib(autofit.obj)' or at 'E:\C++\Skyline\source\Skyline\Debug\freetype255d.pdb'; linking object as if no debug info
+     1>freetype255d.lib(bdf.obj) : warning LNK4099: PDB 'freetype255d.pdb' was not found with 'freetype255d.lib(bdf.obj)' or at 'E:\C++\Skyline\source\Skyline\Debug\freetype255d.pdb'; linking object as if no debug info
+     1>freetype255d.lib(cff.obj) : warning LNK4099: PDB 'freetype255d.pdb' was not found with 'freetype255d.lib(cff.obj)' or at 'E:\C++\Skyline\source\Skyline\Debug\freetype255d.pdb'; linking object as if no debug info
+     1>freetype255d.lib(ftbase.obj) : warning LNK4099: PDB 'freetype255d.pdb' was not found with 'freetype255d.lib(ftbase.obj)' or at 'E:\C++\Skyline\source\Skyline\Debug\freetype255d.pdb'; linking object as if no debug info
+     1>freetype255d.lib(ftbitmap.obj) : warning LNK4099: PDB 'freetype255d.pdb' was not found with 'freetype255d.lib(ftbitmap.obj)' or at 'E:\C++\Skyline\source\Skyline\Debug\freetype255d.pdb'; linking object as if no debug info
+     1>freetype255d.lib(ftdebug.obj) : warning LNK4099: PDB 'freetype255d.pdb' was not found with 'freetype255d.lib(ftdebug.obj)' or at 'E:\C++\Skyline\source\Skyline\Debug\freetype255d.pdb'; linking object as if no debug info
+     1>freetype255d.lib(ftgzip.obj) : warning LNK4099: PDB 'freetype255d.pdb' was not found with 'freetype255d.lib(ftgzip.obj)' or at 'E:\C++\Skyline\source\Skyline\Debug\freetype255d.pdb'; linking object as if no debug info
+     1>freetype255d.lib(ftinit.obj) : warning LNK4099: PDB 'freetype255d.pdb' was not found with 'freetype255d.lib(ftinit.obj)' or at 'E:\C++\Skyline\source\Skyline\Debug\freetype255d.pdb'; linking object as if no debug info
+     1>freetype255d.lib(ftlzw.obj) : warning LNK4099: PDB 'freetype255d.pdb' was not found with 'freetype255d.lib(ftlzw.obj)' or at 'E:\C++\Skyline\source\Skyline\Debug\freetype255d.pdb'; linking object as if no debug info
+     1>freetype255d.lib(ftsystem.obj) : warning LNK4099: PDB 'freetype255d.pdb' was not found with 'freetype255d.lib(ftsystem.obj)' or at 'E:\C++\Skyline\source\Skyline\Debug\freetype255d.pdb'; linking object as if no debug info
+     1>freetype255d.lib(smooth.obj) : warning LNK4099: PDB 'freetype255d.pdb' was not found with 'freetype255d.lib(smooth.obj)' or at 'E:\C++\Skyline\source\Skyline\Debug\freetype255d.pdb'; linking object as if no debug info
+     1>freetype255d.lib(pcf.obj) : warning LNK4099: PDB 'freetype255d.pdb' was not found with 'freetype255d.lib(pcf.obj)' or at 'E:\C++\Skyline\source\Skyline\Debug\freetype255d.pdb'; linking object as if no debug info
+     1>freetype255d.lib(pfr.obj) : warning LNK4099: PDB 'freetype255d.pdb' was not found with 'freetype255d.lib(pfr.obj)' or at 'E:\C++\Skyline\source\Skyline\Debug\freetype255d.pdb'; linking object as if no debug info
+     1>freetype255d.lib(psaux.obj) : warning LNK4099: PDB 'freetype255d.pdb' was not found with 'freetype255d.lib(psaux.obj)' or at 'E:\C++\Skyline\source\Skyline\Debug\freetype255d.pdb'; linking object as if no debug info
+     1>freetype255d.lib(pshinter.obj) : warning LNK4099: PDB 'freetype255d.pdb' was not found with 'freetype255d.lib(pshinter.obj)' or at 'E:\C++\Skyline\source\Skyline\Debug\freetype255d.pdb'; linking object as if no debug info
+     1>freetype255d.lib(psmodule.obj) : warning LNK4099: PDB 'freetype255d.pdb' was not found with 'freetype255d.lib(psmodule.obj)' or at 'E:\C++\Skyline\source\Skyline\Debug\freetype255d.pdb'; linking object as if no debug info
+     1>freetype255d.lib(raster.obj) : warning LNK4099: PDB 'freetype255d.pdb' was not found with 'freetype255d.lib(raster.obj)' or at 'E:\C++\Skyline\source\Skyline\Debug\freetype255d.pdb'; linking object as if no debug info
+     1>freetype255d.lib(sfnt.obj) : warning LNK4099: PDB 'freetype255d.pdb' was not found with 'freetype255d.lib(sfnt.obj)' or at 'E:\C++\Skyline\source\Skyline\Debug\freetype255d.pdb'; linking object as if no debug info
+     1>freetype255d.lib(truetype.obj) : warning LNK4099: PDB 'freetype255d.pdb' was not found with 'freetype255d.lib(truetype.obj)' or at 'E:\C++\Skyline\source\Skyline\Debug\freetype255d.pdb'; linking object as if no debug info
+     1>freetype255d.lib(type1.obj) : warning LNK4099: PDB 'freetype255d.pdb' was not found with 'freetype255d.lib(type1.obj)' or at 'E:\C++\Skyline\source\Skyline\Debug\freetype255d.pdb'; linking object as if no debug info
+     1>freetype255d.lib(type1cid.obj) : warning LNK4099: PDB 'freetype255d.pdb' was not found with 'freetype255d.lib(type1cid.obj)' or at 'E:\C++\Skyline\source\Skyline\Debug\freetype255d.pdb'; linking object as if no debug info
+     1>freetype255d.lib(type42.obj) : warning LNK4099: PDB 'freetype255d.pdb' was not found with 'freetype255d.lib(type42.obj)' or at 'E:\C++\Skyline\source\Skyline\Debug\freetype255d.pdb'; linking object as if no debug info
+     1>freetype255d.lib(winfnt.obj) : warning LNK4099: PDB 'freetype255d.pdb' was not found with 'freetype255d.lib(winfnt.obj)' or at 'E:\C++\Skyline\source\Skyline\Debug\freetype255d.pdb'; linking object as if no debug info
+         Skyline.vcxproj -> E:\C++\Skyline\source\Skyline\Debug\Skyline.exe
+       PostBuildEvent:
+         cmd /c xcopy ".\Resources\Textures" "E:\C++\Skyline\source\Skyline\Debug\Textures\" /y
+         cmd /c xcopy ".\Resources\Shaders" "E:\C++\Skyline\source\Skyline\Debug\Shaders\" /y
+         :VCEnd
+         .\Resources\Textures\grass_tile.png
+         .\Resources\Textures\grass_tile1.png
+         2 File(s) copied
+         .\Resources\Shaders\FontFragment.shader
+         .\Resources\Shaders\FontVertex.shader
+         .\Resources\Shaders\Fragment.shader
+         .\Resources\Shaders\Vertex.shader
+         4 File(s) copied
+     1>Done Building Project "E:\C++\Skyline\source\Skyline\Skyline.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.26

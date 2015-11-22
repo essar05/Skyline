@@ -1,0 +1,36 @@
+﻿Build started 11/15/2015 3:16:54 AM.
+     1>Project "E:\C++\Skyline\source\Essengine\Essengine.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Engine\Renderer.cpp
+         Renderer.cpp
+     1>e:\c++\skyline\source\essengine\engine\renderer.cpp(115): warning C4018: '<' : signed/unsigned mismatch
+     1>e:\c++\skyline\source\essengine\engine\renderer.cpp(147): warning C4244: '=' : conversion from 'FT_Pos' to 'float', possible loss of data
+     1>e:\c++\skyline\source\essengine\engine\renderer.cpp(148): warning C4244: '=' : conversion from 'FT_Pos' to 'float', possible loss of data
+     1>e:\c++\skyline\source\essengine\engine\renderer.cpp(150): warning C4244: '=' : conversion from 'unsigned int' to 'float', possible loss of data
+     1>e:\c++\skyline\source\essengine\engine\renderer.cpp(151): warning C4244: '=' : conversion from 'unsigned int' to 'float', possible loss of data
+     1>e:\c++\skyline\source\essengine\engine\renderer.cpp(153): warning C4244: '=' : conversion from 'FT_Int' to 'float', possible loss of data
+     1>e:\c++\skyline\source\essengine\engine\renderer.cpp(154): warning C4244: '=' : conversion from 'FT_Int' to 'float', possible loss of data
+     1>e:\c++\skyline\source\essengine\engine\renderer.cpp(280): warning C4244: 'initializing' : conversion from 'unsigned int' to 'float', possible loss of data
+     1>e:\c++\skyline\source\essengine\engine\renderer.cpp(281): warning C4244: 'initializing' : conversion from 'unsigned int' to 'float', possible loss of data
+     1>e:\c++\skyline\source\essengine\engine\renderer.cpp(305): warning C4305: 'initializing' : truncation from 'double' to 'GLfloat'
+     1>e:\c++\skyline\source\essengine\engine\renderer.cpp(325): warning C4018: '<' : signed/unsigned mismatch
+       Lib:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"E:\C++\Skyline\source\Essengine\Debug\Essengine.lib" /NOLOGO Debug\Game.obj
+         Debug\GLW.obj
+         Debug\Map.obj
+         Debug\MapParser.obj
+         Debug\Model.obj
+         Debug\Renderer.obj
+         Debug\SDLW.obj
+         Debug\Shader.obj
+         Debug\Texture.obj
+         Debug\Tile.obj
+         Debug\Timer.obj
+         Debug\RuntimeException.obj
+         Debug\Grass.obj
+         Essengine.vcxproj -> E:\C++\Skyline\source\Essengine\Debug\Essengine.lib
+     1>Done Building Project "E:\C++\Skyline\source\Essengine\Essengine.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:01.02

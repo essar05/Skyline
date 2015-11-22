@@ -31,8 +31,7 @@
 
   /* generic errors */
 
-  FT_NOERRORDEF_( Ok,                                        0x00,
-                  "no error" )
+  FT_NOERRORDEF_( Ok,                                        0x00, "no error" )
 
   FT_ERRORDEF_( Cannot_Open_Resource,                        0x01,
                 "cannot open resource" )
