@@ -87,44 +87,28 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera2D.cpp" />
-    <ClCompile Include="Engine\GLW.cpp" />
-    <ClCompile Include="Engine\Map.cpp" />
-    <ClCompile Include="Engine\MapParser.cpp" />
-    <ClCompile Include="Engine\Model.cpp" />
-    <ClCompile Include="Engine\SDLW.cpp" />
-    <ClCompile Include="Engine\Shader.cpp" />
-    <ClCompile Include="Engine\Texture.cpp" />
-    <ClCompile Include="Engine\Tile.cpp" />
-    <ClCompile Include="Engine\Timer.cpp" />
     <ClCompile Include="Errors\RuntimeException.cpp" />
     <ClCompile Include="GLProgram.cpp" />
     <ClCompile Include="GLTexture.cpp" />
+    <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="IOManager.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="SpriteBatch.cpp" />
-    <ClCompile Include="Terrain\Grass.cpp" />
     <ClCompile Include="TextureCache.cpp" />
+    <ClCompile Include="Timing.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera2D.h" />
-    <ClInclude Include="Engine\GLW.h" />
-    <ClInclude Include="Engine\Map.h" />
-    <ClInclude Include="Engine\MapParser.h" />
-    <ClInclude Include="Engine\Model.h" />
-    <ClInclude Include="Engine\SDLW.h" />
-    <ClInclude Include="Engine\Shader.h" />
-    <ClInclude Include="Engine\Texture.h" />
-    <ClInclude Include="Engine\Tile.h" />
-    <ClInclude Include="Engine\Timer.h" />
     <ClInclude Include="GLProgram.h" />
     <ClInclude Include="GLTexture.h" />
     <ClInclude Include="IGame.h" />
+    <ClInclude Include="InputManager.h" />
     <ClInclude Include="IOManager.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SpriteBatch.h" />
-    <ClInclude Include="Terrain\Grass.h" />
     <ClInclude Include="TextureCache.h" />
+    <ClInclude Include="Timing.h" />
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>

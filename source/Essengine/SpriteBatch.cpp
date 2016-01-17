@@ -13,11 +13,6 @@ namespace Essengine {
 
   void SpriteBatch::begin(GlyphSortType sortType) {
     _sortType = sortType;
-    _renderBatches.clear();
-    for(int i = 0; i < _glyphs.size(); i++) {
-      delete _glyphs[i];
-    }
-    _glyphs.clear();
   }
 
   void SpriteBatch::end() {
@@ -26,7 +21,7 @@ namespace Essengine {
   }
 
   //pass by reference for optimization and const to make sure they're not changed;
-  void SpriteBatch::draw(const glm::vec4& destRect, const glm::vec4& uvRect, GLuint textureId, const Color& color, float zDepth) {
+  void SpriteBatch::draw(const glm::vec4& destRect, const glm::vec4& uvRect, GLuint textureId, const ColorRGBA8& color, float zDepth) {
     Glyph* glyph = new Glyph;
 
     glyph->textureId = textureId;
@@ -54,13 +49,19 @@ namespace Essengine {
   void SpriteBatch::render() {
     glBindVertexArray(_vao);
 
-    for(int i = 0; i < _renderBatches.size(); i++) {
+    for(unsigned int i = 0; i < _renderBatches.size(); i++) {
       glBindTexture(GL_TEXTURE_2D, _renderBatches[i].textureId);
 
       glDrawArrays(GL_TRIANGLES, _renderBatches[i].offset, _renderBatches[i].numVertices);
     }
   
     glBindVertexArray(0);
+
+    _renderBatches.clear();
+    for(int i = 0; i < _glyphs.size(); i++) {
+      delete _glyphs[i];
+    }
+    _glyphs.clear();
   }
 
   void SpriteBatch::createVertexArray() {

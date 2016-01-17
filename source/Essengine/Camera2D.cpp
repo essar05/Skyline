@@ -1,4 +1,5 @@
 #include "Camera2D.h"
+#include <iostream>
 
 namespace Essengine {
   Camera2D::Camera2D(): 
@@ -17,20 +18,24 @@ namespace Essengine {
     _screenHeight = screenHeight;
 
     //build ortho;
-    _orthoMatrix = glm::ortho(0.0f, (float) _screenWidth, (float) _screenHeight, 0.0f);
+    _orthoMatrix = glm::ortho(0.0f, (float) _screenWidth, 0.0f, (float) _screenHeight);
   }
 
   void Camera2D::update() {
     if(_doUpdate) {
       _cameraMatrix = _orthoMatrix;
 
-      glm::vec3 translation(- _position.x, -_position.y, 0.0f);
+      glm::vec3 translation(-_position.x, -_position.y, 0.0f);
       _cameraMatrix = glm::translate(_cameraMatrix, translation);
 
       glm::vec3 scaling(_scale, _scale, 0.0f);
       _cameraMatrix = glm::scale(_cameraMatrix, scaling);
       _doUpdate = false;
     }
+  }
+
+  glm::vec2 Camera2D::getViewportSize() {
+    return glm::vec2(_screenWidth / _scale, _screenHeight / _scale);
   }
 
 }

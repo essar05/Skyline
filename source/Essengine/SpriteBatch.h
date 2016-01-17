@@ -46,7 +46,7 @@ namespace Essengine {
       void end();
 
       //pass by reference for optimization and const to make sure they're not changed;
-      void draw(const glm::vec4& destRect, const glm::vec4& uvRect, GLuint textureId, const Color& color, float zDepth);
+      void draw(const glm::vec4& destRect, const glm::vec4& uvRect, GLuint textureId, const ColorRGBA8& color, float zDepth);
 
       void render();
 

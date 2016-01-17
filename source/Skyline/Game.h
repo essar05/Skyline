@@ -9,6 +9,11 @@
 #include <GLProgram.h>
 #include <SpriteBatch.h>
 #include <Camera2D.h>
+#include <TextureCache.h>
+#include <InputManager.h>
+#include <Timing.h>
+#include "Level.h"
+#include "Player.h"
 
 enum class GameState { RUNNING, EXIT };
 
@@ -20,6 +25,11 @@ class Game : Essengine::IGame {
 	  void Render();
 	  void Run();
     ~Game();
+
+    Essengine::SpriteBatch* getSpriteBatch();
+    Essengine::Camera2D* getMainCamera();
+    float getWidth();
+    float getHeight();
 
   protected:
     Game();
@@ -37,14 +47,21 @@ class Game : Essengine::IGame {
     GameState _state;
     Essengine::SpriteBatch _spriteBatch;
     Essengine::Camera2D _camera;
+    Essengine::TextureCache _textureCache;
 
-    float _fps;
-    float _frameTime;
-    float _time;
+    Essengine::InputManager _inputManager;
+    Essengine::FPSLimiter _fpsLimiter;
+
+    Level _level;
+    Player* _player;
 
     //settings
-    int _maxFps = 0;
+    float _fps;
+    float _maxFPS = 60.0f;
     bool _debugMode = false;
+    float _height = 768.0f;
+    float _width = 1024.0f;
+    std::string _title = "Skyline 1.0";
 
 };
 
