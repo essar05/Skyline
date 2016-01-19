@@ -5,7 +5,7 @@
 #include <GLTexture.h>
 #include <windows.h>
 #include <Psapi.h>
-
+#include "Entity.h"
 
 Game::Game() {}
 
@@ -23,7 +23,16 @@ void Game::Boot() {
 
   LevelSection* section = new LevelSection(sectionWidth, sectionHeight);
   section->setBackground(_textureCache.getTexture("Textures/tex1.png")._id);
+
+  Entity *e = new Entity(100, _textureCache.getTexture("Textures/tesx.png")._id, 40, 30, glm::vec2(300.0f, 900.0f));
+  section->addObject(_entityManager.addEntity(e));
+  e = new Entity(100, _textureCache.getTexture("Textures/tesx.png")._id, 40, 30, glm::vec2(400.0f, 900.0f));
+  section->addObject(_entityManager.addEntity(e));
+  e = new Entity(100, _textureCache.getTexture("Textures/tesx.png")._id, 40, 30, glm::vec2(400.0f, 500.0f));
+  section->addObject(_entityManager.addEntity(e));
+
   _level.addSection(section);
+
   LevelSection* section2 = new LevelSection(sectionWidth, sectionHeight);
   section->setBackground(_textureCache.getTexture("Textures/tex1.png")._id);
   _level.addSection(section);
@@ -31,11 +40,16 @@ void Game::Boot() {
   _player = new Player(100, _textureCache.getTexture("Textures/tesx.png")._id, 100, 200, glm::vec2(500.0f, 100.0f));
   _player->setSpeed(8.0f);
 
+  
+  
+
   /*
-    objects are only allowed to be in their respective sections
-    that way, only the objects currently in view will be rendered.
-    tentitymanager to add/get objects
-    only spawn objects when they are in the next section, and they are about to enter the screen.
+    1. object spawning
+    2. make sure all pointers get deleted.
+    level destructor -> delete all sections
+    game destructor delete entities.
+    3. level reading
+
   */
 }
 
@@ -222,4 +236,8 @@ float Game::getWidth() {
 
 float Game::getHeight() {
   return _height;
+}
+
+EntityManager* Game::getEntityManager() {
+  return &_entityManager;
 }

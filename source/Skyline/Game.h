@@ -14,6 +14,7 @@
 #include <Timing.h>
 #include "Level.h"
 #include "Player.h"
+#include "EntityManager.h"
 
 enum class GameState { RUNNING, EXIT };
 
@@ -28,6 +29,7 @@ class Game : Essengine::IGame {
 
     Essengine::SpriteBatch* getSpriteBatch();
     Essengine::Camera2D* getMainCamera();
+    EntityManager* getEntityManager();
     float getWidth();
     float getHeight();
 
@@ -44,7 +46,7 @@ class Game : Essengine::IGame {
     static Game* instance;
     Essengine::Window* _window;
     Essengine::GLProgram* _baseProgram;
-    GameState _state;
+    
     Essengine::SpriteBatch _spriteBatch;
     Essengine::Camera2D _camera;
     Essengine::TextureCache _textureCache;
@@ -52,8 +54,10 @@ class Game : Essengine::IGame {
     Essengine::InputManager _inputManager;
     Essengine::FPSLimiter _fpsLimiter;
 
+    GameState _state;
     Level _level;
     Player* _player;
+    EntityManager _entityManager;
 
     //settings
     float _fps;

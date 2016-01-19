@@ -12,12 +12,14 @@ Entity::~Entity() {
 }
 
 void Entity::draw() {
-  Game* gameInstance = Game::GetInstance();
+  if(_isAlive) {
+    Game* gameInstance = Game::GetInstance();
 
-  Essengine::SpriteBatch* spriteBatch = gameInstance->getSpriteBatch();
-  glm::vec4 uv(0.0f, 0.0f, 1.0f, 1.0f);
-  Essengine::ColorRGBA8 color(255, 255, 255, 255);
-  spriteBatch->draw(glm::vec4(_position, _width, _height), uv, _textureId, color, 0);
+    Essengine::SpriteBatch* spriteBatch = gameInstance->getSpriteBatch();
+    glm::vec4 uv(0.0f, 0.0f, 1.0f, 1.0f);
+    Essengine::ColorRGBA8 color(255, 255, 255, 255);
+    spriteBatch->draw(glm::vec4(_position, _width, _height), uv, _textureId, color, 0);
+  }
 }
 
 void Entity::move(int dir) {
@@ -46,4 +48,16 @@ void Entity::move(int dir, float speed) {
       _position += glm::vec2(0.0f, speed);
       break;
   }
+}
+
+glm::vec2 Entity::getPosition() {
+  return _position;
+}
+
+float Entity::getWidth() {
+  return _width;
+}
+
+float Entity::getHeight() {
+  return _height;
 }

@@ -28,7 +28,6 @@ void Level::draw() {
   Essengine::SpriteBatch* spriteBatch = gameInstance->getSpriteBatch();
   Essengine::Camera2D* camera = gameInstance->getMainCamera();
   glm::vec2 viewportSize = camera->getViewportSize();
-  float scaledCameraPosition = camera->getPosition()[1] / camera->getScale();
   
   /*
     only render the sections currently in the viewport.
@@ -40,9 +39,9 @@ void Level::draw() {
   */
   auto it = _renderStartIt;
   while(it != _sections.end()) {
-    if(scaledCameraPosition + viewportSize[1] < it->first) {
+    if(camera->getScaledPosition()[1] + viewportSize[1] < it->first) {
       break;
-    } else if(scaledCameraPosition > it->first + it->second->getHeight()) {
+    } else if(camera->getScaledPosition()[1] > it->first + it->second->getHeight()) {
       _renderStartIt = ++it;
       continue;
     }

@@ -7,8 +7,14 @@ class Entity {
   Entity();
   Entity(int health, int textureId, float width, float height, glm::vec2 position);
   ~Entity();
+
+  void setSpeed(float speed) { _speed = speed; }
+  glm::vec2 getPosition();
+  float getWidth();
+  float getHeight();
+
   void draw();
-  void setSpeed(float speed) { _speed = speed;  }
+  
   void move(int dir);
   void move(int dir, float speed);
 

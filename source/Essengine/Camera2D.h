@@ -18,6 +18,7 @@ namespace Essengine {
       glm::vec2 getPosition() { return _position; }
       float getScale() { return _scale; }
       glm::vec2 getViewportSize();
+      glm::vec2 getScaledPosition();
 
       glm::mat4 getCameraMatrix() { return _cameraMatrix; }
 

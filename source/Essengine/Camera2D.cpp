@@ -38,4 +38,8 @@ namespace Essengine {
     return glm::vec2(_screenWidth / _scale, _screenHeight / _scale);
   }
 
+  glm::vec2 Camera2D::getScaledPosition() {
+    return (_position / glm::vec2(_scale, _scale));
+  }
+
 }

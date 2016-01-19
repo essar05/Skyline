@@ -1,4 +1,6 @@
 #pragma once
+#include <vector>
+
 class LevelSection {
   public:
     LevelSection(float height, float width);
@@ -19,11 +21,16 @@ class LevelSection {
       return _width;
     }
     void draw(float x, float y);
+    void addObject(unsigned int objectId);
+    static bool compareObjectYPosition(unsigned int a, unsigned int b);
 
   private:
     unsigned int _backgroundId;
     float _height;
     float _width;
+
+    std::vector<unsigned int> _objects;
+    unsigned int _renderStartIt = 0;
 
 };
 

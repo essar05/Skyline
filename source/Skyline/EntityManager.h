@@ -7,12 +7,12 @@ class EntityManager {
   public:
   EntityManager();
   ~EntityManager();
-  void addEntity(Entity*);
-  void getEntity(int id);
+  unsigned int addEntity(Entity* entity);
+  Entity* getEntity(unsigned int id);
 
   private:
-  std::unordered_map<int, Entity*> _entities;
-  int _entityCount = 0;
+  std::unordered_map<unsigned int, Entity*> _entities;
+  unsigned int _entityCount = 0;
 
 };
 

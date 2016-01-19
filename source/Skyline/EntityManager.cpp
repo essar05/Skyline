@@ -8,10 +8,15 @@ EntityManager::EntityManager() {
 EntityManager::~EntityManager() {
 }
 
-void EntityManager::addEntity(Entity*) {
-
+unsigned int EntityManager::addEntity(Entity* entity) {
+  _entities[_entityCount++] = entity;
+  return (_entityCount - 1);
 }
 
-void EntityManager::getEntity(int id) {
-
+Entity* EntityManager::getEntity(unsigned int id) {
+  auto it = _entities.find(id);
+  if(it == _entities.end()) {
+    return nullptr;
+  }
+  return it->second;
 }
