@@ -25,21 +25,47 @@ namespace Essengine {
     if(_doUpdate) {
       _cameraMatrix = _orthoMatrix;
 
-      glm::vec3 translation(-_position.x, -_position.y, 0.0f);
+      //the camera position is in world units so scale it screen. then it's going to get scaled back but it's fine.
+      glm::vec2 screenPosition = this->getScreenCoordinates(_position);
+
+      glm::vec3 translation(-screenPosition.x + _screenWidth / 2, -screenPosition.y + _screenHeight / 2, 0.0f);
       _cameraMatrix = glm::translate(_cameraMatrix, translation);
 
       glm::vec3 scaling(_scale, _scale, 0.0f);
+      glm::vec3 zoom(_zoom, _zoom, 0.0f);
       _cameraMatrix = glm::scale(_cameraMatrix, scaling);
+      _cameraMatrix = glm::scale(_cameraMatrix, zoom);
       _doUpdate = false;
     }
   }
 
-  glm::vec2 Camera2D::getViewportSize() {
-    return glm::vec2(_screenWidth / _scale, _screenHeight / _scale);
+  //get the camera size within the world
+  glm::vec2 Camera2D::getWorldViewportSize() {
+    return glm::vec2(_screenWidth / (_scale + _zoom), _screenHeight / (_scale + _zoom));
   }
 
-  glm::vec2 Camera2D::getScaledPosition() {
-    return (_position / glm::vec2(_scale, _scale));
+  glm::vec2 Camera2D::getViewportSize() {
+    return glm::vec2(_screenWidth / _zoom, _screenHeight / _zoom);
+  }
+
+  glm::vec2 Camera2D::getPosition() {
+    return _position;
+  }
+
+  glm::vec2 Camera2D::getWorldCoordinates(glm::vec2 screenCoordinates) {
+	  return screenCoordinates / _scale;
+  }
+
+  glm::vec2 Camera2D::getScreenCoordinates(glm::vec2 worldCoordinates) {
+	  return worldCoordinates * _scale;
+  }
+
+  float Camera2D::getWorldScalar(float screenScalar) {
+	  return screenScalar / _scale;
+  }
+
+  float Camera2D::getScreenScalar(float worldScalar) {
+	  return worldScalar * _scale;
   }
 
 }

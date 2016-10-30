@@ -10,11 +10,12 @@ namespace Essengine {
 
     private:
       const char* ErrorMessage;
+      std::string message;
 
     public:
 
       ERuntimeException(std::string anErrorMessage) throw() {
-        std::cout << "Runtime Exception: " << anErrorMessage << std::endl;
+        this->message = anErrorMessage;
         this->ErrorMessage = anErrorMessage.c_str();
       }
 
@@ -25,6 +26,11 @@ namespace Essengine {
       virtual const char* what() const throw() {
         return this->ErrorMessage;
       }
+
+      std::string getMessage() {
+        return this->message;
+      }
+
   };
 }
 

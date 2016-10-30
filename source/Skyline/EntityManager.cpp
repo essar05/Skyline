@@ -1,11 +1,17 @@
 #include "EntityManager.h"
-
+#include <iostream>
 
 EntityManager::EntityManager() {
 }
 
 
 EntityManager::~EntityManager() {
+  auto it = _entities.begin();
+  while(it != _entities.end()) {
+    delete it->second;
+
+    it++;
+  }
 }
 
 unsigned int EntityManager::addEntity(Entity* entity) {
@@ -19,4 +25,12 @@ Entity* EntityManager::getEntity(unsigned int id) {
     return nullptr;
   }
   return it->second;
+}
+
+void EntityManager::deleteEntity(unsigned int id) {
+  auto it = _entities.find(id);
+  if(it != _entities.end()) {
+    delete it->second;
+    _entities.erase(it);
+  }
 }

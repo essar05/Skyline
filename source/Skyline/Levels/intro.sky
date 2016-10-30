@@ -1,0 +1,26 @@
+{
+  "sections": [
+	{
+	  "background": "tex1.png",
+	  "height": 1024,
+	  "width": 1024
+	},
+	{
+	  "background": "tex.png",
+	  "height": 1024,
+	  "width": 1024,
+	  "objects": [
+	    {
+          "type": 3,
+		  "x": 732,
+		  "y": 76
+		},
+		{
+          "type": 3,
+		  "x": 500,
+		  "y": 80
+		}
+	  ]
+	}
+  ]
+}

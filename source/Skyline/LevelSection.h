@@ -1,6 +1,8 @@
 #pragma once
 #include <vector>
 
+class Game;
+
 class LevelSection {
   public:
     LevelSection(float height, float width);
@@ -10,18 +12,14 @@ class LevelSection {
       _backgroundId = backgroundId;
     }
 
-    unsigned int getBackground() {
-      return _backgroundId;
-    }
+    unsigned int getBackground() { return _backgroundId; }
+    float getHeight() { return _height; }
+    float getWidth() { return _width;  }
 
-    float getHeight() {
-      return _height;
-    }
-    float getWidth() {
-      return _width;
-    }
     void draw(float x, float y);
     void addObject(unsigned int objectId);
+    void update();
+    
     static bool compareObjectYPosition(unsigned int a, unsigned int b);
 
   private:
@@ -31,6 +29,8 @@ class LevelSection {
 
     std::vector<unsigned int> _objects;
     unsigned int _renderStartIt = 0;
+
+    Game* _game;
 
 };
 

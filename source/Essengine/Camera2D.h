@@ -14,11 +14,18 @@ namespace Essengine {
 
       void setPosition(const glm::vec2& position) { _position = position; _doUpdate = true; }
       void setScale(float scale) { _scale = scale; _doUpdate = true; }
+      void setZoom(float zoom) { _zoom = zoom; _doUpdate = true; }
 
-      glm::vec2 getPosition() { return _position; }
+      glm::vec2 getPosition();
       float getScale() { return _scale; }
+      float getZoom() { return _zoom; }
+      glm::vec2 getWorldViewportSize();
       glm::vec2 getViewportSize();
-      glm::vec2 getScaledPosition();
+
+      glm::vec2 getWorldCoordinates(glm::vec2 screenCoordinates);
+      glm::vec2 getScreenCoordinates(glm::vec2 worldCoordinates);
+      float getWorldScalar(float screenScalar);
+      float getScreenScalar(float worldScalar);
 
       glm::mat4 getCameraMatrix() { return _cameraMatrix; }
 
@@ -29,6 +36,7 @@ namespace Essengine {
       bool _doUpdate;
 
       float _scale;
+      float _zoom;
       glm::vec2 _position;
       glm::mat4 _cameraMatrix;
       glm::mat4 _orthoMatrix;

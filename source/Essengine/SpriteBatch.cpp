@@ -13,37 +13,23 @@ namespace Essengine {
 
   void SpriteBatch::begin(GlyphSortType sortType) {
     _sortType = sortType;
+    _renderBatches.clear();
+    _glyphs.clear();
   }
 
   void SpriteBatch::end() {
+    _glyphPointers.resize(_glyphs.size());
+    for(int i = 0; i < _glyphs.size(); i++) {
+      _glyphPointers[i] = &_glyphs[i];
+    }
+
     sortGlyphs();
     createRenderBatches();
   }
 
   //pass by reference for optimization and const to make sure they're not changed;
   void SpriteBatch::draw(const glm::vec4& destRect, const glm::vec4& uvRect, GLuint textureId, const ColorRGBA8& color, float zDepth) {
-    Glyph* glyph = new Glyph;
-
-    glyph->textureId = textureId;
-    glyph->zDepth = zDepth;
-
-    glyph->topLeft.color = color;
-    glyph->topLeft.setPosition(destRect.x, destRect.y + destRect.w);
-    glyph->topLeft.setUV(uvRect.x, uvRect.y + uvRect.w);
-
-    glyph->bottomLeft.color = color;
-    glyph->bottomLeft.setPosition(destRect.x, destRect.y);
-    glyph->bottomLeft.setUV(uvRect.x, uvRect.y);
-
-    glyph->bottomRight.color = color;
-    glyph->bottomRight.setPosition(destRect.x + destRect.z, destRect.y);
-    glyph->bottomRight.setUV(uvRect.x + uvRect.z, uvRect.y);
-
-    glyph->topRight.color = color;
-    glyph->topRight.setPosition(destRect.x + destRect.z, destRect.y + destRect.w);
-    glyph->topRight.setUV(uvRect.x + uvRect.z, uvRect.y + uvRect.w);
-
-    _glyphs.push_back(glyph);
+    _glyphs.emplace_back(destRect, uvRect, textureId, color, zDepth);
   }
 
   void SpriteBatch::render() {
@@ -56,12 +42,6 @@ namespace Essengine {
     }
   
     glBindVertexArray(0);
-
-    _renderBatches.clear();
-    for(int i = 0; i < _glyphs.size(); i++) {
-      delete _glyphs[i];
-    }
-    _glyphs.clear();
   }
 
   void SpriteBatch::createVertexArray() {
@@ -88,14 +68,13 @@ namespace Essengine {
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*) offsetof(Vertex, uv));
 
     glBindVertexArray(0);
-
   }
 
   void SpriteBatch::createRenderBatches() {
     std::vector<Vertex> vertices;
-    vertices.resize(_glyphs.size() * 6);
+    vertices.resize(_glyphPointers.size() * 6);
 
-    if(_glyphs.empty()) {
+    if(_glyphPointers.empty()) {
       return;
     }
 
@@ -103,32 +82,32 @@ namespace Essengine {
     int offset = 0;
 
     //setup the first batch just to avoid more ifs inside a for. isntead we'll start the for from the 1 index.
-    _renderBatches.emplace_back(offset, 6, _glyphs[0]->textureId);
+    _renderBatches.emplace_back(offset, 6, _glyphPointers[0]->textureId);
     
     //add the vertices of the first glyph in our vector
-    vertices[k++] = _glyphs[0]->topLeft;
-    vertices[k++] = _glyphs[0]->bottomLeft;
-    vertices[k++] = _glyphs[0]->bottomRight;
-    vertices[k++] = _glyphs[0]->bottomRight;
-    vertices[k++] = _glyphs[0]->topRight;
-    vertices[k++] = _glyphs[0]->topLeft;
+    vertices[k++] = _glyphPointers[0]->topLeft;
+    vertices[k++] = _glyphPointers[0]->bottomLeft;
+    vertices[k++] = _glyphPointers[0]->bottomRight;
+    vertices[k++] = _glyphPointers[0]->bottomRight;
+    vertices[k++] = _glyphPointers[0]->topRight;
+    vertices[k++] = _glyphPointers[0]->topLeft;
     offset += 6;
 
-    for(int i = 1; i < _glyphs.size(); i++) {
+    for(int i = 1; i < _glyphPointers.size(); i++) {
       //only create a new batch if the texture of the glyph is different.
-      if(_glyphs[i]->textureId != _glyphs[i - 1]->textureId) {
-        _renderBatches.emplace_back(offset, 6, _glyphs[i]->textureId);
+      if(_glyphPointers[i]->textureId != _glyphPointers[i - 1]->textureId) {
+        _renderBatches.emplace_back(offset, 6, _glyphPointers[i]->textureId);
       } else {
         _renderBatches.back().numVertices += 6;
       }
       
       //add the vertices of glyph i in our vector
-      vertices[k++] = _glyphs[i]->topLeft;
-      vertices[k++] = _glyphs[i]->bottomLeft;
-      vertices[k++] = _glyphs[i]->bottomRight;
-      vertices[k++] = _glyphs[i]->bottomRight;
-      vertices[k++] = _glyphs[i]->topRight;
-      vertices[k++] = _glyphs[i]->topLeft;
+      vertices[k++] = _glyphPointers[i]->topLeft;
+      vertices[k++] = _glyphPointers[i]->bottomLeft;
+      vertices[k++] = _glyphPointers[i]->bottomRight;
+      vertices[k++] = _glyphPointers[i]->bottomRight;
+      vertices[k++] = _glyphPointers[i]->topRight;
+      vertices[k++] = _glyphPointers[i]->topLeft;
       offset += 6;
     }
 
@@ -145,13 +124,13 @@ namespace Essengine {
   void SpriteBatch::sortGlyphs() {
     switch(_sortType) {
       case GlyphSortType::BACK_TO_FRONT:
-        std::stable_sort(_glyphs.begin(), _glyphs.end(), compareBackToFront);
+        std::stable_sort(_glyphPointers.begin(), _glyphPointers.end(), compareBackToFront);
         break;
       case GlyphSortType::FRONT_TO_BACK:
-        std::stable_sort(_glyphs.begin(), _glyphs.end(), compareFrontToBack);
+        std::stable_sort(_glyphPointers.begin(), _glyphPointers.end(), compareFrontToBack);
         break;
       case GlyphSortType::TEXTURE:
-        std::stable_sort(_glyphs.begin(), _glyphs.end(), compareTexture);
+        std::stable_sort(_glyphPointers.begin(), _glyphPointers.end(), compareTexture);
         break;
     }
   }

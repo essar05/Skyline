@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -14,6 +14,7 @@
     <ProjectGuid>{05BC8DED-8BAE-4716-99CE-6BE1A2D98A9C}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Skyline</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -25,7 +26,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -41,8 +42,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)..\lib\SDL2\include\;$(SolutionDir)..\lib\SDL2_Image\include\;$(SolutionDir)..\lib\glew\include\GL\;$(SolutionDir)..\lib\freeglut\include\;$(SolutionDir)..\lib\glm\;$(SolutionDir)..\lib\freetype\include\;$(SolutionDir)Essengine\Engine\;$(SolutionDir)Essengine\Errors\;$(SolutionDir)Essengine\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)..\lib\freetype\lib\;$(SolutionDir)..\lib\freeglut\lib\;$(SolutionDir)..\lib\glew\lib\;$(SolutionDir)..\lib\SDL2_Image\lib\;$(SolutionDir)..\lib\SDL2\lib\;$(SolutionDir)Essengine\Debug\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)..\lib\SDL2\include\;$(SolutionDir)..\lib\SDL2_Image\include\;$(SolutionDir)..\lib\glew\include\GL\;$(SolutionDir)..\lib\freeglut\include\;$(SolutionDir)..\lib\glm\;$(SolutionDir)..\lib\freetype\include\;$(SolutionDir)Essengine\Engine\;$(SolutionDir)Essengine\Errors\;$(SolutionDir)Essengine\;$(SolutionDir)..\lib\rapidjson\;$(SolutionDir)..\lib\box2d\include\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)..\lib\freetype\lib\;$(SolutionDir)..\lib\freeglut\lib\;$(SolutionDir)..\lib\glew\lib\;$(SolutionDir)..\lib\SDL2_Image\lib\;$(SolutionDir)..\lib\box2d\lib\;$(SolutionDir)..\lib\SDL2\lib\;$(SolutionDir)Essengine\Debug\;$(LibraryPath)</LibraryPath>
     <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -60,12 +61,15 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>freeglut.lib;glew32.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;opengl32.lib;freetype255d.lib;Essengine.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <EntryPointSymbol>main</EntryPointSymbol>
+      <AdditionalDependencies>freeglut.lib;glew32.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;opengl32.lib;freetype255d.lib;Box2D.lib;Essengine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
+      <AdditionalOptions>/verbose:lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PostBuildEvent>
       <Command>cmd /c xcopy ".\Resources\Textures" "$(TargetDir)Textures\" /y
-cmd /c xcopy ".\Resources\Shaders" "$(TargetDir)Shaders\" /y</Command>
+cmd /c xcopy ".\Resources\Shaders" "$(TargetDir)Shaders\" /y
+cmd /c xcopy ".\Levels" "$(TargetDir)Levels\" /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -94,8 +98,13 @@ cmd /c xcopy ".\Resources\Shaders" "$(TargetDir)Shaders\" /y</Command>
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LevelSection.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Projectile.cpp" />
+    <ClCompile Include="ProjectileManager.cpp" />
+    <ClCompile Include="ProjectileSpawner.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="Levels\intro.sky" />
     <None Include="Resources\Shaders\FontFragment.shader" />
     <None Include="Resources\Shaders\FontVertex.shader" />
   </ItemGroup>
@@ -106,6 +115,9 @@ cmd /c xcopy ".\Resources\Shaders" "$(TargetDir)Shaders\" /y</Command>
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelSection.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Projectile.h" />
+    <ClInclude Include="ProjectileManager.h" />
+    <ClInclude Include="ProjectileSpawner.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

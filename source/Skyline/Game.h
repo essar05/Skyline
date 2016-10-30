@@ -15,6 +15,7 @@
 #include "Level.h"
 #include "Player.h"
 #include "EntityManager.h"
+#include "ProjectileManager.h"
 
 enum class GameState { RUNNING, EXIT };
 
@@ -29,7 +30,11 @@ class Game : Essengine::IGame {
 
     Essengine::SpriteBatch* getSpriteBatch();
     Essengine::Camera2D* getMainCamera();
+    Essengine::TextureCache* getTextureCache();
     EntityManager* getEntityManager();
+    Level* getLevel() { return _level; }
+    Player* getPlayer() { return _player; }
+    ProjectileManager* getProjectileManager() { return &_projectileManager; }
     float getWidth();
     float getHeight();
 
@@ -41,7 +46,11 @@ class Game : Essengine::IGame {
     void initSystem();
     void calculateFPS();
     void render();
-    void processInput();
+    void update(float deltaTime);
+    void updateObjects(float deltaTime);
+    void updatePlayer(float deltaTime);
+    void updateProjectiles(float deltaTime);
+    void processInput(float deltaTime);
 
     static Game* instance;
     Essengine::Window* _window;
@@ -55,17 +64,24 @@ class Game : Essengine::IGame {
     Essengine::FPSLimiter _fpsLimiter;
 
     GameState _state;
-    Level _level;
+    Level* _level;
     Player* _player;
     EntityManager _entityManager;
+    ProjectileManager _projectileManager;
 
     //settings
     float _fps;
     float _maxFPS = 60.0f;
     bool _debugMode = false;
-    float _height = 768.0f;
-    float _width = 1024.0f;
+    bool _limitFPS = false;
+
+    float _height = 720.0f;
+    float _width = 1280.0f;
     std::string _title = "Skyline 1.0";
+    float scrollSpeed = 0.2f;
+
+    bool _canPause = true;
+    bool _isPaused = false;
 
 };
 

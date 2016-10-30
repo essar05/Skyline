@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Entity">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>UBAAJAgQABOYFAEEQAIAQAIBADQAUIACIAAIgUBMEEQ=</HashCode>
+      <FileName>Entity.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EntityManager">
+    <Position X="2.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAFAAAAAAAIAAAAABAAAAAAAQAAAAAAAABAAACAAAA=</HashCode>
+      <FileName>EntityManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Game">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAgACIAQsSAAYAAIAEACScIBhjoTQAIAJGDECAUAAI=</HashCode>
+      <FileName>Game.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Level">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gACEAACAAICAEBAAAAKAAABAABAAAAEBAAAAAAAEAEQ=</HashCode>
+      <FileName>Level.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LevelSection">
+    <Position X="4" Y="3.5" Width="1.5" />
+    <Members>
+      <Method Name="setBackground" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>QQAAEAAAAQCAABAAACIEAAIAABAAQAAAAAAAABAEAEQ=</HashCode>
+      <FileName>LevelSection.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Player">
+    <Position X="9.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAQAEUBA=</HashCode>
+      <FileName>Player.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projectile">
+    <Position X="9.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAiABAAEAAAAAAAgAAAAAAAAAAAAAAAAAAAAAEIAA=</HashCode>
+      <FileName>Projectile.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectileManager">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAgAIAAAAAAIAAAAAAAQAAAAAGAEA=</HashCode>
+      <FileName>ProjectileManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjectileSpawner">
+    <Position X="2.25" Y="4" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAEgACEAAAAgACAAAAAALAAAAAAAAAAAAAAAGAAA=</HashCode>
+      <FileName>ProjectileSpawner.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="GameState" Collapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

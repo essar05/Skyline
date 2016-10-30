@@ -13,7 +13,7 @@ int main(int argc, char* args[]) {
     theInstance->Destroy();
   }
   catch (Essengine::ERuntimeException& anException) {
-    printf(anException.what());
+    std::cout << anException.getMessage() << std::endl;
   }
 
   return 0;

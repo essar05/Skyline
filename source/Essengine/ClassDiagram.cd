@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Essengine::ERuntimeException" Collapsed="true">
+    <Position X="13.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAACAAAAAAAAAAAAAAEAAAAAAAAAAgAAgACA=</HashCode>
+      <FileName>Errors\RuntimeException.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Essengine::Camera2D">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>RAAAIAIQBAAAACAAAAAAAAACACAgACICAAAAgoAGCCA=</HashCode>
+      <FileName>Camera2D.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Essengine::GLProgram">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACSAAAAAAKAAAAIAAAAAAAgIACAABAAAgIAAQAA=</HashCode>
+      <FileName>GLProgram.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Essengine::GLTexture">
+    <Position X="5.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAgBAAAAAABAAAQAAAAAAAAIAAAA=</HashCode>
+      <FileName>GLTexture.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Essengine::IGame">
+    <Position X="0.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAAIAAAAAAAAABAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>IGame.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Essengine::InputManager">
+    <Position X="4" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAEAAAAAAAAAAAAAABAAFABAAAIAAAAAA=</HashCode>
+      <FileName>InputManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Essengine::IOManager">
+    <Position X="12" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IOManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Essengine::ResourceManager">
+    <Position X="4" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ResourceManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Essengine::Glyph">
+    <Position X="14" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAkAAAAAAAAAAAAAAAAAAAAAAEAAABAAAAIAAAIAEAA=</HashCode>
+      <FileName>SpriteBatch.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Essengine::RenderBatch">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAAIAAABAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>SpriteBatch.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Essengine::SpriteBatch">
+    <Position X="2.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACgAAAACAAAAAAAAABIgQAAQAAACAAICQIQEEAAQAAA=</HashCode>
+      <FileName>SpriteBatch.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Essengine::TextureCache">
+    <Position X="5.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAgAAAAAAAAAAAAAAAAAAAAAAEAAAAAI=</HashCode>
+      <FileName>TextureCache.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Essengine::FPSLimiter">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAACAAQgIAAAAAAAAAIQAAAQAAYAAAGAAAAAAAA=</HashCode>
+      <FileName>Timing.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Essengine::Window">
+    <Position X="11.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAQBAARAAAAAAAAAACEEAAAA=</HashCode>
+      <FileName>Window.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="Essengine::Position" Collapsed="true">
+    <Position X="8.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAAAA=</HashCode>
+      <FileName>Vertex.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Essengine::ColorRGBA8" Collapsed="true">
+    <Position X="8.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAQEBAAAAAAA=</HashCode>
+      <FileName>Vertex.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Essengine::UV" Collapsed="true">
+    <Position X="8.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAAAAAA=</HashCode>
+      <FileName>Vertex.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Essengine::Vertex">
+    <Position X="8.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAIAACAAAAAACAAAAAAAAIAgA=</HashCode>
+      <FileName>Vertex.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="Essengine::ShaderType" Collapsed="true">
+    <Position X="8.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>GLProgram.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Essengine::GlyphSortType" Collapsed="true">
+    <Position X="14" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAABAAAAAAAAAAAAAAggA=</HashCode>
+      <FileName>SpriteBatch.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Essengine::WindowMode">
+    <Position X="11.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAACAAAAAAAAAAAAAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Window.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

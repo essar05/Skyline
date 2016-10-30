@@ -5,8 +5,9 @@ namespace Essengine {
 
   FPSLimiter::FPSLimiter() { }
 
-  void FPSLimiter::init(float maxFPS) {
+  void FPSLimiter::init(float maxFPS, bool limitFPS) {
     setMaxFPS(maxFPS);
+    _limitFPS = limitFPS;
   }
 
   void FPSLimiter::begin() {
@@ -17,7 +18,7 @@ namespace Essengine {
     float frameTicks = SDL_GetTicks() - _startTicks;
 
     //limit FPS
-    if(_maxFPS > 0 && 1000.0f / _maxFPS > frameTicks) {
+    if(_limitFPS && _maxFPS > 0 && 1000.0f / _maxFPS > frameTicks) {
       SDL_Delay(1000.0f / _maxFPS - frameTicks);
     }
 

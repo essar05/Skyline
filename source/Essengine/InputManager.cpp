@@ -5,7 +5,6 @@ namespace Essengine {
   InputManager::InputManager() {
   }
 
-
   InputManager::~InputManager() {
   }
 
