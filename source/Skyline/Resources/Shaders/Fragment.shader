@@ -10,13 +10,13 @@ out vec4 color;
 
 // Values that stay constant for the whole mesh.
 uniform sampler2D textureSampler;
+uniform int useTexture;
 
-void main(){
+void main() {
+  color = fragmentColor.rgba;
 
-	vec2 pos = fragmentPosition;
-	vec4 cl = fragmentColor;
-
-    // Output color = color of the texture at the specified UV
-    //color = vec4(0.0, 1.0, 0.0, 1.0);
-    color = fragmentColor.rgba * texture(textureSampler, fragmentUV).rgba;
+  if(useTexture == 1) {
+    vec4 textureSample = texture(textureSampler, fragmentUV).rgba;
+    color *= textureSample;
+  }
 }

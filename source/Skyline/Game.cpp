@@ -127,6 +127,9 @@ void Game::render() {
   GLint textureLocation = _baseProgram->getUniformLocation("textureSampler");
   glUniform1i(textureLocation, 0);
 
+  GLint useTextureLocation = _baseProgram->getUniformLocation("useTexture");
+  glUniform1i(useTextureLocation, 1);
+
   GLint pLocation = _baseProgram->getUniformLocation("P");
   glm::mat4 cameraMatrix = _camera.getCameraMatrix();
 
@@ -153,6 +156,41 @@ void Game::render() {
 
   _spriteBatch.end();
   _spriteBatch.render();
+
+  //unbind texture (not neccesary, or well doesn't do anything really)
+  //glBindTexture(GL_TEXTURE_2D, 0);
+  glUniform1i(useTextureLocation, 0);
+  this->getLevel()->getWorld()->DrawDebugData();
+
+  /*
+  just as reminder of render process i guess?
+  GLfloat vertices[] = {
+    10.0f, 10.0f,  1.0f, 0.0f, 0.0f, 1.0f,
+    10.0f, 5.0f,   1.0f, 0.0f, 0.0f, 1.0f,
+    15.0f, 5.0f,   1.0f, 0.0f, 0.0f, 1.0f,
+    15.0f, 5.0f,  1.0f, 0.0f, 0.0f, 1.0f,
+    10.0f, 5.0f,   1.0f, 0.0f, 0.0f, 1.0f,
+    10.0f, 10.0f,   1.0f, 0.0f, 0.0f, 1.0f
+  };
+
+  GLuint vao;
+  glGenVertexArrays(1, &vao);
+  glBindVertexArray(vao);
+
+  GLuint vbo;
+  glGenBuffers(1, &vbo);
+
+  glBindBuffer(GL_ARRAY_BUFFER, vbo);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
+  glEnableVertexAttribArray(0);
+  glEnableVertexAttribArray(1);
+  glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*) 0);
+  glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*) (2 * sizeof(GLfloat)));
+
+  glDrawArrays(GL_TRIANGLES, 0, 3);
+
+  glBindVertexArray(0);
+  */
 
   _baseProgram->unuse();
 

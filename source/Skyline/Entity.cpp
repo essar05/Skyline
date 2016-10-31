@@ -24,6 +24,7 @@ Entity::Entity(int textureId, float width, float height, glm::vec2 position, boo
   bodyDef.type = b2_dynamicBody;
   bodyDef.position.Set(_position.x, _position.y);
   bodyDef.angle = 0;
+  bodyDef.fixedRotation = true;
   _body = _game->getLevel()->getWorld()->CreateBody(&bodyDef);
 
   b2PolygonShape boxShape;

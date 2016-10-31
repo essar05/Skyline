@@ -50,9 +50,9 @@ void Level::update(float deltaTime) {
   auto it = _sections.begin();
   std::unordered_map<float, LevelSection*>::iterator endIt = _sections.begin();
   while(it != _sections.end()) {
-    if(camera->getPosition().y + viewportSize[1] < it->first) {
+    if(camera->getPosition().y + viewportSize[1] / 2 < it->first) {
       break;
-    } else if(camera->getPosition().y > it->first + it->second->getHeight()) {
+    } else if(camera->getPosition().y / camera->getZoom() - viewportSize[1] / 2 > it->first + it->second->getHeight()) {
       delete it->second;
       endIt = ++it;
       continue;
@@ -62,7 +62,7 @@ void Level::update(float deltaTime) {
 
     it++;
   }
-
+  
   _sections.erase(_sections.begin(), endIt);
 }
 
@@ -129,6 +129,11 @@ void Level::load(std::string levelName) {
   }
 
   _world = new b2World(b2Vec2(0, 0));
+
+  //in constructor, usually
+  _world->SetDebugDraw(&_glDebugDrawInstance);
+  //somewhere appropriate
+  _glDebugDrawInstance.SetFlags(b2Draw::e_shapeBit | b2Draw::e_centerOfMassBit);
 
   for(rapidjson::SizeType i = 0; i < document["sections"].Size(); i++) {
     //check exists;

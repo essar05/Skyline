@@ -10,6 +10,7 @@
 #include <fstream>
 #include <streambuf>
 #include <Box2D.h>
+#include "b2GLDebugDraw.h"
 
 class Level {
   public:
@@ -38,5 +39,6 @@ class Level {
     std::unordered_map<float, LevelSection*>::iterator _renderStartIt;
 
     b2World* _world;
+    b2GLDebugDraw _glDebugDrawInstance;
 
 };
