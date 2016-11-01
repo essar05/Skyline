@@ -20,7 +20,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -91,6 +91,7 @@ cmd /c xcopy ".\Levels" "$(TargetDir)Levels\" /y</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="b2GLDebugDraw.cpp" />
     <ClCompile Include="Bootstrap.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityManager.cpp" />
@@ -109,6 +110,7 @@ cmd /c xcopy ".\Levels" "$(TargetDir)Levels\" /y</Command>
     <None Include="Resources\Shaders\FontVertex.shader" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="b2GLDebugDraw.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityManager.h" />
     <ClInclude Include="Game.h" />

@@ -63,32 +63,43 @@ void b2GLDebugDraw::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, 
   glDrawArrays(GL_TRIANGLE_FAN, 0, vertexCount);
 
   glBindVertexArray(0);
-  /*
-  glColor4f(color.r, color.g, color.b, 0.5f);
-  glBegin(GL_TRIANGLE_FAN);
-  for(int i = 0; i < vertexCount; i++) {
-    b2Vec2 v = vertices[i];
-    glVertex2f(v.x, v.y);
-  }
-  glEnd();*/
 }
 
 void b2GLDebugDraw::DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color) {
-
   const float32 k_segments = 16.0f;
   const int vertexCount = 16;
   const float32 k_increment = 2.0f * b2_pi / k_segments;
   float32 theta = 0.0f;
 
-  glColor4f(color.r, color.g, color.b, 1);
-  glBegin(GL_LINE_LOOP);
-  GLfloat glVertices[vertexCount * 2];
-  for(int32 i = 0; i < k_segments; ++i) {
+  GLfloat* vert = new GLfloat[vertexCount * 6];
+  for(int i = 0; i < vertexCount; i++) {
     b2Vec2 v = center + radius * b2Vec2(cos(theta), sin(theta));
-    glVertex2f(v.x, v.y);
+    vert[i * 6] = v.x;
+    vert[i * 6 + 1] = v.y;
+    vert[i * 6 + 2] = color.r;
+    vert[i * 6 + 3] = color.g;
+    vert[i * 6 + 4] = color.b;
+    vert[i * 6 + 5] = 0.5f;
     theta += k_increment;
   }
-  glEnd();
+
+  GLuint vao;
+  glGenVertexArrays(1, &vao);
+  glBindVertexArray(vao);
+
+  GLuint vbo;
+  glGenBuffers(1, &vbo);
+
+  glBindBuffer(GL_LINE_LOOP, vbo);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(vert) * vertexCount * 6, vert, GL_DYNAMIC_DRAW);
+  glEnableVertexAttribArray(0);
+  glEnableVertexAttribArray(1);
+  glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*) 0);
+  glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*) (2 * sizeof(GLfloat)));
+
+  glDrawArrays(GL_TRIANGLE_FAN, 0, vertexCount);
+
+  glBindVertexArray(0);
 }
 
 void b2GLDebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color) {
@@ -97,47 +108,121 @@ void b2GLDebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const 
   const float32 k_increment = 2.0f * b2_pi / k_segments;
   float32 theta = 0.0f;
 
-  glColor4f(color.r, color.g, color.b, 0.5f);
-  glBegin(GL_TRIANGLE_FAN);
-  GLfloat glVertices[vertexCount * 2];
-  for(int32 i = 0; i < k_segments; ++i) {
+  GLfloat* vert = new GLfloat[vertexCount * 6];
+  for(int i = 0; i < vertexCount; i++) {
     b2Vec2 v = center + radius * b2Vec2(cos(theta), sin(theta));
-    glVertex2f(v.x, v.y);
+    vert[i * 6] = v.x;
+    vert[i * 6 + 1] = v.y;
+    vert[i * 6 + 2] = color.r;
+    vert[i * 6 + 3] = color.g;
+    vert[i * 6 + 4] = color.b;
+    vert[i * 6 + 5] = 0.5f;
     theta += k_increment;
   }
-  glEnd();
+
+  GLuint vao;
+  glGenVertexArrays(1, &vao);
+  glBindVertexArray(vao);
+
+  GLuint vbo;
+  glGenBuffers(1, &vbo);
+
+  glBindBuffer(GL_LINE_LOOP, vbo);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(vert) * vertexCount * 6, vert, GL_DYNAMIC_DRAW);
+  glEnableVertexAttribArray(0);
+  glEnableVertexAttribArray(1);
+  glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*) 0);
+  glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*) (2 * sizeof(GLfloat)));
+
+  glDrawArrays(GL_TRIANGLE_FAN, 0, vertexCount);
+
+  glBindVertexArray(0);
 
   DrawSegment(center, center + radius*axis, color);
 }
 
 void b2GLDebugDraw::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color) {
-  glColor4f(color.r, color.g, color.b, 1);
-  glBegin(GL_LINES);
-  glVertex2f(p1.x, p1.y);
-  glVertex2f(p2.x, p2.y);
-  glEnd();
+  int vertexCount = 2;
+  GLfloat vert[] = {
+    p1.x, p1.y, color.r, color.g, color.b, 0.5f,
+    p2.x, p2.y, color.r, color.g, color.b, 0.5f
+  };
+  
+  GLuint vao;
+  glGenVertexArrays(1, &vao);
+  glBindVertexArray(vao);
+
+  GLuint vbo;
+  glGenBuffers(1, &vbo);
+
+  glBindBuffer(GL_LINE_LOOP, vbo);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * vertexCount * 6, vert, GL_DYNAMIC_DRAW);
+  glEnableVertexAttribArray(0);
+  glEnableVertexAttribArray(1);
+  glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*) 0);
+  glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*) (2 * sizeof(GLfloat)));
+
+  glDrawArrays(GL_LINES, 0, vertexCount);
+
+  glBindVertexArray(0);
 }
 
 void b2GLDebugDraw::DrawPoint(const b2Vec2& p, float32 size, const b2Color& color) {
-  glColor4f(color.r, color.g, color.b, 1);
+  int vertexCount = 1;
+  GLfloat vert[] = {
+    p.x, p.y, color.r, color.g, color.b, 0.5f
+  };
+
+  GLuint vao;
+  glGenVertexArrays(1, &vao);
+  glBindVertexArray(vao);
+
+  GLuint vbo;
+  glGenBuffers(1, &vbo);
+
+  glBindBuffer(GL_LINE_LOOP, vbo);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * vertexCount * 6, vert, GL_DYNAMIC_DRAW);
+  glEnableVertexAttribArray(0);
+  glEnableVertexAttribArray(1);
+  glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*) 0);
+  glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*) (2 * sizeof(GLfloat)));
+
   glPointSize(1.0f);
-  glBegin(GL_POINTS);
-  glVertex2f(p.x, p.y);
-  glEnd();
+  glDrawArrays(GL_POINTS, 0, vertexCount);
+
+  glBindVertexArray(0);
 }
 
 void b2GLDebugDraw::DrawString(int x, int y, const char *string, ...) {
   // TODO:
 }
 
-void b2GLDebugDraw::DrawAABB(b2AABB* aabb, const b2Color& c) {
-  glColor4f(c.r, c.g, c.b, 1);
-  glBegin(GL_LINE_LOOP);
-  glVertex2f(aabb->lowerBound.x, aabb->lowerBound.y);
-  glVertex2f(aabb->upperBound.x, aabb->lowerBound.y);
-  glVertex2f(aabb->upperBound.x, aabb->upperBound.y);
-  glVertex2f(aabb->lowerBound.x, aabb->upperBound.y);
-  glEnd();
+void b2GLDebugDraw::DrawAABB(b2AABB* aabb, const b2Color& color) {
+  int vertexCount = 4;
+  GLfloat vert[] = {
+    aabb->lowerBound.x, aabb->lowerBound.y, color.r, color.g, color.b, 0.5f,
+    aabb->upperBound.x, aabb->lowerBound.y, color.r, color.g, color.b, 0.5f,
+    aabb->upperBound.x, aabb->upperBound.y, color.r, color.g, color.b, 0.5f,
+    aabb->lowerBound.x, aabb->upperBound.y, color.r, color.g, color.b, 0.5f,
+  };
+
+  GLuint vao;
+  glGenVertexArrays(1, &vao);
+  glBindVertexArray(vao);
+
+  GLuint vbo;
+  glGenBuffers(1, &vbo);
+
+  glBindBuffer(GL_ARRAY_BUFFER, vbo);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(vert), vert, GL_DYNAMIC_DRAW);
+  glEnableVertexAttribArray(0);
+  glEnableVertexAttribArray(1);
+  glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*) 0);
+  glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*) (2 * sizeof(GLfloat)));
+
+  glDrawArrays(GL_LINE_LOOP, 0, vertexCount);
+
+  glBindVertexArray(0);
 }
 
 void b2GLDebugDraw::DrawTransform(const b2Transform& xf) {
