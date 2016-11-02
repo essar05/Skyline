@@ -13,11 +13,12 @@
 #include <InputManager.h>
 #include <Timing.h>
 #include "Level.h"
-#include "Player.h"
 #include "EntityManager.h"
 #include "ProjectileManager.h"
 
 enum class GameState { RUNNING, EXIT };
+
+class Level;
 
 class Game : Essengine::IGame {
   public:
@@ -33,7 +34,6 @@ class Game : Essengine::IGame {
     Essengine::TextureCache* getTextureCache();
     EntityManager* getEntityManager();
     Level* getLevel() { return _level; }
-    Player* getPlayer() { return _player; }
     ProjectileManager* getProjectileManager() { return &_projectileManager; }
     float getWidth();
     float getHeight();
@@ -44,11 +44,8 @@ class Game : Essengine::IGame {
   private:
     void initShaders();
     void initSystem();
-    void calculateFPS();
-    void render();
     void update(float deltaTime);
     void updateObjects(float deltaTime);
-    void updatePlayer(float deltaTime);
     void updateProjectiles(float deltaTime);
     void processInput(float deltaTime);
 
@@ -65,7 +62,6 @@ class Game : Essengine::IGame {
 
     GameState _state;
     Level* _level;
-    Player* _player;
     EntityManager _entityManager;
     ProjectileManager _projectileManager;
 

@@ -9,6 +9,7 @@
 #include <algorithm>
 //#include <Psapi.h>
 #include "Entity.h"
+#include "Utils.h"
 
 Game::Game() {}
 
@@ -24,13 +25,7 @@ void Game::Boot() {
   _level = new Level();
   _level->load("intro");
 
-  _player = new Player(_textureCache.getTexture("Textures/Cumz4AC.png")._id, 90.0f, 120.0f, glm::vec2(_camera.getViewportSize().x / 2, 100.0f));
-  _player->setBaseVelocity(glm::vec2(0.0, this->scrollSpeed));
-  _player->setBaseDirection(glm::vec2(0.0, 1.0f));
-  _player->setVelocity(_player->getBaseVelocity() * _player->getBaseDirection());
-  _player->getBody()->SetLinearVelocity(b2Vec2(0.0f, 0.2f));
-
-  _player->spawn();
+  
 }
 
 void Game::Run() {
@@ -55,7 +50,7 @@ void Game::Run() {
     int i = 0;
     while(totalDeltaTime > 0.0f && i < MAX_FRAMES_SIMULATED) {
       float deltaTime = std::min(totalDeltaTime, MAX_DELTA_TIME);
-  
+
       processInput(deltaTime);
       update(deltaTime);
 
@@ -63,7 +58,7 @@ void Game::Run() {
       i++;
     }
 
-    render();
+    Render();
 
     _fps = _fpsLimiter.end();
 
@@ -84,14 +79,13 @@ void Game::update(float deltaTime) {
   if(!_isPaused) {
     _camera.setPosition(_camera.getPosition() + glm::vec2(0.0f, this->scrollSpeed * _camera.getZoom()) * deltaTime);
     _level->update(deltaTime);
-    updatePlayer(deltaTime);
     updateProjectiles(deltaTime);
     updateObjects(deltaTime);
   }
 }
 
 void Game::updateObjects(float deltaTime) {
-  Entity* entity;
+  /*Entity* entity;
   std::vector<unsigned int> activeObjects = _level->getActiveObjects();
   for(unsigned int i = 0; i < activeObjects.size(); i++) {
     entity = _entityManager.getEntity(activeObjects[i]);
@@ -99,20 +93,15 @@ void Game::updateObjects(float deltaTime) {
       continue;
     }
 
-    _player->collidesWith(entity);
-  }
-}
-
-void Game::updatePlayer(float deltaTime) {
-  //_player->move(glm::vec2(0.0f, 1.0f), this->scrollSpeed, deltaTime);
-  _player->update(deltaTime);
+    //_player->collidesWith(entity);
+  }*/
 }
 
 void Game::updateProjectiles(float deltaTime) {
   _projectileManager.update(deltaTime);
 }
 
-void Game::render() {
+void Game::Render() {
   glClearDepth(1.0);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -151,7 +140,6 @@ void Game::render() {
   */
 
   _level->draw();
-  _player->draw();
   _projectileManager.draw();
 
   _spriteBatch.end();
@@ -246,12 +234,32 @@ void Game::processInput(float deltaTime) {
   }
 
   float playerSpeed = 0.5f;
+  
+  glm::vec2 direction = glm::vec2(0.0f, 0.0f);
 
-  b2Vec2 direction(0,0);
+  if(_inputManager.isKeyDown(SDLK_LEFT)) {
+    direction += glm::vec2(-1.0f, 0.0f);
+  }
+
+  if(_inputManager.isKeyDown(SDLK_RIGHT)) {
+    direction += glm::vec2(1.0f, 0.0f);
+  }
+
+  if(_inputManager.isKeyDown(SDLK_UP)) {
+    direction += glm::vec2(0.0f, 1.0f);
+  }
+
+  if(_inputManager.isKeyDown(SDLK_DOWN)) {
+    direction += glm::vec2(0.0f, -1.0f);
+  }
+
+  _level->getPlayer()->setDirection(direction);
+
+  //b2Vec2 direction(0, 0);
   b2Vec2 maxVelocity(0.5f, 0.55f);
   b2Vec2 minVelocity(0.0f, 0.2f);
-  b2Vec2 velocity = _player->getBody()->GetLinearVelocity();
-
+  b2Vec2 velocity = _level->getPlayer()->getBody()->GetLinearVelocity();
+  /*
   if(_inputManager.isKeyDown(SDLK_LEFT)) {
     direction += b2Vec2(-1.0f, 0.0f);
   }
@@ -266,30 +274,14 @@ void Game::processInput(float deltaTime) {
 
   if(_inputManager.isKeyDown(SDLK_DOWN)) {
     direction += b2Vec2(0.0f, -1.0f);
-  }
+  }*/
 
-  b2Vec2 force(0.0f, 0.0f), acceleration(0.0f, 0.0f);
   
-  if(direction.x != 0) {
-    acceleration.x = (direction.x * maxVelocity.x - velocity.x) * 2.0f;
-  } else if (velocity.x != 0) {
-    acceleration.x = (0.0f - velocity.x) * 5.0f;
-  }
-
-  if(direction.y != 0) {
-    acceleration.y = (direction.y * maxVelocity.y - velocity.y) * (direction.y > 0 ? 2.0f : 0.5f);
-  } else {
-    acceleration.y = (0.2f - velocity.y) * 3.0f;
-  }
-
-  force = _player->getBody()->GetMass() * deltaTime * acceleration;
-
-  _player->getBody()->ApplyForce(force, _player->getBody()->GetWorldCenter(), true);
-
+ 
   if(_inputManager.isKeyDown(SDLK_SPACE)) {
-    _player->setIsFiring(true);
+    _level->getPlayer()->setIsFiring(true);
   } else {
-    _player->setIsFiring(false);
+    _level->getPlayer()->setIsFiring(false);
   }
 }
 
@@ -330,7 +322,6 @@ void Game::initShaders() {
 void Game::Destroy() {
   delete _window;
   delete _baseProgram;
-  delete _player;
   delete _level;
 
   delete this;

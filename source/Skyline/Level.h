@@ -11,6 +11,8 @@
 #include <streambuf>
 #include <Box2D.h>
 #include "b2GLDebugDraw.h"
+#include "Player.h"
+#include "Game.h"
 
 class Level {
   public:
@@ -28,9 +30,11 @@ class Level {
     std::vector<unsigned int> getActiveObjects();
 
     b2World* getWorld();
+    Player* getPlayer();
 
   private:
     Game* _game;
+    Player* _player;
 
     float _height;
     float _width;

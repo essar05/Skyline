@@ -18,7 +18,7 @@ void ProjectileManager::add(Projectile* projectile) {
 
 void ProjectileManager::update(float deltaTime) {
   Game* gameInstance = Game::GetInstance();
-  Player* player = gameInstance->getPlayer();
+  Player* player = gameInstance->getLevel()->getPlayer();
   std::vector<unsigned int> objects = gameInstance->getLevel()->getActiveObjects();
 
   for(unsigned int i = 0; i < _projectiles.size();) {

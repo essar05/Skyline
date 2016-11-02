@@ -2,10 +2,9 @@
 
 #include "Entity.h"
 #include "Game.h"
-#include <algorithm>
+#include "Utils.h"
 
-Entity::Entity() {
-}
+Entity::Entity() {}
 
 Entity::Entity(int textureId, float width, float height, glm::vec2 position) : Entity(textureId, width, height, position, true) { }
 
@@ -27,52 +26,45 @@ Entity::Entity(int textureId, float width, float height, glm::vec2 position, boo
   bodyDef.fixedRotation = true;
   _body = _game->getLevel()->getWorld()->CreateBody(&bodyDef);
 
+  b2Vec2 vertices[3];
+  vertices[0].Set(-_width / 2, 0.0f);
+  vertices[1].Set(_width / 2, 0.0f);
+  vertices[2].Set(0.0f, _height / 2);
+  int32 count = 3;
+
   b2PolygonShape boxShape;
-  boxShape.SetAsBox(_width / 2, _height / 2);
+  boxShape.Set(vertices, count);
+  
+  //boxShape.SetAsBox(_width / 2, _height / 2);
 
   b2FixtureDef boxFixtureDef;
   boxFixtureDef.shape = &boxShape;
   boxFixtureDef.density = 1;
 
   _body->CreateFixture(&boxFixtureDef);
+
+  b2PolygonShape boxShape2;
+  boxShape2.SetAsBox(_width / 7, _height / 4, b2Vec2(0.0f, - _height / 4), 0);
+
+  b2FixtureDef boxFixtureDef2;
+  boxFixtureDef2.shape = &boxShape2;
+  boxFixtureDef2.density = 1;
+  _body->CreateFixture(&boxFixtureDef2);
 }
 
 Entity::~Entity() {
-  //_game->getLevel()->getWorld()->DestroyBody(_body);
 }
 
 void Entity::setDirection(const glm::vec2& direction) {
   _direction = direction;
 }
 
-void Entity::setAcceleration(const glm::vec2& acceleration) {
-  _acceleration = acceleration;
-}
-
 void Entity::setVelocity(const glm::vec2& velocity) {
   _velocity = velocity;
 }
 
-void Entity::setBaseVelocity(const glm::vec2& velocity) {
-  _baseVelocity = velocity;
-}
-
-glm::vec2 Entity::getBaseVelocity() {
-  return _baseVelocity;
-}
-
-void Entity::setBaseDirection(const glm::vec2& direction) {
-  _baseDirection = direction;
-}
-
-glm::vec2 Entity::getBaseDirection() {
-  return _baseDirection;
-}
-
 void Entity::update(float deltaTime) {
-  _velocity += _acceleration * deltaTime;
-
-  _position += _velocity * deltaTime;
+  
 }
 
 void Entity::applyDamage(float damage) {
@@ -109,7 +101,6 @@ void Entity::draw() {
   if(_isSpawned) {
     b2Vec2 bodyPosition = this->_body->GetPosition();
     glm::vec2 screenPosition = glm::vec2(bodyPosition.x, bodyPosition.y);
-    //float width = this->_body->GetFixtureList()->GetShape()->;
 
     Essengine::SpriteBatch* spriteBatch = _game->getSpriteBatch();
     glm::vec4 uv(0.0f, 0.0f, 1.0f, 1.0f);
@@ -126,7 +117,7 @@ float Entity::isSpawned() {
 }
 
 glm::vec2 Entity::getPosition() {
-  return _position;
+  return Utils::toVec2(this->_body->GetPosition());
 }
 
 glm::vec2 Entity::getDirection() {
