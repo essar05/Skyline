@@ -22,10 +22,10 @@ void Game::Boot() {
 
   _state = GameState::RUNNING;
 
+  _entityManager = new EntityManager;
+
   _level = new Level();
   _level->load("intro");
-
-  
 }
 
 void Game::Run() {
@@ -124,7 +124,7 @@ void Game::Render() {
 
   glUniformMatrix4fv(pLocation, 1, GL_FALSE, &(cameraMatrix[0][0]));
 
-  _spriteBatch.begin();
+  _spriteBatch.begin(Essengine::GlyphSortType::BACK_TO_FRONT);
   /*
   glm::vec4 position(80.0f, 23.0f, 100.0f, 100.0f);
   glm::vec4 uv(0.0f, 0.0f, 1.0f, 1.0f);
@@ -218,11 +218,9 @@ void Game::processInput(float deltaTime) {
   }
   if(_inputManager.isKeyDown(SDLK_q)) {
     _camera.setScale(_camera.getScale() + SCALE_SPEED * deltaTime);
-    std::cout << "Scale: " << _camera.getScale() << std::endl;
   }
   if(_inputManager.isKeyDown(SDLK_e)) {
     _camera.setScale(_camera.getScale() - SCALE_SPEED * deltaTime);
-    std::cout << "Scale: " << _camera.getScale() << std::endl;
   }
   if(_inputManager.isKeyDown(SDLK_TAB)) {
     if(_canPause == true) {
@@ -233,50 +231,22 @@ void Game::processInput(float deltaTime) {
     _canPause = true;
   }
 
-  float playerSpeed = 0.5f;
-  
   glm::vec2 direction = glm::vec2(0.0f, 0.0f);
 
   if(_inputManager.isKeyDown(SDLK_LEFT)) {
     direction += glm::vec2(-1.0f, 0.0f);
   }
-
   if(_inputManager.isKeyDown(SDLK_RIGHT)) {
     direction += glm::vec2(1.0f, 0.0f);
   }
-
   if(_inputManager.isKeyDown(SDLK_UP)) {
     direction += glm::vec2(0.0f, 1.0f);
   }
-
   if(_inputManager.isKeyDown(SDLK_DOWN)) {
     direction += glm::vec2(0.0f, -1.0f);
   }
 
   _level->getPlayer()->setDirection(direction);
-
-  //b2Vec2 direction(0, 0);
-  b2Vec2 maxVelocity(0.5f, 0.55f);
-  b2Vec2 minVelocity(0.0f, 0.2f);
-  b2Vec2 velocity = _level->getPlayer()->getBody()->GetLinearVelocity();
-  /*
-  if(_inputManager.isKeyDown(SDLK_LEFT)) {
-    direction += b2Vec2(-1.0f, 0.0f);
-  }
-
-  if(_inputManager.isKeyDown(SDLK_RIGHT)) {
-    direction += b2Vec2(1.0f, 0.0f);
-  }
-
-  if(_inputManager.isKeyDown(SDLK_UP)) {
-    direction += b2Vec2(0.0f, 1.0f);
-  }
-
-  if(_inputManager.isKeyDown(SDLK_DOWN)) {
-    direction += b2Vec2(0.0f, -1.0f);
-  }*/
-
-  
  
   if(_inputManager.isKeyDown(SDLK_SPACE)) {
     _level->getPlayer()->setIsFiring(true);
@@ -322,6 +292,7 @@ void Game::initShaders() {
 void Game::Destroy() {
   delete _window;
   delete _baseProgram;
+  delete _entityManager;
   delete _level;
 
   delete this;
@@ -351,7 +322,7 @@ float Game::getHeight() {
 }
 
 EntityManager* Game::getEntityManager() {
-  return &_entityManager;
+  return _entityManager;
 }
 
 Essengine::TextureCache* Game::getTextureCache() {

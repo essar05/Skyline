@@ -53,6 +53,7 @@ Entity::Entity(int textureId, float width, float height, glm::vec2 position, boo
 }
 
 Entity::~Entity() {
+  _body->GetWorld()->DestroyBody( _body );
 }
 
 void Entity::setDirection(const glm::vec2& direction) {
@@ -86,15 +87,17 @@ bool Entity::collidesWith(Entity* anotherEntity) {
 
 bool Entity::inViewport() {
   glm::vec2 viewportSize = _game->getMainCamera()->getWorldViewportSize();
-  glm::vec2 cameraPosition = _game->getMainCamera()->getPosition();
+  glm::vec2 cameraPosition = _game->getMainCamera()->getPosition() / _game->getMainCamera()->getZoom();
+
   return collidesWith(viewportSize.x, viewportSize.y, cameraPosition);
 }
 
 bool Entity::collidesWith(float bWidth, float bHeight, const glm::vec2& bPosition) {
-  return (_position.x < bPosition.x + bWidth &&
-          _position.x + _width > bPosition.x &&
-          _position.y < bPosition.y + bHeight &&
-          _position.y + _height > bPosition.y);
+  glm::vec2 position = Utils::toVec2(_body->GetPosition());
+  return (position.x - _width / 2 < bPosition.x + bWidth / 2 &&
+          position.x + _width / 2 > bPosition.x - bWidth / 2 &&
+          position.y - _height / 2 < bPosition.y + bHeight / 2 &&
+          position.y + _height / 2 > bPosition.y - bHeight / 2);
 }
 
 void Entity::draw() {
@@ -104,7 +107,7 @@ void Entity::draw() {
 
     Essengine::SpriteBatch* spriteBatch = _game->getSpriteBatch();
     glm::vec4 uv(0.0f, 0.0f, 1.0f, 1.0f);
-    spriteBatch->draw(glm::vec4(screenPosition.x - _width / 2, screenPosition.y - _height / 2, _width, _height), uv, _textureId, _color, 0);
+    spriteBatch->draw(glm::vec4(screenPosition.x - _width / 2, screenPosition.y - _height / 2, _width, _height), uv, _textureId, _color, 1);
   }
 }
 

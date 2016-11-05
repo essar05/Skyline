@@ -9,8 +9,8 @@ Level::Level(float width, float height) : _height(height), _width(width) {
 }
 
 Level::~Level() {
-  delete _world;
   delete _player;
+  delete _world;
 
   auto it = _sections.begin();
   while(it != _sections.end()) {
@@ -45,7 +45,7 @@ void Level::update(float deltaTime) {
   auto it = _sections.begin();
   std::unordered_map<float, LevelSection*>::iterator endIt = _sections.begin();
   while(it != _sections.end()) {
-    if(camera->getPosition().y + viewportSize[1] / 2 < it->first) {
+    if(camera->getPosition().y / camera->getZoom() + viewportSize[1] / 2 < it->first) {
       break;
     } else if(camera->getPosition().y / camera->getZoom() - viewportSize[1] / 2 > it->first + it->second->getHeight()) {
       delete it->second;

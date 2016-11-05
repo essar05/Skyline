@@ -62,7 +62,7 @@ class Game : Essengine::IGame {
 
     GameState _state;
     Level* _level;
-    EntityManager _entityManager;
+    EntityManager* _entityManager;
     ProjectileManager _projectileManager;
 
     //settings
