@@ -15,7 +15,6 @@ class Entity {
 
     void setDirection(const glm::vec2& direction);
     void setVelocity(const glm::vec2& velocity);
-    
     void setColor(const Essengine::ColorRGBA8& color) { _color = color; }
 
     glm::vec2 getPosition();
@@ -28,7 +27,7 @@ class Entity {
 
     void draw();
   
-    void update(float deltaTime);
+    virtual bool update(float deltaTime);
     
     void applyDamage(float damage);
 
@@ -41,6 +40,9 @@ class Entity {
 
   protected:
     Game* _game;
+
+    virtual void createBody();
+    virtual void createFixture();
 
     float _health = 100.0f;
     float _width;

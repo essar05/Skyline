@@ -34,7 +34,7 @@ class Game : Essengine::IGame {
     Essengine::TextureCache* getTextureCache();
     EntityManager* getEntityManager();
     Level* getLevel() { return _level; }
-    ProjectileManager* getProjectileManager() { return &_projectileManager; }
+    ProjectileManager* getProjectileManager() { return _projectileManager; }
     float getWidth();
     float getHeight();
 
@@ -63,13 +63,13 @@ class Game : Essengine::IGame {
     GameState _state;
     Level* _level;
     EntityManager* _entityManager;
-    ProjectileManager _projectileManager;
+    ProjectileManager* _projectileManager;
 
     //settings
     float _fps;
     float _maxFPS = 60.0f;
     bool _debugMode = false;
-    bool _limitFPS = false;
+    bool _limitFPS = true;
 
     float _height = 720.0f;
     float _width = 1280.0f;

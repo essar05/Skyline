@@ -14,6 +14,9 @@ class Projectile : public Entity {
     int getSource() { return _source; }
     float getDamage() { return _damage; }
 
+  protected:
+    void createFixture();
+
   private:
     int _source; //1 -> player, 2 -> enemies;
     float _damage;

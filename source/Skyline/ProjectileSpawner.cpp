@@ -6,9 +6,10 @@ ProjectileSpawner::ProjectileSpawner() {
 
 }
 
-ProjectileSpawner::ProjectileSpawner(float fireRate, float projectileWidth, float projectileDamage) {
+ProjectileSpawner::ProjectileSpawner(float fireRate, glm::vec2 size, float projectileDamage) {
   _fireRate = fireRate;
-  _projectileWidth = projectileWidth;
+  _projectileWidth = size.x;
+  _projectileHeight = size.y;
   _projectileDamage = projectileDamage;
 }
 
@@ -32,7 +33,7 @@ void ProjectileSpawner::spawn(int projectileCount, const glm::vec2& position, co
 
   for(int i = 0; i < projectileCount; i++) {
     Projectile* projectile = new Projectile(gameInstance->getTextureCache()->getTexture("Textures/tesx.png")._id, 
-                                            _projectileWidth, _projectileWidth, glm::vec2(position.x - _projectileWidth / 2, position.y - _projectileWidth), _source, _projectileDamage);
+                                            _projectileWidth, _projectileHeight, glm::vec2(position.x, position.y), _source, _projectileDamage);
     projectile->setVelocity(velocity);
     projectile->spawn();
     gameInstance->getProjectileManager()->add(projectile);

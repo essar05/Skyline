@@ -23,6 +23,8 @@ void b2GLDebugDraw::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const
 
   glBindBuffer(GL_ARRAY_BUFFER, vbo);
   glBufferData(GL_ARRAY_BUFFER, sizeof(vert), vert, GL_DYNAMIC_DRAW);
+  delete[] vert;
+
   glEnableVertexAttribArray(0);
   glEnableVertexAttribArray(1);
   glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*) 0);
@@ -31,6 +33,8 @@ void b2GLDebugDraw::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const
   glDrawArrays(GL_LINE_LOOP, 0, vertexCount);
 
   glBindVertexArray(0);
+  glDeleteBuffers(1, &vbo);
+  glDeleteVertexArrays(1, &vao);
 }
 
 void b2GLDebugDraw::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color) {
@@ -45,7 +49,7 @@ void b2GLDebugDraw::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, 
     vert[i * 6 + 4] = color.b;
     vert[i * 6 + 5] = 0.5f;
   }
-
+  
   GLuint vao;
   glGenVertexArrays(1, &vao);
   glBindVertexArray(vao);
@@ -55,6 +59,8 @@ void b2GLDebugDraw::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, 
 
   glBindBuffer(GL_ARRAY_BUFFER, vbo);
   glBufferData(GL_ARRAY_BUFFER, sizeof(vert) * vertexCount * 6, vert, GL_DYNAMIC_DRAW);
+  delete [] vert;
+  
   glEnableVertexAttribArray(0);
   glEnableVertexAttribArray(1);
   glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*) 0);
@@ -63,6 +69,11 @@ void b2GLDebugDraw::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, 
   glDrawArrays(GL_TRIANGLE_FAN, 0, vertexCount);
 
   glBindVertexArray(0);
+  /*i guess it's fine for now since it's just a debug function, 
+  but maybe in the future i can make this whole thing more elegant rather than creating and deleting buffers and vertex arrays for every damn polygon.
+  */
+  glDeleteBuffers(1, &vbo);
+  glDeleteVertexArrays(1, &vao);
 }
 
 void b2GLDebugDraw::DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color) {
@@ -90,8 +101,10 @@ void b2GLDebugDraw::DrawCircle(const b2Vec2& center, float32 radius, const b2Col
   GLuint vbo;
   glGenBuffers(1, &vbo);
 
-  glBindBuffer(GL_LINE_LOOP, vbo);
+  glBindBuffer(GL_ARRAY_BUFFER, vbo);
   glBufferData(GL_ARRAY_BUFFER, sizeof(vert) * vertexCount * 6, vert, GL_DYNAMIC_DRAW);
+  delete[] vert;
+
   glEnableVertexAttribArray(0);
   glEnableVertexAttribArray(1);
   glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*) 0);
@@ -100,6 +113,8 @@ void b2GLDebugDraw::DrawCircle(const b2Vec2& center, float32 radius, const b2Col
   glDrawArrays(GL_TRIANGLE_FAN, 0, vertexCount);
 
   glBindVertexArray(0);
+  glDeleteBuffers(1, &vbo);
+  glDeleteVertexArrays(1, &vao);
 }
 
 void b2GLDebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color) {
@@ -129,6 +144,8 @@ void b2GLDebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const 
 
   glBindBuffer(GL_LINE_LOOP, vbo);
   glBufferData(GL_ARRAY_BUFFER, sizeof(vert) * vertexCount * 6, vert, GL_DYNAMIC_DRAW);
+  delete [] vert;
+
   glEnableVertexAttribArray(0);
   glEnableVertexAttribArray(1);
   glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*) 0);
@@ -139,6 +156,8 @@ void b2GLDebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const 
   glBindVertexArray(0);
 
   DrawSegment(center, center + radius*axis, color);
+  glDeleteBuffers(1, &vbo);
+  glDeleteVertexArrays(1, &vao);
 }
 
 void b2GLDebugDraw::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color) {
@@ -155,8 +174,10 @@ void b2GLDebugDraw::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Colo
   GLuint vbo;
   glGenBuffers(1, &vbo);
 
-  glBindBuffer(GL_LINE_LOOP, vbo);
+  glBindBuffer(GL_ARRAY_BUFFER, vbo);
   glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * vertexCount * 6, vert, GL_DYNAMIC_DRAW);
+
+
   glEnableVertexAttribArray(0);
   glEnableVertexAttribArray(1);
   glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*) 0);
@@ -165,6 +186,8 @@ void b2GLDebugDraw::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Colo
   glDrawArrays(GL_LINES, 0, vertexCount);
 
   glBindVertexArray(0);
+  glDeleteBuffers(1, &vbo);
+  glDeleteVertexArrays(1, &vao);
 }
 
 void b2GLDebugDraw::DrawPoint(const b2Vec2& p, float32 size, const b2Color& color) {
@@ -180,7 +203,7 @@ void b2GLDebugDraw::DrawPoint(const b2Vec2& p, float32 size, const b2Color& colo
   GLuint vbo;
   glGenBuffers(1, &vbo);
 
-  glBindBuffer(GL_LINE_LOOP, vbo);
+  glBindBuffer(GL_ARRAY_BUFFER, vbo);
   glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * vertexCount * 6, vert, GL_DYNAMIC_DRAW);
   glEnableVertexAttribArray(0);
   glEnableVertexAttribArray(1);
@@ -191,6 +214,9 @@ void b2GLDebugDraw::DrawPoint(const b2Vec2& p, float32 size, const b2Color& colo
   glDrawArrays(GL_POINTS, 0, vertexCount);
 
   glBindVertexArray(0);
+  glDeleteBuffers(1, &vbo);
+  glDeleteVertexArrays(1, &vao);
+
 }
 
 void b2GLDebugDraw::DrawString(int x, int y, const char *string, ...) {
@@ -223,6 +249,8 @@ void b2GLDebugDraw::DrawAABB(b2AABB* aabb, const b2Color& color) {
   glDrawArrays(GL_LINE_LOOP, 0, vertexCount);
 
   glBindVertexArray(0);
+  glDeleteBuffers(1, &vbo);
+  glDeleteVertexArrays(1, &vao);
 }
 
 void b2GLDebugDraw::DrawTransform(const b2Transform& xf) {

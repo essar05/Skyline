@@ -10,7 +10,17 @@ LevelSection::LevelSection(float width, float height) {
 }
 
 LevelSection::~LevelSection() {
+  EntityManager* entityManager = _game->getEntityManager();
+  Level* level = _game->getLevel();
 
+  if(entityManager != nullptr) {
+    for(unsigned int k = 0; k < _objects.size(); k++) {
+      unsigned int objectId = _objects[k];
+      entityManager->deleteEntity(objectId);
+      _objects.erase(_objects.begin() + k);
+      level->discardActiveObject();
+    }
+  }
 }
 
 void LevelSection::update() {

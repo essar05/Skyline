@@ -19,37 +19,8 @@ Entity::Entity(int textureId, float width, float height, glm::vec2 position, boo
     _position = _game->getMainCamera()->getWorldCoordinates(_position);
   }
 
-  b2BodyDef bodyDef;
-  bodyDef.type = b2_dynamicBody;
-  bodyDef.position.Set(_position.x, _position.y);
-  bodyDef.angle = 0;
-  bodyDef.fixedRotation = true;
-  _body = _game->getLevel()->getWorld()->CreateBody(&bodyDef);
-
-  b2Vec2 vertices[3];
-  vertices[0].Set(-_width / 2, 0.0f);
-  vertices[1].Set(_width / 2, 0.0f);
-  vertices[2].Set(0.0f, _height / 2);
-  int32 count = 3;
-
-  b2PolygonShape boxShape;
-  boxShape.Set(vertices, count);
-  
-  //boxShape.SetAsBox(_width / 2, _height / 2);
-
-  b2FixtureDef boxFixtureDef;
-  boxFixtureDef.shape = &boxShape;
-  boxFixtureDef.density = 1;
-
-  _body->CreateFixture(&boxFixtureDef);
-
-  b2PolygonShape boxShape2;
-  boxShape2.SetAsBox(_width / 7, _height / 4, b2Vec2(0.0f, - _height / 4), 0);
-
-  b2FixtureDef boxFixtureDef2;
-  boxFixtureDef2.shape = &boxShape2;
-  boxFixtureDef2.density = 1;
-  _body->CreateFixture(&boxFixtureDef2);
+  createBody();
+  createFixture();
 }
 
 Entity::~Entity() {
@@ -64,8 +35,18 @@ void Entity::setVelocity(const glm::vec2& velocity) {
   _velocity = velocity;
 }
 
-void Entity::update(float deltaTime) {
+bool Entity::update(float deltaTime) {
+  b2Vec2 velocity = _body->GetLinearVelocity();
+  b2Vec2 force(0.0f, 0.0f), acceleration(0.0f, 0.0f);
+
+  acceleration.x = _velocity.x - velocity.x;
+  acceleration.y = _velocity.y - velocity.y;
   
+  force = _body->GetMass() * deltaTime * acceleration;
+
+  _body->ApplyForce(force, _body->GetWorldCenter(), true);
+
+  return true;
 }
 
 void Entity::applyDamage(float damage) {
@@ -111,6 +92,42 @@ void Entity::draw() {
   }
 }
 
+void Entity::createBody() {
+  b2BodyDef bodyDef;
+  bodyDef.type = b2_dynamicBody;
+  bodyDef.position.Set(_position.x, _position.y);
+  bodyDef.angle = 0;
+  bodyDef.fixedRotation = true;
+  _body = _game->getLevel()->getWorld()->CreateBody(&bodyDef);
+}
+
+void Entity::createFixture() {
+  b2Vec2 vertices[3];
+  vertices[0].Set(-_width / 2, 0.0f);
+  vertices[1].Set(_width / 2, 0.0f);
+  vertices[2].Set(0.0f, _height / 2);
+  int32 count = 3;
+
+  b2PolygonShape boxShape;
+  boxShape.Set(vertices, count);
+
+  //boxShape.SetAsBox(_width / 2, _height / 2);
+
+  b2FixtureDef boxFixtureDef;
+  boxFixtureDef.shape = &boxShape;
+  boxFixtureDef.density = 1;
+
+  _body->CreateFixture(&boxFixtureDef);
+
+  b2PolygonShape boxShape2;
+  boxShape2.SetAsBox(_width / 7, _height / 4, b2Vec2(0.0f, -_height / 4), 0);
+
+  b2FixtureDef boxFixtureDef2;
+  boxFixtureDef2.shape = &boxShape2;
+  boxFixtureDef2.density = 1;
+  _body->CreateFixture(&boxFixtureDef2);
+}
+
 void Entity::spawn() {
   _isSpawned = true;
 }
@@ -134,3 +151,4 @@ float Entity::getWidth() {
 float Entity::getHeight() {
   return _height;
 }
+

@@ -24,8 +24,8 @@ void ProjectileManager::update(float deltaTime) {
   for(unsigned int i = 0; i < _projectiles.size();) {
     if(!_projectiles[i]->update(deltaTime)) {
       discard(i);
-    } else if(checkCollision(_projectiles[i], player, objects)) {
-      discard(i);
+    /*} else if(checkCollision(_projectiles[i], player, objects)) {
+      discard(i);*/
     } else {
       i++;
     }
@@ -38,7 +38,7 @@ void ProjectileManager::discard(unsigned int index) {
 }
 
 bool ProjectileManager::checkCollision(Projectile* projectile, Player* player, const std::vector<unsigned int>& objects) {
-  Game* gameInstance = Game::GetInstance();
+  /*Game* gameInstance = Game::GetInstance();
 
   Entity* entity;
   EntityManager* entityManager = gameInstance->getEntityManager();
@@ -59,7 +59,7 @@ bool ProjectileManager::checkCollision(Projectile* projectile, Player* player, c
     }
   } else {
     return projectile->collidesWith(player);
-  }
+  }*/
 
   return false;
 }

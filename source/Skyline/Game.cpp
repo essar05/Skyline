@@ -23,6 +23,7 @@ void Game::Boot() {
   _state = GameState::RUNNING;
 
   _entityManager = new EntityManager;
+  _projectileManager = new ProjectileManager;
 
   _level = new Level();
   _level->load("intro");
@@ -98,7 +99,7 @@ void Game::updateObjects(float deltaTime) {
 }
 
 void Game::updateProjectiles(float deltaTime) {
-  _projectileManager.update(deltaTime);
+  _projectileManager->update(deltaTime);
 }
 
 void Game::Render() {
@@ -140,7 +141,7 @@ void Game::Render() {
   */
 
   _level->draw();
-  _projectileManager.draw();
+  _projectileManager->draw();
 
   _spriteBatch.end();
   _spriteBatch.render();
@@ -293,8 +294,11 @@ void Game::Destroy() {
   delete _window;
   delete _baseProgram;
   delete _entityManager;
+  _entityManager = nullptr;
+  delete _projectileManager;
+  _projectileManager = nullptr;
   delete _level;
-
+  
   delete this;
 }
 
