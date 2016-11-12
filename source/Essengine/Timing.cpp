@@ -23,7 +23,7 @@ namespace Essengine {
     }
 
     //calculate FPS
-    calculateFPS();
+    //calculateFPS();
 
     return _fps;
   }

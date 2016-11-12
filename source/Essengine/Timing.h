@@ -11,6 +11,7 @@ namespace Essengine {
       float end(); //returns current FPS
 
       void setMaxFPS(float fps);
+      float getFPS() { return _fps; }
 
     private:
       void calculateFPS();

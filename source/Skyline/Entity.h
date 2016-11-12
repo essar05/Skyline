@@ -13,11 +13,14 @@ class Entity {
     Entity(int textureId, float width, float height, glm::vec2 position, bool scaleToWorld);
     ~Entity();
 
+    void setPosition(const glm::vec2& position);
+    void setPreviousPosition(const glm::vec2& position);
     void setDirection(const glm::vec2& direction);
     void setVelocity(const glm::vec2& velocity);
     void setColor(const Essengine::ColorRGBA8& color) { _color = color; }
 
     glm::vec2 getPosition();
+    glm::vec2 getPreviousPosition() { return _previousPosition; }
     glm::vec2 getDirection();
     float getWidth();
     float getHeight();
@@ -48,6 +51,7 @@ class Entity {
     float _width;
     float _height;
     glm::vec2 _position;
+    glm::vec2 _previousPosition;
     glm::vec2 _direction = glm::vec2(0.0f);
     glm::vec2 _velocity = glm::vec2(0.0f);
     

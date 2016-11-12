@@ -1,6 +1,7 @@
 #include "Level.h"
 #include <Camera2D.h>
 #include <iostream>
+#include "Utils.h"
 
 Level::Level() : Level(0, 0) {}
 
@@ -95,6 +96,35 @@ void Level::draw() {
   _player->draw();
 }
 
+void Level::smoothStates() {
+  const float oneMinusRatio = 1.f - _game->getTimeStepAccumulatorRatio();
+
+  for(b2Body * b = _world->GetBodyList(); b != NULL; b = b->GetNext()) {
+    if(b->GetType() == b2_staticBody) {
+      continue;
+    }
+
+    Entity* e = static_cast<Entity*>(b->GetUserData());
+    e->setPosition(
+      _game->getTimeStepAccumulatorRatio() * Utils::toVec2(b->GetPosition()) +
+      oneMinusRatio * e->getPreviousPosition()
+    );
+  }
+}
+
+void Level::resetSmoothStates() {
+  for(b2Body * b = _world->GetBodyList(); b != NULL; b = b->GetNext()) {
+    if(b->GetType() == b2_staticBody) {
+      continue;
+    }
+
+    Entity* e = static_cast<Entity*>(b->GetUserData());
+    glm::vec2 position = Utils::toVec2(b->GetPosition());
+    e->setPosition(position);
+    e->setPreviousPosition(position);
+  }
+}
+
 //this function is a bit of a clusterfuck, should think of breaking it down better
 void Level::load(std::string levelName) {
   //should probably think about discarding old level when loading a new one.
@@ -104,6 +134,7 @@ void Level::load(std::string levelName) {
   Essengine::Camera2D* camera = _game->getMainCamera();
 
   _world = new b2World(b2Vec2(0, 0));
+  _world->SetAutoClearForces(false);
   _world->SetDebugDraw(&_glDebugDrawInstance);
   _glDebugDrawInstance.SetFlags(b2Draw::e_shapeBit | b2Draw::e_centerOfMassBit);
 

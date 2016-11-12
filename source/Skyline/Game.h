@@ -37,6 +37,7 @@ class Game : Essengine::IGame {
     ProjectileManager* getProjectileManager() { return _projectileManager; }
     float getWidth();
     float getHeight();
+    float getTimeStepAccumulatorRatio() { return _timestepAccumulatorRatio; }
 
   protected:
     Game();
@@ -67,14 +68,18 @@ class Game : Essengine::IGame {
 
     //settings
     float _fps;
-    float _maxFPS = 60.0f;
-    bool _debugMode = false;
+    float _maxFPS = 120.0f;
+    float _timestepAccumulator = 0.0f;
+    float _timestepAccumulatorRatio = 0.0f;
+    bool _debugMode = true;
     bool _limitFPS = true;
 
     float _height = 720.0f;
     float _width = 1280.0f;
     std::string _title = "Skyline 1.0";
-    float scrollSpeed = 0.2f;
+    float scrollSpeed = 10.0f;
+    glm::vec2 _cameraPosition;
+    glm::vec2 _previousCameraPosition;
 
     bool _canPause = true;
     bool _isPaused = false;

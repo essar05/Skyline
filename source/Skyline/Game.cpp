@@ -32,11 +32,8 @@ void Game::Boot() {
 void Game::Run() {
   SDL_StartTextInput();
 
-  const float DESIRED_FPS = 60;
-  const float MS_PER_SECOND = 1000;
-  const float DESIRED_FRAMETIME = MS_PER_SECOND / DESIRED_FPS;
   const int MAX_FRAMES_SIMULATED = 6;
-  const float MAX_DELTA_TIME = 1.0f;
+  const float TIMESTEP = 1.0f / 60.0f; //each physics step should represent a 60th of a second advancement in the world
 
   float previousTicks = (float) SDL_GetTicks();
 
@@ -44,20 +41,32 @@ void Game::Run() {
     _fpsLimiter.begin();
 
     float newTicks = (float) SDL_GetTicks();
-    float frameTime = newTicks - previousTicks;
+    float frameTime = newTicks - previousTicks; //the number of milliseconds that has passed since the last frame.
     previousTicks = newTicks;
-    float totalDeltaTime = frameTime / DESIRED_FRAMETIME;
-    
-    int i = 0;
-    while(totalDeltaTime > 0.0f && i < MAX_FRAMES_SIMULATED) {
-      float deltaTime = std::min(totalDeltaTime, MAX_DELTA_TIME);
+    _timestepAccumulator += frameTime / 1000.0f;
+    const int nSteps = static_cast<int> ( std::floor(_timestepAccumulator / TIMESTEP) );
 
-      processInput(deltaTime);
-      update(deltaTime);
-
-      totalDeltaTime -= deltaTime;
-      i++;
+    if(nSteps > 0) {
+      _timestepAccumulator -= nSteps * TIMESTEP;
     }
+
+    _timestepAccumulatorRatio = _timestepAccumulator / TIMESTEP;
+
+    const int nStepsClamped = std::min(nSteps, MAX_FRAMES_SIMULATED);
+    processInput(TIMESTEP * nStepsClamped);
+    
+    for(int i = 0; i < nStepsClamped; i++) {
+      _level->resetSmoothStates();
+      update(TIMESTEP);
+    }
+    
+    //smooth cameraPosition as well. maybe we could do it inside smoothStates so we don't have separated code but for now this will do
+    const float oneMinusRatio = 1.f - _timestepAccumulatorRatio;
+    glm::vec2 interpolatedCameraPosition = _timestepAccumulatorRatio * _cameraPosition + oneMinusRatio * _previousCameraPosition;
+    _camera.setPosition(interpolatedCameraPosition);
+
+    _level->smoothStates();
+    _level->getWorld()->ClearForces();
 
     Render();
 
@@ -78,10 +87,11 @@ void Game::Run() {
 
 void Game::update(float deltaTime) {
   if(!_isPaused) {
-    _camera.setPosition(_camera.getPosition() + glm::vec2(0.0f, this->scrollSpeed * _camera.getZoom()) * deltaTime);
-    _level->update(deltaTime);
+    _previousCameraPosition = _cameraPosition;
+    _cameraPosition = _cameraPosition + glm::vec2(0.0f, this->scrollSpeed * _camera.getZoom()) * deltaTime;
     updateProjectiles(deltaTime);
     updateObjects(deltaTime);
+    _level->update(deltaTime);
   }
 }
 
@@ -139,6 +149,8 @@ void Game::Render() {
   _spriteBatch.draw(position, uv, _textureCache.getTexture("Textures/grass_tile.png")._id, color, 0);
   //_spriteBatch.draw(position, uv, tex._id, color, 0);
   */
+
+  //std::cout << _camera.getWorldViewportSize().x << " " << _camera.getWorldViewportSize().y << std::endl;
 
   _level->draw();
   _projectileManager->draw();
@@ -272,6 +284,8 @@ void Game::initSystem() {
   _camera.setScale(32.0f);
   _camera.setZoom(this->getWidth() / 1024.0f);
   _camera.setPosition(_camera.getWorldCoordinates(glm::vec2(this->_width / 2, this->_height / 2)));
+  _previousCameraPosition = _camera.getPosition();
+  _cameraPosition = _previousCameraPosition;
 
   _spriteBatch.init();
   _fpsLimiter.init(_maxFPS, _limitFPS);

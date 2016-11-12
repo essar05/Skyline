@@ -12,10 +12,10 @@ class Player : public Entity {
     bool update(float deltaTime);
 
   private:
-    glm::vec2 _defaultVelocity = glm::vec2(0.0f, 0.2f);
-    glm::vec2 _maxVelocity = glm::vec2(0.4f, 0.5f);
+    glm::vec2 _defaultVelocity = glm::vec2(0.0f, 10.0f);
+    glm::vec2 _maxVelocity = glm::vec2(15.0f, 20.0f);
     
-    float _fireRate = 0.2f;
+    float _fireRate = 8.0f; //
     bool _isFiring = false;
     ProjectileSpawner _projectileSpawner;
 

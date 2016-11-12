@@ -24,6 +24,8 @@ class Level {
     void draw();
     void load(std::string levelName);
     void update(float deltaTime);
+    void smoothStates();
+    void resetSmoothStates();
 
     void addActiveObject(unsigned int k);
     void discardActiveObject();

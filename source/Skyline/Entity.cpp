@@ -3,6 +3,7 @@
 #include "Entity.h"
 #include "Game.h"
 #include "Utils.h"
+#include <iostream>
 
 Entity::Entity() {}
 
@@ -19,12 +20,24 @@ Entity::Entity(int textureId, float width, float height, glm::vec2 position, boo
     _position = _game->getMainCamera()->getWorldCoordinates(_position);
   }
 
+  _previousPosition = _position;
+
   createBody();
   createFixture();
+
+  _body->SetUserData(this);
 }
 
 Entity::~Entity() {
   _body->GetWorld()->DestroyBody( _body );
+}
+
+void Entity::setPosition(const glm::vec2& position) {
+  _position = position;
+}
+
+void Entity::setPreviousPosition(const glm::vec2& position) {
+  _previousPosition = position;
 }
 
 void Entity::setDirection(const glm::vec2& direction) {
@@ -42,9 +55,10 @@ bool Entity::update(float deltaTime) {
   acceleration.x = _velocity.x - velocity.x;
   acceleration.y = _velocity.y - velocity.y;
   
-  force = _body->GetMass() * deltaTime * acceleration;
+  force = _body->GetMass() * acceleration;
 
-  _body->ApplyForce(force, _body->GetWorldCenter(), true);
+  //_body->ApplyLinearImpulse(force, _body->GetWorldCenter(), true);
+  _body->SetLinearVelocity(Utils::toB2Vec2(_velocity));
 
   return true;
 }
@@ -84,7 +98,7 @@ bool Entity::collidesWith(float bWidth, float bHeight, const glm::vec2& bPositio
 void Entity::draw() {
   if(_isSpawned) {
     b2Vec2 bodyPosition = this->_body->GetPosition();
-    glm::vec2 screenPosition = glm::vec2(bodyPosition.x, bodyPosition.y);
+    glm::vec2 screenPosition = _position;
 
     Essengine::SpriteBatch* spriteBatch = _game->getSpriteBatch();
     glm::vec4 uv(0.0f, 0.0f, 1.0f, 1.0f);

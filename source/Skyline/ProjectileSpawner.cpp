@@ -21,7 +21,7 @@ void ProjectileSpawner::update(float deltaTime, bool isFiring, const glm::vec2& 
   _fireRateCounter += _fireRate * deltaTime;
   int projectileCount = (int) floor(_fireRateCounter);
 
-  if(isFiring && projectileCount > 0) {  
+  if(isFiring && projectileCount > 0) {
     spawn(projectileCount, position, velocity);
   }
 

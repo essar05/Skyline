@@ -30,4 +30,5 @@ void Projectile::createFixture() {
   boxFixtureDef.density = 1;
 
   _body->CreateFixture(&boxFixtureDef);
+  _body->SetBullet(true);
 }
