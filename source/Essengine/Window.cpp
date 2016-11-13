@@ -36,14 +36,38 @@ namespace Essengine {
 
     glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
 
-    //Set VSYNC
-    SDL_GL_SetSwapInterval(-1);
+    //Set VSYNC to disabled
+    SDL_GL_SetSwapInterval(0);
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   }
 
   Window::~Window() {
+  }
+
+  int Window::GetMonitorRefreshRate() {
+    SDL_DisplayMode mode = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
+    int windowDisplayIndex = SDL_GetWindowDisplayIndex(this->_sdlWindow);
+    if(windowDisplayIndex < 0) {
+      std::string sdlError = SDL_GetError();
+      throw Essengine::ERuntimeException("Error in Window::GetMonitorRefreshRate: " + sdlError);
+    }
+
+    if(SDL_GetDisplayMode(windowDisplayIndex, 0, &mode) < 0) {
+      std::string sdlError = SDL_GetError();
+      throw Essengine::ERuntimeException("Error in Window::GetMonitorRefreshRate: " + sdlError);
+    }
+
+    return mode.refresh_rate;
+  }
+
+  void Window::SetVSync(int vSync) {
+    if(vSync != 0 && vSync != 1 && vSync != -1) {
+      throw Essengine::ERuntimeException("Incorrect value passed to Window::SetVSync");
+    }
+
+    SDL_GL_SetSwapInterval(vSync);
   }
 
   void Window::SwapBuffer() {

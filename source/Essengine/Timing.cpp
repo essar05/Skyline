@@ -1,5 +1,6 @@
 #include "Timing.h"
 #include <SDL.h>
+#include <iostream>
 
 namespace Essengine {
 
@@ -11,19 +12,20 @@ namespace Essengine {
   }
 
   void FPSLimiter::begin() {
-    _startTicks = SDL_GetTicks();
+    _startTicks = std::chrono::high_resolution_clock::now();
   }
 
   float FPSLimiter::end() {
-    float frameTicks = SDL_GetTicks() - _startTicks;
+    _newTicks = std::chrono::high_resolution_clock::now();
+    _frameTime = std::chrono::duration_cast<std::chrono::microseconds>(_newTicks - _startTicks).count() / 1000.0f; //in miliseconds
 
     //limit FPS
-    if(_limitFPS && _maxFPS > 0 && 1000.0f / _maxFPS > frameTicks) {
-      SDL_Delay(1000.0f / _maxFPS - frameTicks);
+    if(_limitFPS && _maxFPS > 0 && 1000.0f / _maxFPS > _frameTime) {
+      SDL_Delay(1000.0f / _maxFPS - _frameTime);
     }
 
     //calculate FPS
-    //calculateFPS();
+    calculateFPS();
 
     return _fps;
   }
@@ -35,21 +37,17 @@ namespace Essengine {
   void FPSLimiter::calculateFPS() {
     static const int NUM_SAMPLES = 10;
     static float frameTimes[NUM_SAMPLES];
-
-    static float prevTicks = SDL_GetTicks();
     static int currentFrame = 0;
 
-    float currentTicks = SDL_GetTicks();
-
-    _frameTime = currentTicks - prevTicks;
     //if it runs too fast, it puts the frame time as 0 so we just wanna approximate to 1
     if(_frameTime == 0) {
       _frameTime = 1;
     }
 
+    //std::cout << "frametime: " << _frameTime << std::endl;
+
     frameTimes[currentFrame % NUM_SAMPLES] = _frameTime;
 
-    prevTicks = currentTicks;
     currentFrame++;
 
     int sampleCount = NUM_SAMPLES;

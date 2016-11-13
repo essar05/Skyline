@@ -10,6 +10,7 @@
 //#include <Psapi.h>
 #include "Entity.h"
 #include "Utils.h"
+#include <chrono>
 
 Game::Game() {}
 
@@ -34,16 +35,29 @@ void Game::Run() {
 
   const int MAX_FRAMES_SIMULATED = 6;
   const float TIMESTEP = 1.0f / 60.0f; //each physics step should represent a 60th of a second advancement in the world
+  static float deltaBuffer = 0; // this buffer keeps track of the extra bits of time
 
-  float previousTicks = (float) SDL_GetTicks();
+  std::chrono::high_resolution_clock::time_point previousTicks = std::chrono::high_resolution_clock::now(); // microseconds
+  std::chrono::high_resolution_clock::time_point newTicks = previousTicks; // microseconds
+  float frametime = 0.0f;
 
   while(_state == GameState::RUNNING) {
     _fpsLimiter.begin();
 
-    float newTicks = (float) SDL_GetTicks();
-    float frameTime = newTicks - previousTicks; //the number of milliseconds that has passed since the last frame.
+    newTicks = std::chrono::high_resolution_clock::now(); // microseconds
+    frametime = std::chrono::duration_cast<std::chrono::microseconds>(newTicks - previousTicks).count() / 1000.0f; //in miliseconds
     previousTicks = newTicks;
-    _timestepAccumulator += frameTime / 1000.0f;
+
+    //below from http://frankforce.com/?p=2636 seems to be working sweet
+    frametime += deltaBuffer;
+    const int refreshRate = _window->GetMonitorRefreshRate();
+    int frameCount = (int) (frametime * refreshRate + 1);
+    if(frameCount <= 0)	frameCount = 1;
+    const float oldDelta = frametime;
+    frametime = frameCount / (float) refreshRate;
+    deltaBuffer = oldDelta - frametime;
+
+    _timestepAccumulator += frametime / 1000.0f;
     const int nSteps = static_cast<int> ( std::floor(_timestepAccumulator / TIMESTEP) );
 
     if(nSteps > 0) {

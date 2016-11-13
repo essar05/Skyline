@@ -73,6 +73,7 @@ class Game : Essengine::IGame {
     float _timestepAccumulatorRatio = 0.0f;
     bool _debugMode = true;
     bool _limitFPS = true;
+    bool _vSync = 0;
 
     float _height = 720.0f;
     float _width = 1280.0f;

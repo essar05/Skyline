@@ -1,4 +1,5 @@
 #pragma once
+#include <chrono>
 
 namespace Essengine {
 
@@ -18,7 +19,8 @@ namespace Essengine {
     
       float _maxFPS;
 
-      unsigned int _startTicks;
+      std::chrono::high_resolution_clock::time_point _startTicks;
+      std::chrono::high_resolution_clock::time_point _newTicks;
       float _fps;
       float _frameTime;
       float _time;

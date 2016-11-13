@@ -19,9 +19,11 @@ namespace Essengine {
       ~Window();
 
       void SwapBuffer();
-      
+      void SetVSync(int vSync);
+
       int GetWidth() { return _width; }
       int GetHeight() { return _height; }
+      int GetMonitorRefreshRate();
 
     private:
       int _height;
