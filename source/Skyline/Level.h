@@ -14,6 +14,8 @@
 #include "Player.h"
 #include "Game.h"
 
+class Player;
+
 class Level {
   public:
     Level();

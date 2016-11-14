@@ -4,6 +4,8 @@
 #include "Player.h"
 #include <vector>
 
+class Player;
+
 class ProjectileManager {
   public:
     ProjectileManager();

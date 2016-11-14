@@ -38,16 +38,19 @@ namespace Essengine {
     static const int NUM_SAMPLES = 10;
     static float frameTimes[NUM_SAMPLES];
     static int currentFrame = 0;
+    static std::chrono::high_resolution_clock::time_point prevTicks = std::chrono::high_resolution_clock::now();
+
+    std::chrono::high_resolution_clock::time_point currentTicks = std::chrono::high_resolution_clock::now();
+    _frameTime = std::chrono::duration_cast<std::chrono::microseconds>(currentTicks - prevTicks).count() / 1000.0f;
 
     //if it runs too fast, it puts the frame time as 0 so we just wanna approximate to 1
     if(_frameTime == 0) {
       _frameTime = 1;
     }
 
-    //std::cout << "frametime: " << _frameTime << std::endl;
-
     frameTimes[currentFrame % NUM_SAMPLES] = _frameTime;
 
+    prevTicks = currentTicks;
     currentFrame++;
 
     int sampleCount = NUM_SAMPLES;

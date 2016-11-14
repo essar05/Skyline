@@ -105,10 +105,12 @@ void Level::smoothStates() {
     }
 
     Entity* e = static_cast<Entity*>(b->GetUserData());
-    e->setPosition(
-      _game->getTimeStepAccumulatorRatio() * Utils::toVec2(b->GetPosition()) +
-      oneMinusRatio * e->getPreviousPosition()
-    );
+    if(e) {
+      e->setPosition(
+        _game->getTimeStepAccumulatorRatio() * Utils::toVec2(b->GetPosition()) +
+        oneMinusRatio * e->getPreviousPosition()
+      );
+    }
   }
 }
 
@@ -119,9 +121,11 @@ void Level::resetSmoothStates() {
     }
 
     Entity* e = static_cast<Entity*>(b->GetUserData());
-    glm::vec2 position = Utils::toVec2(b->GetPosition());
-    e->setPosition(position);
-    e->setPreviousPosition(position);
+    if(e) {
+      glm::vec2 position = Utils::toVec2(b->GetPosition());
+      e->setPosition(position);
+      e->setPreviousPosition(position);
+    }
   }
 }
 
@@ -135,7 +139,7 @@ void Level::load(std::string levelName) {
 
   _world = new b2World(b2Vec2(0, 0));
   _world->SetAutoClearForces(false);
-  _world->SetDebugDraw(&_glDebugDrawInstance);
+  //_world->SetDebugDraw(&_glDebugDrawInstance);
   _glDebugDrawInstance.SetFlags(b2Draw::e_shapeBit | b2Draw::e_centerOfMassBit);
 
   _player = new Player(textureCache->getTexture("Textures/Cumz4AC.png")._id, 90.0f, 120.0f, glm::vec2(camera->getViewportSize().x / 2, 100.0f));

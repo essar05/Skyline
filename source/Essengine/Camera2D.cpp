@@ -41,7 +41,7 @@ namespace Essengine {
 
   //get the camera size within the world
   glm::vec2 Camera2D::getWorldViewportSize() {
-    return glm::vec2(_screenWidth / (_scale + _zoom), _screenHeight / (_scale + _zoom));
+    return glm::vec2((_screenWidth / _zoom) / _scale, (_screenHeight / _zoom) / _scale);
   }
 
   glm::vec2 Camera2D::getViewportSize() {

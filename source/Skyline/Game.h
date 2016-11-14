@@ -19,6 +19,7 @@
 enum class GameState { RUNNING, EXIT };
 
 class Level;
+class ProjectileManager;
 
 class Game : Essengine::IGame {
   public:
@@ -68,12 +69,12 @@ class Game : Essengine::IGame {
 
     //settings
     float _fps;
-    float _maxFPS = 120.0f;
+    float _maxFPS = 60.0f;
     float _timestepAccumulator = 0.0f;
     float _timestepAccumulatorRatio = 0.0f;
-    bool _debugMode = true;
-    bool _limitFPS = true;
-    bool _vSync = 0;
+    bool _debugMode = false;
+    bool _limitFPS = false;
+    bool _vSync = 1;
 
     float _height = 720.0f;
     float _width = 1280.0f;

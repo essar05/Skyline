@@ -41,7 +41,47 @@ bool Player::update(float deltaTime) {
 
   float currentSpeed = velocity.Length();
   if(currentSpeed > maxSpeed) {
-    //_body->SetLinearVelocity((maxSpeed / currentSpeed) * velocity);
+    body->SetLinearVelocity((maxSpeed / currentSpeed) * velocity);
+  }
+
+  /* BIND PLAYER WITHIN THE VIEWPORT */
+  //calculate next step position
+  glm::vec2 nextPosition = glm::vec2(
+    _body->GetPosition().x + _body->GetLinearVelocity().x * deltaTime + (acceleration.x * deltaTime * deltaTime) / 2,
+    _body->GetPosition().y + _body->GetLinearVelocity().y * deltaTime + (acceleration.y * deltaTime * deltaTime) / 2
+  );
+
+  glm::vec2 viewportSize = _game->getMainCamera()->getWorldViewportSize();
+  glm::vec2 cameraPosition = _game->getMainCamera()->getPosition() / _game->getMainCamera()->getZoom();
+  b2Vec2 correctedPosition = _body->GetPosition();
+  b2Vec2 correctedVelocity = _body->GetLinearVelocity();
+  bool doCorrectPosition = false;
+
+  if(nextPosition.x - _width / 2 < cameraPosition.x - viewportSize.x / 2) {
+    correctedPosition.x = cameraPosition.x - viewportSize.x / 2 + _width / 2;
+    correctedVelocity.x = 0.0f;
+    doCorrectPosition = true;
+  }
+  if(nextPosition.x + _width / 2 > cameraPosition.x + viewportSize.x / 2) {
+    correctedPosition.x = cameraPosition.x + viewportSize.x / 2 - _width / 2;
+    correctedVelocity.x = 0.0f;
+    doCorrectPosition = true;
+  }
+  if(nextPosition.y - _height / 2 < cameraPosition.y - viewportSize.y / 2) {
+    correctedPosition.y = cameraPosition.y - viewportSize.y / 2 + _height / 2;
+    correctedVelocity.y = 0.0f;
+    doCorrectPosition = true;
+  }
+  if(nextPosition.y + _height / 2 > cameraPosition.y + viewportSize.y / 2) {
+    correctedPosition.y = cameraPosition.y + viewportSize.y / 2 - _height / 2;
+    correctedVelocity.y = 0.0f;
+    doCorrectPosition = true;
+  }
+  
+  //if we have corrections to do, we must make sure to stop the body's velocity in the corrected direction as well.
+  if(doCorrectPosition) {
+    _body->SetLinearVelocity(correctedVelocity);
+    _body->SetTransform(correctedPosition, _body->GetAngle());
   }
 
   glm::vec2 position = Utils::toVec2(_body->GetPosition());

@@ -1,6 +1,7 @@
 #pragma once
 #include "Entity.h"
 #include "ProjectileSpawner.h"
+#include "Game.h"
 
 class Player : public Entity {
   public:
