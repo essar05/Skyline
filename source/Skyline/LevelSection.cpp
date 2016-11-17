@@ -18,7 +18,6 @@ LevelSection::~LevelSection() {
       unsigned int objectId = _objects[k];
       entityManager->deleteEntity(objectId);
       _objects.erase(_objects.begin() + k);
-      level->discardActiveObject();
     }
   }
 }
@@ -30,12 +29,15 @@ void LevelSection::update() {
 
   for(unsigned int k = 0; k < _objects.size();) {
     entity = entityManager->getEntity(_objects[k]);
+    if(entity == nullptr) {
+      _objects.erase(_objects.begin() + k);
+      continue;
+    }
 
     //if this object had been spawned but went out of viewpot OR if it's health is 0 then we just discard it.
     if((entity->isSpawned() && !entity->inViewport()) || entity->getHealth() <= 0) {
       entityManager->deleteEntity(_objects[k]);
       _objects.erase(_objects.begin() + k);
-      level->discardActiveObject();
       continue;
     }
 
@@ -47,7 +49,6 @@ void LevelSection::update() {
     //this entity IS in the viewport but it hasn't been spanwed it. so let's spawn it and set it as active.
     if(!entity->isSpawned()) {
       entity->spawn();
-      level->addActiveObject(_objects[k]);
     }
 
     k++;
@@ -68,6 +69,10 @@ void LevelSection::draw(float x, float y) {
 
   for(unsigned int k = 0; k < _objects.size();) {
     entity = entityManager->getEntity(_objects[k]);
+    if(entity == nullptr) {
+      _objects.erase(_objects.begin() + k);
+      continue;
+    }
 
     if(!entity->isSpawned() && !entity->inViewport()) {
       break;

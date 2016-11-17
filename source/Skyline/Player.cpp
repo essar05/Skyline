@@ -5,8 +5,8 @@
 Player::Player() : Player(0, 0.0f, 0.0f, glm::vec2(0.0f, 0.0f)) { }
 
 Player::Player(int textureId, float width, float height, glm::vec2 position) : Entity(textureId, width, height, position) {
-  _projectileSpawner = ProjectileSpawner(8.0f, glm::vec2(0.2f, 0.5f), 10.0f);
-  _projectileSpawner.setSource(1);
+  _projectileSpawner = ProjectileSpawner(8.0f, glm::vec2(0.2f, 0.5f), 40.0f);
+  _projectileSpawner.setSource(this->getType());
 }
 
 Player::~Player() { }
@@ -18,13 +18,11 @@ bool Player::update(float deltaTime) {
 
   if(_direction.x != 0) {
     acceleration.x = (_direction.x * _maxVelocity.x - velocity.x);
-    //desiredVelocity.x = _direction.x * 15.0f;
   } else if(velocity.x != 0) {
     acceleration.x = (_defaultVelocity.x - velocity.x);
   }
 
   if(_direction.y != 0) {
-    //desiredVelocity.y = _direction.y * 15.0f;
     if(_direction.y < 0) {
       acceleration.y = (b2Max(velocity.y - 3.5f, _direction.y * 5.0f) - velocity.y);
     } else {
@@ -37,11 +35,10 @@ bool Player::update(float deltaTime) {
   force = _body->GetMass() * acceleration;
 
   _body->ApplyLinearImpulse(force, _body->GetWorldCenter(), true);
-  //_body->SetLinearVelocity(desiredVelocity);
 
   float currentSpeed = velocity.Length();
   if(currentSpeed > maxSpeed) {
-    body->SetLinearVelocity((maxSpeed / currentSpeed) * velocity);
+    //_body->SetLinearVelocity((maxSpeed / currentSpeed) * velocity);
   }
 
   /* BIND PLAYER WITHIN THE VIEWPORT */
@@ -54,39 +51,52 @@ bool Player::update(float deltaTime) {
   glm::vec2 viewportSize = _game->getMainCamera()->getWorldViewportSize();
   glm::vec2 cameraPosition = _game->getMainCamera()->getPosition() / _game->getMainCamera()->getZoom();
   b2Vec2 correctedPosition = _body->GetPosition();
-  b2Vec2 correctedVelocity = _body->GetLinearVelocity();
+  b2Vec2 correctionAcceleration = b2Vec2(0.0f, 0.0f);
+  b2Vec2 currentVelocity = _body->GetLinearVelocity();
+
   bool doCorrectPosition = false;
 
   if(nextPosition.x - _width / 2 < cameraPosition.x - viewportSize.x / 2) {
     correctedPosition.x = cameraPosition.x - viewportSize.x / 2 + _width / 2;
-    correctedVelocity.x = 0.0f;
+    correctionAcceleration.x = 0.0f - currentVelocity.x;
     doCorrectPosition = true;
   }
   if(nextPosition.x + _width / 2 > cameraPosition.x + viewportSize.x / 2) {
     correctedPosition.x = cameraPosition.x + viewportSize.x / 2 - _width / 2;
-    correctedVelocity.x = 0.0f;
+    correctionAcceleration.x = 0.0f - currentVelocity.x;
     doCorrectPosition = true;
   }
-  if(nextPosition.y - _height / 2 < cameraPosition.y - viewportSize.y / 2) {
+  if(nextPosition.y - _height / 2 < cameraPosition.y - viewportSize.y / 2 && _direction.y != 1) {
     correctedPosition.y = cameraPosition.y - viewportSize.y / 2 + _height / 2;
-    correctedVelocity.y = 0.0f;
+    correctionAcceleration.y = 0.0f - currentVelocity.y;
     doCorrectPosition = true;
   }
-  if(nextPosition.y + _height / 2 > cameraPosition.y + viewportSize.y / 2) {
+  if(nextPosition.y + _height / 2 > cameraPosition.y + viewportSize.y / 2 && _direction.y != -1) {
     correctedPosition.y = cameraPosition.y + viewportSize.y / 2 - _height / 2;
-    correctedVelocity.y = 0.0f;
+    correctionAcceleration.y = _defaultVelocity.y * 0.99f - currentVelocity.y;
     doCorrectPosition = true;
   }
   
   //if we have corrections to do, we must make sure to stop the body's velocity in the corrected direction as well.
+  //still can be a bit weird... could be interpolated camera position or something...
   if(doCorrectPosition) {
-    _body->SetLinearVelocity(correctedVelocity);
+    b2Vec2 force = _body->GetMass() * correctionAcceleration;
+    //the impulse is applied in order to stop the body from moving further in that direction.
+    _body->ApplyLinearImpulse(force, _body->GetWorldCenter(), true);
+
     _body->SetTransform(correctedPosition, _body->GetAngle());
   }
 
-  glm::vec2 position = Utils::toVec2(_body->GetPosition());
-  //test
-  _projectileSpawner.update(deltaTime, _isFiring, position + glm::vec2(0.0f, _height / 2 + _projectileSpawner.getProjectileHeight()), glm::vec2(0.0f, 50.0f));
+  glm::vec2 position = Utils::toVec2(_body->GetPosition()) + glm::vec2(0.0f, _height / 2 + _projectileSpawner.getProjectileHeight());
+
+  _projectileSpawner.update(deltaTime, _isFiring, position, glm::vec2(0.0f, 50.0f));
 
   return true;
+}
+
+void Player::contact(Entity* e) {
+  if(e->getType() == ET_ENTITY) {
+    applyDamage(e->getCollisionDamage());
+    _game->getEntityManager()->deleteEntity(e->getId(), true);
+  }
 }

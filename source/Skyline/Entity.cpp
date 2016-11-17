@@ -106,6 +106,10 @@ void Entity::draw() {
   }
 }
 
+void Entity::contact(Entity* entity) {
+
+}
+
 void Entity::createBody() {
   b2BodyDef bodyDef;
   bodyDef.type = b2_dynamicBody;

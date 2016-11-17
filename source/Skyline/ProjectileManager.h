@@ -13,12 +13,14 @@ class ProjectileManager {
     
     void add(Projectile* projectile);
     void update(float deltaTime);
-    void discard(unsigned int index);
+    void deleteProjectile(unsigned int index, bool queued = false);
+    void deleteQueuedProjectiles();
     void draw();
-    bool checkCollision(Projectile* projectile, Player* player, const std::vector<unsigned int>& objects);
-  
+
   private:
-    std::vector<Projectile*> _projectiles;
+    std::unordered_map<unsigned int, Projectile*> _projectiles;
+    unsigned int _projectileCount = 0;
+    std::vector<unsigned int> _deleteQueue;
 
 };
 

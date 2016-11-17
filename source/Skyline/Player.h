@@ -10,7 +10,9 @@ class Player : public Entity {
     ~Player();
 
     void setIsFiring(bool isFiring) { _isFiring = isFiring; }
-    bool update(float deltaTime);
+    bool update(float deltaTime) override;
+    int getType() override { return ET_PLAYER; }
+    void contact(Entity* e) override;
 
   private:
     glm::vec2 _defaultVelocity = glm::vec2(0.0f, 10.0f);

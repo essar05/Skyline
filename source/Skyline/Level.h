@@ -13,6 +13,7 @@
 #include "b2GLDebugDraw.h"
 #include "Player.h"
 #include "Game.h"
+#include "ContactListener.h"
 
 class Player;
 
@@ -29,10 +30,6 @@ class Level {
     void smoothStates();
     void resetSmoothStates();
 
-    void addActiveObject(unsigned int k);
-    void discardActiveObject();
-    std::vector<unsigned int> getActiveObjects();
-
     b2World* getWorld();
     Player* getPlayer();
 
@@ -42,11 +39,12 @@ class Level {
 
     float _height;
     float _width;
-    std::vector<unsigned int> _activeObjects;
+
     std::unordered_map<float, LevelSection*> _sections;
     std::unordered_map<float, LevelSection*>::iterator _renderStartIt;
 
     b2World* _world;
     b2GLDebugDraw _glDebugDrawInstance;
+    ContactListener _contactListener;
 
 };

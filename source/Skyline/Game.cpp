@@ -59,16 +59,13 @@ void Game::Run() {
 
     _timestepAccumulator += frametime / 1000.0f;
     const int nSteps = static_cast<int> ( std::floor(_timestepAccumulator / TIMESTEP) );
-
     if(nSteps > 0) {
       _timestepAccumulator -= nSteps * TIMESTEP;
     }
-
     _timestepAccumulatorRatio = _timestepAccumulator / TIMESTEP;
 
     const int nStepsClamped = std::min(nSteps, MAX_FRAMES_SIMULATED);
     processInput(TIMESTEP * nStepsClamped);
-    
     for(int i = 0; i < nStepsClamped; i++) {
       _level->resetSmoothStates();
       update(TIMESTEP);
@@ -106,6 +103,8 @@ void Game::update(float deltaTime) {
     updateProjectiles(deltaTime);
     updateObjects(deltaTime);
     _level->update(deltaTime);
+    _entityManager->deleteQueuedEntities();
+    _projectileManager->deleteQueuedProjectiles();
   }
 }
 

@@ -1,5 +1,5 @@
 #include "Projectile.h"
-
+#include "Game.h"
 
 Projectile::Projectile() {
 }
@@ -19,6 +19,13 @@ bool Projectile::update(float deltaTime) {
     return false;
   }
   return true;
+}
+
+void Projectile::contact(Entity* e) {
+  if(e->getType() == ET_ENTITY && _source == ET_PLAYER) { //todo change to ET_DAMAGE
+    e->applyDamage(this->getDamage());
+    _game->getProjectileManager()->deleteProjectile(this->getId(), true);
+  }
 }
 
 void Projectile::createFixture() {

@@ -3,6 +3,7 @@
 #include <Vertex.h>
 #include <glm\glm.hpp>
 #include <Box2D.h>
+#include "EntityType.h"
 
 class Game;
 
@@ -18,7 +19,10 @@ class Entity {
     void setDirection(const glm::vec2& direction);
     void setVelocity(const glm::vec2& velocity);
     void setColor(const Essengine::ColorRGBA8& color) { _color = color; }
+    void setId(unsigned int id) { _id = id; }
 
+    unsigned int getId() { return _id; }
+    virtual int getType() { return ET_ENTITY; }
     glm::vec2 getPosition();
     glm::vec2 getPreviousPosition() { return _previousPosition; }
     glm::vec2 getDirection();
@@ -37,6 +41,7 @@ class Entity {
     bool collidesWith(Entity* anotherEntity);
     bool inViewport();
     bool collidesWith(float width, float height, const glm::vec2& position);
+    virtual void contact(Entity* entity);
 
     void spawn();
     float isSpawned();
@@ -47,6 +52,7 @@ class Entity {
     virtual void createBody();
     virtual void createFixture();
 
+    unsigned int _id = NULL;
     float _health = 100.0f;
     float _width;
     float _height;
@@ -67,4 +73,3 @@ class Entity {
     int _textureId;
 
 };
-

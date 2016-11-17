@@ -7,65 +7,63 @@ ProjectileManager::ProjectileManager() {
 
 
 ProjectileManager::~ProjectileManager() {
-  for(unsigned int i = 0; i < _projectiles.size(); i++) {
-    delete _projectiles[i];
+  auto it = _projectiles.begin();
+  while(it != _projectiles.end()) {
+      delete it->second;
   }
+  _projectiles.clear();
 }
 
 void ProjectileManager::add(Projectile* projectile) {
-  _projectiles.push_back(projectile);
+  _projectiles[_projectileCount++] = projectile;
+  projectile->setId(_projectileCount - 1);
 }
 
 void ProjectileManager::update(float deltaTime) {
   Game* gameInstance = Game::GetInstance();
   Player* player = gameInstance->getLevel()->getPlayer();
-  std::vector<unsigned int> objects = gameInstance->getLevel()->getActiveObjects();
 
-  for(unsigned int i = 0; i < _projectiles.size();) {
-    if(!_projectiles[i]->update(deltaTime)) {
-      discard(i);
-    /*} else if(checkCollision(_projectiles[i], player, objects)) {
-      discard(i);*/
-    } else {
-      i++;
+  auto it = _projectiles.begin();
+  while(it != _projectiles.end()) {
+    if(!it->second->update(deltaTime)) {
+      delete it->second;
+      it = _projectiles.erase(it);
+      continue;
     }
+
+    it++;
   }
 }
 
-void ProjectileManager::discard(unsigned int index) {
-  delete _projectiles[index];
-  _projectiles.erase(_projectiles.begin() + index);
+void ProjectileManager::deleteProjectile(unsigned int index, bool queued) {
+  if(queued) {
+    _deleteQueue.push_back(index);
+    return;
+  }
+
+  auto it = _projectiles.find(index);
+  if(it != _projectiles.end()) {
+    delete it->second;
+    _projectiles.erase(it);
+  }
 }
 
-bool ProjectileManager::checkCollision(Projectile* projectile, Player* player, const std::vector<unsigned int>& objects) {
-  /*Game* gameInstance = Game::GetInstance();
-
-  Entity* entity;
-  EntityManager* entityManager = gameInstance->getEntityManager();
-
-  if(projectile->getSource() == 1) {
-    bool isColliding = false;
-    for(unsigned int i = 0; i < objects.size(); i++) {
-      entity = entityManager->getEntity(objects[i]);
-      if(entity == nullptr) {
-        continue;
-      }
-
-      bool isColliding = projectile->collidesWith(entity);
-      if(isColliding) {
-        entity->applyDamage(projectile->getDamage());
-        return true;
-      }
+void ProjectileManager::deleteQueuedProjectiles() {
+  for(int i = 0; i < _deleteQueue.size(); i++) {
+    auto it = _projectiles.find(_deleteQueue[i]);
+    if(it != _projectiles.end()) {
+      delete it->second;
+      _projectiles.erase(it);
     }
-  } else {
-    return projectile->collidesWith(player);
-  }*/
+  }
 
-  return false;
+  _deleteQueue.clear();
 }
 
 void ProjectileManager::draw() {
-  for(unsigned int i = 0; i < _projectiles.size(); i++) {
-    _projectiles[i]->draw();
+  auto it = _projectiles.begin();
+  while(it != _projectiles.end()) {
+    it->second->draw();
+    it++;
   }
 }
