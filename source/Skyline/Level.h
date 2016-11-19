@@ -40,8 +40,8 @@ class Level {
     float _height;
     float _width;
 
-    std::unordered_map<float, LevelSection*> _sections;
-    std::unordered_map<float, LevelSection*>::iterator _renderStartIt;
+    std::map<float, LevelSection*> _sections;
+    std::map<float, LevelSection*>::iterator _renderStartIt;
 
     b2World* _world;
     b2GLDebugDraw _glDebugDrawInstance;

@@ -24,9 +24,9 @@ bool Player::update(float deltaTime) {
 
   if(_direction.y != 0) {
     if(_direction.y < 0) {
-      acceleration.y = (b2Max(velocity.y - 3.5f, _direction.y * 5.0f) - velocity.y);
+      acceleration.y = _direction.y * _maxVelocity.y - velocity.y;
     } else {
-      acceleration.y = (b2Min(_direction.y * _maxVelocity.y, velocity.y + 3.5f) - velocity.y);
+      acceleration.y = (b2Min(_direction.y * (_maxVelocity.y + _defaultVelocity.y), velocity.y + 8.5f) - velocity.y);
     }
   } else {
     acceleration.y = (_defaultVelocity.y - velocity.y);

@@ -1,26 +1,53 @@
 {
   "sections": [
-	{
-	  "background": "tex1.png",
-	  "height": 1024,
-	  "width": 1024
-	},
-	{
-	  "background": "tex.png",
-	  "height": 1024,
-	  "width": 1024,
-	  "objects": [
-	    {
+    {
+      "background": "tex1.png",
+      "height": 1024,
+      "width": 1024
+    },
+    {
+      "background": "tex1.png",
+      "height": 1024,
+      "width": 1024,
+      "objects": [
+        {
           "type": 3,
-		  "x": 732,
-		  "y": 76
-		},
-		{
+          "x": 732,
+          "y": 388
+        },
+        {
           "type": 3,
-		  "x": 500,
-		  "y": 80
-		}
-	  ]
-	}
+          "x": 200,
+          "y": 80
+        }
+      ]
+    },
+    {
+      "background": "tex1.png",
+      "height": 1024,
+      "width": 1024,
+      "objects": [
+        {
+          "type": 3,
+          "x": 732,
+          "y": 76
+        },
+        {
+          "type": 3,
+          "x": 420,
+          "y": 150
+        }
+      ]
+    },
+    {
+      "background": "tex1.png",
+      "height": 1024,
+      "width": 1024
+    },
+    {
+      "background": "tex1.png",
+      "height": 1024,
+      "width": 1024
+    }
   ]
 }

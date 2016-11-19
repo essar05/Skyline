@@ -44,13 +44,15 @@ void Level::update(float deltaTime) {
   we set the new section rendering iterator to the next section and we skip over to the next loop cycle
   */
   auto it = _sections.begin();
-  std::unordered_map<float, LevelSection*>::iterator endIt = _sections.begin();
+  std::map<float, LevelSection*>::iterator endIt = _sections.begin();
+  bool deleteSection = false;
   while(it != _sections.end()) {
     if(camera->getPosition().y / camera->getZoom() + viewportSize[1] / 2 < it->first) {
       break;
     } else if(camera->getPosition().y / camera->getZoom() - viewportSize[1] / 2 > it->first + it->second->getHeight()) {
       delete it->second;
       endIt = ++it;
+      deleteSection = true;
       continue;
     }
 
@@ -59,7 +61,9 @@ void Level::update(float deltaTime) {
     it++;
   }
   
-  _sections.erase(_sections.begin(), endIt);
+  if(deleteSection) {
+    _sections.erase(_sections.begin(), endIt);
+  }
 
   //update the player stuff
   _player->update(deltaTime);
@@ -84,7 +88,7 @@ void Level::draw() {
 
   auto it = _sections.begin();
   while(it != _sections.end()) {
-    if(camera->getPosition().y + viewportSize[1] < it->first) {
+    if(camera->getPosition().y / camera->getZoom() + viewportSize[1] / 2 < it->first) {
       break;
     }
 
