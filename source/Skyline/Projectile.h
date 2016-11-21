@@ -17,7 +17,7 @@ class Projectile : public Entity {
     void contact(Entity* e) override;
 
   protected:
-    void createFixture();
+    void createFixtures() override;
 
   private:
     int _source; //1 -> player, 2 -> enemies;

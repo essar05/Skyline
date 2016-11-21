@@ -101,19 +101,16 @@ void Level::draw() {
 }
 
 void Level::smoothStates() {
-  const float oneMinusRatio = 1.f - _game->getTimeStepAccumulatorRatio();
+  const float timestepAccumulatorRatio = _game->getTimeStepAccumulatorRatio();
 
   for(b2Body * b = _world->GetBodyList(); b != NULL; b = b->GetNext()) {
     if(b->GetType() == b2_staticBody) {
       continue;
     }
 
-    Entity* e = static_cast<Entity*>(b->GetUserData());
-    if(e) {
-      e->setPosition(
-        _game->getTimeStepAccumulatorRatio() * Utils::toVec2(b->GetPosition()) +
-        oneMinusRatio * e->getPreviousPosition()
-      );
+    Entity* entity = static_cast<Entity*>(b->GetUserData());
+    if(entity) {
+      entity->smoothStates(timestepAccumulatorRatio);
     }
   }
 }
@@ -124,11 +121,9 @@ void Level::resetSmoothStates() {
       continue;
     }
 
-    Entity* e = static_cast<Entity*>(b->GetUserData());
-    if(e) {
-      glm::vec2 position = Utils::toVec2(b->GetPosition());
-      e->setPosition(position);
-      e->setPreviousPosition(position);
+    Entity* entity = static_cast<Entity*>(b->GetUserData());
+    if(entity) {
+      entity->resetSmoothStates();
     }
   }
 }
@@ -148,6 +143,7 @@ void Level::load(std::string levelName) {
   _glDebugDrawInstance.SetFlags(b2Draw::e_shapeBit | b2Draw::e_centerOfMassBit);
 
   _player = new Player(textureCache->getTexture("Textures/Cumz4AC.png")._id, 90.0f, 120.0f, glm::vec2(camera->getViewportSize().x / 2, 100.0f));
+  _player->createB2Data();
   _player->spawn();
 
   std::ifstream t("Levels/" + levelName + ".sky");
@@ -183,6 +179,7 @@ void Level::load(std::string levelName) {
         
         //create the entity, add it to the manager and then add it to the section.
         Entity* e = new Entity(textureCache->getTexture("Textures/camel.png")._id, 100.0f, 115.0f, glm::vec2(objectX, objectY));
+        e->createB2Data();
         section->addObject(entityManager->addEntity(e));
       }
     }

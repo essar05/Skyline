@@ -21,11 +21,6 @@ Entity::Entity(int textureId, float width, float height, glm::vec2 position, boo
   }
 
   _previousPosition = _position;
-
-  createBody();
-  createFixture();
-
-  _body->SetUserData(this);
 }
 
 Entity::~Entity() {
@@ -106,8 +101,27 @@ void Entity::draw() {
   }
 }
 
-void Entity::contact(Entity* entity) {
+void Entity::contact(Entity* entity) {}
 
+void Entity::smoothStates(float timestepAccumulatorRatio) {
+  float oneMinusRatio = 1.0f - timestepAccumulatorRatio;
+
+  this->setPosition(
+    timestepAccumulatorRatio * Utils::toVec2(_body->GetPosition()) +
+    oneMinusRatio * _previousPosition
+  );
+}
+
+void Entity::resetSmoothStates() {
+  glm::vec2 position = Utils::toVec2(_body->GetPosition());
+  _position = position;
+  _previousPosition = position;
+}
+
+void Entity::createB2Data() {
+  createBody();
+  createFixtures();
+  _body->SetUserData(this);
 }
 
 void Entity::createBody() {
@@ -119,7 +133,7 @@ void Entity::createBody() {
   _body = _game->getLevel()->getWorld()->CreateBody(&bodyDef);
 }
 
-void Entity::createFixture() {
+void Entity::createFixtures() {
   b2Vec2 vertices[3];
   vertices[0].Set(-_width / 2, 0.0f);
   vertices[1].Set(_width / 2, 0.0f);

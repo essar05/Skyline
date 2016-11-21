@@ -14,6 +14,9 @@ class Entity {
     Entity(int textureId, float width, float height, glm::vec2 position, bool scaleToWorld);
     ~Entity();
 
+    void draw();
+    virtual bool update(float deltaTime);
+
     void setPosition(const glm::vec2& position);
     void setPreviousPosition(const glm::vec2& position);
     void setDirection(const glm::vec2& direction);
@@ -32,25 +35,22 @@ class Entity {
     float getHealth() { return _health; }
     b2Body* getBody() { return _body;  }
 
-    void draw();
-  
-    virtual bool update(float deltaTime);
-    
     void applyDamage(float damage);
-
     bool collidesWith(Entity* anotherEntity);
-    bool inViewport();
     bool collidesWith(float width, float height, const glm::vec2& position);
     virtual void contact(Entity* entity);
-
-    void spawn();
+    virtual void createB2Data();
+    bool inViewport();
     float isSpawned();
-
+    void resetSmoothStates();
+    void smoothStates(float timestepAccumulatorRatio);
+    void spawn();
+    
   protected:
     Game* _game;
 
     virtual void createBody();
-    virtual void createFixture();
+    virtual void createFixtures();
 
     unsigned int _id = NULL;
     float _health = 100.0f;

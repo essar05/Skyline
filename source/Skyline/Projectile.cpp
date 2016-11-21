@@ -28,7 +28,7 @@ void Projectile::contact(Entity* e) {
   }
 }
 
-void Projectile::createFixture() {
+void Projectile::createFixtures() {
   b2PolygonShape boxShape;
   boxShape.SetAsBox(_width / 2, _height / 2);
 

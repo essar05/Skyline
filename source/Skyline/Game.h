@@ -79,7 +79,8 @@ class Game : Essengine::IGame {
     float _height = 720.0f;
     float _width = 1280.0f;
     std::string _title = "Skyline 1.0";
-    float scrollSpeed = 10.0f;
+    float _scrollSpeed = 10.0f;
+
     glm::vec2 _cameraPosition;
     glm::vec2 _previousCameraPosition;
 

@@ -71,6 +71,11 @@ void Game::Run() {
       update(TIMESTEP);
     }
     
+    newTicks = std::chrono::high_resolution_clock::now(); // microseconds
+    frametime = std::chrono::duration_cast<std::chrono::microseconds>(newTicks - previousTicks).count() / 1000.0f; //in miliseconds
+    float delta = (frametime / 1000.0f) / TIMESTEP;
+    _timestepAccumulatorRatio += delta;
+
     //smooth cameraPosition as well. maybe we could do it inside smoothStates so we don't have separated code but for now this will do
     const float oneMinusRatio = 1.f - _timestepAccumulatorRatio;
     glm::vec2 interpolatedCameraPosition = _timestepAccumulatorRatio * _cameraPosition + oneMinusRatio * _previousCameraPosition;
@@ -99,7 +104,8 @@ void Game::Run() {
 void Game::update(float deltaTime) {
   if(!_isPaused) {
     _previousCameraPosition = _cameraPosition;
-    _cameraPosition = _cameraPosition + glm::vec2(0.0f, this->scrollSpeed * _camera.getZoom()) * deltaTime;
+    _cameraPosition = _cameraPosition + glm::vec2(0.0f, this->_scrollSpeed * _camera.getZoom()) * deltaTime;
+    
     updateProjectiles(deltaTime);
     updateObjects(deltaTime);
     _level->update(deltaTime);
@@ -131,11 +137,7 @@ void Game::Render() {
 
   _baseProgram->use();
   _camera.update();
-  /*
-  PROCESS_MEMORY_COUNTERS memCounter;
-  bool result = GetProcessMemoryInfo(GetCurrentProcess(), &memCounter, sizeof(memCounter));
-  std::cout << "Start " << memCounter.WorkingSetSize / (1014) << " kb" << std::endl;
-  */
+
   glActiveTexture(GL_TEXTURE0);
   GLint textureLocation = _baseProgram->getUniformLocation("textureSampler");
   glUniform1i(textureLocation, 0);
@@ -149,21 +151,6 @@ void Game::Render() {
   glUniformMatrix4fv(pLocation, 1, GL_FALSE, &(cameraMatrix[0][0]));
 
   _spriteBatch.begin(Essengine::GlyphSortType::BACK_TO_FRONT);
-  /*
-  glm::vec4 position(80.0f, 23.0f, 100.0f, 100.0f);
-  glm::vec4 uv(0.0f, 0.0f, 1.0f, 1.0f);
-  Essengine::ColorRGBA8 color(255, 255, 255, 255);
-  
-  Essengine::GLTexture tex = _textureCache.getTexture("Textures/grass_tile.png");
-
-  //result = GetProcessMemoryInfo(GetCurrentProcess(), &memCounter, sizeof(memCounter));
-  //std::cout << "End " << memCounter.WorkingSetSize / (1014) << " kb" << std::endl << std::endl;
-
-  _spriteBatch.draw(position, uv, _textureCache.getTexture("Textures/grass_tile.png")._id, color, 0);
-  //_spriteBatch.draw(position, uv, tex._id, color, 0);
-  */
-
-  //std::cout << _camera.getWorldViewportSize().x << " " << _camera.getWorldViewportSize().y << std::endl;
 
   _level->draw();
   _projectileManager->draw();
@@ -171,40 +158,8 @@ void Game::Render() {
   _spriteBatch.end();
   _spriteBatch.render();
 
-  //unbind texture (not neccesary, or well doesn't do anything really)
-  //glBindTexture(GL_TEXTURE_2D, 0);
   glUniform1i(useTextureLocation, 0);
   this->getLevel()->getWorld()->DrawDebugData();
-
-  /*
-  just as reminder of render process i guess?
-  GLfloat vertices[] = {
-    10.0f, 10.0f,  1.0f, 0.0f, 0.0f, 1.0f,
-    10.0f, 5.0f,   1.0f, 0.0f, 0.0f, 1.0f,
-    15.0f, 5.0f,   1.0f, 0.0f, 0.0f, 1.0f,
-    15.0f, 5.0f,  1.0f, 0.0f, 0.0f, 1.0f,
-    10.0f, 5.0f,   1.0f, 0.0f, 0.0f, 1.0f,
-    10.0f, 10.0f,   1.0f, 0.0f, 0.0f, 1.0f
-  };
-
-  GLuint vao;
-  glGenVertexArrays(1, &vao);
-  glBindVertexArray(vao);
-
-  GLuint vbo;
-  glGenBuffers(1, &vbo);
-
-  glBindBuffer(GL_ARRAY_BUFFER, vbo);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
-  glEnableVertexAttribArray(0);
-  glEnableVertexAttribArray(1);
-  glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*) 0);
-  glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*) (2 * sizeof(GLfloat)));
-
-  glDrawArrays(GL_TRIANGLES, 0, 3);
-
-  glBindVertexArray(0);
-  */
 
   _baseProgram->unuse();
 
@@ -327,6 +282,7 @@ void Game::Destroy() {
   _projectileManager = nullptr;
   delete _level;
   
+
   delete this;
 }
 
