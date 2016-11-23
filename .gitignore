@@ -31,3 +31,16 @@ Textures
 /source/Skyline/Debug/Skyline.Build.CppClean.log
 /source/Skyline161106.vspx
 /source/Essengine/Debug/*.log
+Essengine
+/build/Debug/Skyline/Skyline.ilk
+/build/Debug/Skyline/Skyline.pdb
+/build/Debug/Skyline/Levels
+/build/Debug/Skyline/Shaders
+/build/Debug/Skyline/Textures
+/build/Debug/Skyline/Skyline.exe
+/build/Release/Essengine/Essengine.lib
+/build/Release/Skyline/Skyline.exe
+/build/Release/Skyline/*.iobj
+/build/Release/Skyline/*.ipdb
+/build/obj
+/build/Release/Skyline/Levels

@@ -48,15 +48,6 @@ void Game::Run() {
     frametime = std::chrono::duration_cast<std::chrono::microseconds>(newTicks - previousTicks).count() / 1000.0f; //in miliseconds
     previousTicks = newTicks;
 
-    //below from http://frankforce.com/?p=2636 seems to be working sweet
-    frametime += deltaBuffer;
-    const int refreshRate = _window->GetMonitorRefreshRate();
-    int frameCount = (int) (frametime * refreshRate + 1);
-    if(frameCount <= 0)	frameCount = 1;
-    const float oldDelta = frametime;
-    frametime = frameCount / (float) refreshRate;
-    deltaBuffer = oldDelta - frametime;
-
     _timestepAccumulator += frametime / 1000.0f;
     const int nSteps = static_cast<int> ( std::floor(_timestepAccumulator / TIMESTEP) );
     if(nSteps > 0) {
@@ -71,11 +62,6 @@ void Game::Run() {
       update(TIMESTEP);
     }
     
-    newTicks = std::chrono::high_resolution_clock::now(); // microseconds
-    frametime = std::chrono::duration_cast<std::chrono::microseconds>(newTicks - previousTicks).count() / 1000.0f; //in miliseconds
-    float delta = (frametime / 1000.0f) / TIMESTEP;
-    _timestepAccumulatorRatio += delta;
-
     //smooth cameraPosition as well. maybe we could do it inside smoothStates so we don't have separated code but for now this will do
     const float oneMinusRatio = 1.f - _timestepAccumulatorRatio;
     glm::vec2 interpolatedCameraPosition = _timestepAccumulatorRatio * _cameraPosition + oneMinusRatio * _previousCameraPosition;

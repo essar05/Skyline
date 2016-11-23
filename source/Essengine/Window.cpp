@@ -10,6 +10,9 @@ namespace Essengine {
       windowFlags |= SDL_WINDOW_HIDDEN;
     }
     if (windowModes & WindowMode::FULLSCREEN) {
+      windowFlags |= SDL_WINDOW_FULLSCREEN;
+    }
+    if (windowModes & WindowMode::FULLSCREEN_DESKTOP) {
       windowFlags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
     }
     if (windowModes & WindowMode::BORDERLESS) {

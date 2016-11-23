@@ -38,7 +38,7 @@ bool Player::update(float deltaTime) {
 
   float currentSpeed = velocity.Length();
   if(currentSpeed > maxSpeed) {
-    //_body->SetLinearVelocity((maxSpeed / currentSpeed) * velocity);
+    _body->SetLinearVelocity((maxSpeed / currentSpeed) * velocity);
   }
 
   /* BIND PLAYER WITHIN THE VIEWPORT */

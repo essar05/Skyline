@@ -10,7 +10,8 @@ namespace Essengine {
   enum WindowMode {
     INVISIBLE = 0x1,
     FULLSCREEN = 0x2,
-    BORDERLESS = 0X4
+    BORDERLESS = 0X4,
+    FULLSCREEN_DESKTOP = 0x8
   };
 
   class Window {
