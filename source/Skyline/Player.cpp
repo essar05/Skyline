@@ -2,9 +2,9 @@
 #include "Utils.h"
 #include <iostream>
 
-Player::Player() : Player(0, 0.0f, 0.0f, glm::vec2(0.0f, 0.0f)) { }
+Player::Player() : Player(0, glm::vec4(0.0f), 0.0f, 0.0f, glm::vec2(0.0f, 0.0f)) { }
 
-Player::Player(int textureId, float width, float height, glm::vec2 position) : Entity(textureId, width, height, position) {
+Player::Player(int textureId, glm::vec4 uv, float width, float height, glm::vec2 position) : Entity(textureId, uv, width, height, position) {
   _projectileSpawner = ProjectileSpawner(8.0f, glm::vec2(0.2f, 0.5f), 40.0f);
   _projectileSpawner.setSource(this->getType());
 }

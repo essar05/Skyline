@@ -19,6 +19,8 @@ Game::~Game() {}
 Game* Game::instance = NULL;
 
 void Game::Boot() {
+  std::cout << "Booting from " << SDL_GetBasePath() << std::endl;
+
   initSystem();
 
   _state = GameState::RUNNING;

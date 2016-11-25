@@ -4,14 +4,15 @@
 #include <glm\glm.hpp>
 #include <Box2D.h>
 #include "EntityType.h"
+#include <TextureAtlas.h>
 
 class Game;
 
 class Entity {
   public:
     Entity();
-    Entity(int textureId, float width, float height, glm::vec2 position);
-    Entity(int textureId, float width, float height, glm::vec2 position, bool scaleToWorld);
+    Entity(int textureId, glm::vec4 uv, float width, float height, glm::vec2 position);
+    Entity(int textureId, glm::vec4 uv, float width, float height, glm::vec2 position, bool scaleToWorld);
     ~Entity();
 
     void draw();
@@ -61,6 +62,9 @@ class Entity {
     glm::vec2 _direction = glm::vec2(0.0f);
     glm::vec2 _velocity = glm::vec2(0.0f);
     
+    int _textureId;
+    glm::vec4 _uv;
+
     b2Body* _body;
     
     Essengine::ColorRGBA8 _color;
@@ -70,6 +74,4 @@ class Entity {
     float _isAlive = false;
     float _isSpawned = false;
     
-    int _textureId;
-
 };

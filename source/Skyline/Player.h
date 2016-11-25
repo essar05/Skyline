@@ -6,7 +6,7 @@
 class Player : public Entity {
   public:
     Player();
-    Player(int textureId, float width, float height, glm::vec2 position);
+    Player(int textureId, glm::vec4 uv, float width, float height, glm::vec2 position);
     ~Player();
 
     void setIsFiring(bool isFiring) { _isFiring = isFiring; }

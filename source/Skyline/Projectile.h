@@ -6,8 +6,8 @@
 class Projectile : public Entity {
   public:
     Projectile();
-    Projectile(int textureId, float width, float height, glm::vec2 position);
-    Projectile(int textureId, float width, float height, glm::vec2 position, int source, float _damage);
+    Projectile(int textureId, glm::vec4 uv, float width, float height, glm::vec2 position);
+    Projectile(int textureId, glm::vec4 uv, float width, float height, glm::vec2 position, int source, float _damage);
     ~Projectile();
 
     bool update(float deltaTime) override;

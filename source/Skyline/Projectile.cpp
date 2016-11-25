@@ -4,8 +4,8 @@
 Projectile::Projectile() {
 }
 
-Projectile::Projectile(int textureId, float width, float height, glm::vec2 position) : Entity(textureId, width, height, position, false) {}
-Projectile::Projectile(int textureId, float width, float height, glm::vec2 position, int source, float damage) : Projectile(textureId, width, height, position) { 
+Projectile::Projectile(int textureId, glm::vec4 uv, float width, float height, glm::vec2 position) : Entity(textureId, uv, width, height, position, false) {}
+Projectile::Projectile(int textureId, glm::vec4 uv, float width, float height, glm::vec2 position, int source, float damage) : Projectile(textureId, uv, width, height, position) {
   _source = source; 
   _damage = damage;
 }

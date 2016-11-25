@@ -41,7 +41,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)..\lib\SDL2\include\;$(SolutionDir)..\lib\SDL2_Image\include\;$(SolutionDir)..\lib\glew\include\GL\;$(SolutionDir)..\lib\freeglut\include\;$(SolutionDir)..\lib\glm\;$(SolutionDir)..\lib\freetype\include\;$(SolutionDir)Essengine\Engine\;$(SolutionDir)Essengine\Errors\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\lib\SDL2\include\;$(SolutionDir)..\lib\SDL2_Image\include\;$(SolutionDir)..\lib\glew\include\GL\;$(SolutionDir)..\lib\freeglut\include\;$(SolutionDir)..\lib\glm\;$(SolutionDir)..\lib\freetype\include\;$(SolutionDir)Essengine\Engine\;$(SolutionDir)Essengine\Errors\;$(SolutionDir)..\lib\rapidjson\;$(IncludePath)</IncludePath>
     <LibraryPath>
     </LibraryPath>
     <OutDir>$(SolutionDir)..\build\$(Configuration)\$(ProjectName)\</OutDir>

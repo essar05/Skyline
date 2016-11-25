@@ -7,9 +7,9 @@
 
 Entity::Entity() {}
 
-Entity::Entity(int textureId, float width, float height, glm::vec2 position) : Entity(textureId, width, height, position, true) { }
+Entity::Entity(int textureId, glm::vec4 uv, float width, float height, glm::vec2 position) : Entity(textureId, uv, width, height, position, true) { }
 
-Entity::Entity(int textureId, float width, float height, glm::vec2 position, bool scaleToWorld) : _textureId(textureId), _width(width), _height(height), _position(position) {
+Entity::Entity(int textureId, glm::vec4 uv, float width, float height, glm::vec2 position, bool scaleToWorld) : _textureId(textureId), _uv(uv), _width(width), _height(height), _position(position) {
   _game = Game::GetInstance();
 
   _color = Essengine::ColorRGBA8(225, 255, 255, 255);
@@ -96,8 +96,7 @@ void Entity::draw() {
     glm::vec2 screenPosition = _position;
 
     Essengine::SpriteBatch* spriteBatch = _game->getSpriteBatch();
-    glm::vec4 uv(0.0f, 0.0f, 1.0f, 1.0f);
-    spriteBatch->draw(glm::vec4(screenPosition.x - _width / 2, screenPosition.y - _height / 2, _width, _height), uv, _textureId, _color, 1);
+    spriteBatch->draw(glm::vec4(screenPosition.x - _width / 2, screenPosition.y - _height / 2, _width, _height), _uv, _textureId, _color, 1);
   }
 }
 
