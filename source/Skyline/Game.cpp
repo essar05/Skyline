@@ -270,7 +270,6 @@ void Game::Destroy() {
   _projectileManager = nullptr;
   delete _level;
   
-
   delete this;
 }
 

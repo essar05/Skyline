@@ -93,6 +93,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="AnimationManager.cpp" />
     <ClCompile Include="Camera2D.cpp" />
     <ClCompile Include="Errors\RuntimeException.cpp" />
     <ClCompile Include="GLProgram.cpp" />
@@ -107,6 +109,8 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.h" />
+    <ClInclude Include="AnimationManager.h" />
     <ClInclude Include="Camera2D.h" />
     <ClInclude Include="GLProgram.h" />
     <ClInclude Include="GLTexture.h" />

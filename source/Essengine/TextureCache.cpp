@@ -3,18 +3,16 @@
 
 namespace Essengine {
 
-  TextureCache::TextureCache() {
-  }
-
+  TextureCache::TextureCache() {}
 
   TextureCache::~TextureCache() {
     auto it = _atlases.begin();
     while (it != _atlases.end()) {
       delete it->second;
+      it++;
     }
   }
 
-  
   GLTexture TextureCache::getTexture(std::string texturePath) {
     auto it = _textures.find(texturePath);
     

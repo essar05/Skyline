@@ -7,9 +7,18 @@ Player::Player() : Player(0, glm::vec4(0.0f), 0.0f, 0.0f, glm::vec2(0.0f, 0.0f))
 Player::Player(int textureId, glm::vec4 uv, float width, float height, glm::vec2 position) : Entity(textureId, uv, width, height, position) {
   _projectileSpawner = ProjectileSpawner(8.0f, glm::vec2(0.2f, 0.5f), 40.0f);
   _projectileSpawner.setSource(this->getType());
+
+  _animationManager = new Essengine::AnimationManager();
+  Essengine::Animation* idleAnimation = _animationManager->add("idle");
+  idleAnimation->setPlaybackRate(10.0f / 60.0f);
+  idleAnimation->setTextureAtlas(_game->getTextureCache()->getAtlas("Textures/spritesheet.png", "Textures/sprites.json"));
+  idleAnimation->setFrames(std::vector<std::string> {"player_1", "player_2", "player_3", "player_4"});
+  _animationManager->play("idle");
 }
 
-Player::~Player() { }
+Player::~Player() { 
+  delete _animationManager;
+}
 
 bool Player::update(float deltaTime) {
   b2Vec2 velocity = _body->GetLinearVelocity();
@@ -91,7 +100,21 @@ bool Player::update(float deltaTime) {
 
   _projectileSpawner.update(deltaTime, _isFiring, position, glm::vec2(0.0f, 50.0f));
 
+  _animationManager->update(deltaTime);
+
   return true;
+}
+
+void Player::draw() {
+  if (_isSpawned) {
+    b2Vec2 bodyPosition = this->_body->GetPosition();
+    glm::vec2 screenPosition = _position;
+
+    Essengine::SpriteBatch* spriteBatch = _game->getSpriteBatch();
+    Essengine::TextureAtlas* textureAtlas = _animationManager->getCurrent()->getTextureAtlas();
+    std::string currentAnimationFrame = _animationManager->getCurrent()->getCurrentFrame();
+    spriteBatch->draw(glm::vec4(screenPosition.x - _width / 2, screenPosition.y - _height / 2, _width, _height), textureAtlas->getUV(currentAnimationFrame), textureAtlas->getTextureId(), _color, 1);
+  }
 }
 
 void Player::contact(Entity* e) {
@@ -100,3 +123,4 @@ void Player::contact(Entity* e) {
     _game->getEntityManager()->deleteEntity(e->getId(), true);
   }
 }
+

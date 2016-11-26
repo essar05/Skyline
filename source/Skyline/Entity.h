@@ -15,7 +15,7 @@ class Entity {
     Entity(int textureId, glm::vec4 uv, float width, float height, glm::vec2 position, bool scaleToWorld);
     ~Entity();
 
-    void draw();
+    virtual void draw();
     virtual bool update(float deltaTime);
 
     void setPosition(const glm::vec2& position);

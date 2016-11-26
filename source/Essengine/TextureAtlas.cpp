@@ -3,7 +3,6 @@
 #include <fstream>
 #include <document.h>
 #include "Errors\RuntimeException.cpp"
-#include <iostream>
 
 namespace Essengine {
 
@@ -20,6 +19,7 @@ namespace Essengine {
     auto it = _frames.begin();
     while (it != _frames.end()) {
       delete it->second;
+      it++;
     }
   }
 

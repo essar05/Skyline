@@ -2,6 +2,7 @@
 #include "Entity.h"
 #include "ProjectileSpawner.h"
 #include "Game.h"
+#include <AnimationManager.h>
 
 class Player : public Entity {
   public:
@@ -10,6 +11,7 @@ class Player : public Entity {
     ~Player();
 
     void setIsFiring(bool isFiring) { _isFiring = isFiring; }
+    void draw();
     bool update(float deltaTime) override;
     int getType() override { return ET_PLAYER; }
     void contact(Entity* e) override;
@@ -21,6 +23,7 @@ class Player : public Entity {
     float _fireRate = 8.0f; //
     bool _isFiring = false;
     ProjectileSpawner _projectileSpawner;
+    Essengine::AnimationManager* _animationManager;
 
 };
 
