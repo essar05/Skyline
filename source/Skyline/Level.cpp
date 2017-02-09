@@ -77,6 +77,21 @@ void Level::draw() {
   Essengine::Camera2D* camera = _game->getMainCamera();
   glm::vec2 viewportSize = camera->getWorldViewportSize();
   
+  float bottomCameraEdge = camera->getPosition().y / camera->getZoom() - viewportSize[1] / 2;
+  float topCameraEdge = camera->getPosition().y / camera->getZoom() + viewportSize[1] / 2;
+  int bgBottomPassedCount = floor(bottomCameraEdge / _backgroundHeight); // number of times the background image has repeated entirely below the bottom camera edge
+  int bgTopPassedCount = floor(topCameraEdge / _backgroundHeight); // number of times the background image has repeated entirely below the top camera edge
+
+  glm::vec4 position(0, _backgroundHeight * bgBottomPassedCount, _backgroundWidth, _backgroundHeight);
+  glm::vec4 uv(0.0f, 0.0f, 1.0f, 1.0f);
+  Essengine::ColorRGBA8 color(255, 255, 255, 255);
+  spriteBatch->draw(position, uv, _backgroundId, color, 0);
+
+  if (bgBottomPassedCount < bgTopPassedCount) {
+    position = glm::vec4(0, _backgroundHeight * bgTopPassedCount, _backgroundWidth, _backgroundHeight);
+    spriteBatch->draw(position, uv, _backgroundId, color, 0);
+  }
+
   /*
     only render the sections currently in the viewport.
     originally starting from the first section, 
@@ -142,10 +157,10 @@ void Level::load(std::string levelName) {
   _world->SetContactListener(&_contactListener);
   _glDebugDrawInstance.SetFlags(b2Draw::e_shapeBit | b2Draw::e_centerOfMassBit);
 
-  Essengine::TextureAtlas* atlas = textureCache->getAtlas("Textures/spritesheet.png", "Textures/sprites.json");
+  Essengine::TextureAtlas* atlas = textureCache->getAtlas("Textures/player.png", "Textures/player.json");
   //glm::vec4 uv = atlas->getUV("player");
   
-  _player = new Player(atlas->getTextureId(), atlas->getUV("player"), 90.0f, 120.0f, glm::vec2(camera->getViewportSize().x / 2, 100.0f));
+  _player = new Player(atlas->getTextureId(), atlas->getUV("Spaceship_default"), 100.0f, 76.0f, glm::vec2(camera->getViewportSize().x / 2, 100.0f));
   _player->createB2Data();
   _player->spawn();
 
@@ -160,6 +175,11 @@ void Level::load(std::string levelName) {
 
   rapidjson::Document document;
   document.Parse(str.c_str());
+
+  if (document.HasMember("defaultBackground")) {
+    std::string defaultBackground = document["defaultBackground"].GetString();
+    this->setBackground( &(textureCache->getTexture("Textures/" + defaultBackground)) );
+  }
 
   if(!document.HasMember("sections") || !document["sections"].IsArray()) {
     throw Essengine::ERuntimeException("Level file invalid: missing sections");
@@ -190,6 +210,13 @@ void Level::load(std::string levelName) {
 
     this->addSection(section);
   }
+}
+
+void Level::setBackground(Essengine::GLTexture* texture) {
+  _backgroundId = texture->_id;
+
+  _backgroundWidth = _game->getMainCamera()->getWorldViewportSize().x;
+  _backgroundHeight = texture->_height * (_backgroundWidth / texture->_width);
 }
 
 b2World* Level::getWorld() {

@@ -8,12 +8,25 @@ Player::Player(int textureId, glm::vec4 uv, float width, float height, glm::vec2
   _projectileSpawner = ProjectileSpawner(8.0f, glm::vec2(0.2f, 0.5f), 40.0f);
   _projectileSpawner.setSource(this->getType());
 
+  Essengine::TextureAtlas * _playerAtlas = _game->getTextureCache()->getAtlas("Textures/player.png", "Textures/player.json");
+
   _animationManager = new Essengine::AnimationManager();
-  Essengine::Animation* idleAnimation = _animationManager->add("idle");
+
+  Essengine::Animation* idleAnimation = _animationManager->add("IDLE");
   idleAnimation->setPlaybackRate(10.0f / 60.0f);
-  idleAnimation->setTextureAtlas(_game->getTextureCache()->getAtlas("Textures/spritesheet.png", "Textures/sprites.json"));
-  idleAnimation->setFrames(std::vector<std::string> {"player_1", "player_2", "player_3", "player_4"});
-  _animationManager->play("idle");
+  idleAnimation->setTextureAtlas(_playerAtlas);
+  idleAnimation->setFrames(std::vector<std::string> {"Spaceship_default"});
+  _animationManager->play("IDLE");
+
+  Essengine::Animation* bankLeftAnimation = _animationManager->add("BANK_LEFT");
+  bankLeftAnimation->setPlaybackRate(1.0f / 60.f);
+  bankLeftAnimation->setTextureAtlas(_playerAtlas);
+  bankLeftAnimation->setFrames(std::vector<std::string> {"Spaceship_left01", "Spaceship_left02", "Spaceship_left03"});
+
+  Essengine::Animation* bankRightAnimation = _animationManager->add("BANK_RIGHT");
+  bankRightAnimation->setPlaybackRate(1.0f / 60.f);
+  bankRightAnimation->setTextureAtlas(_playerAtlas);
+  bankRightAnimation->setFrames(std::vector<std::string> {"Spaceship_right01", "Spaceship_right02", "Spaceship_right03"});
 }
 
 Player::~Player() { 
@@ -24,6 +37,14 @@ bool Player::update(float deltaTime) {
   b2Vec2 velocity = _body->GetLinearVelocity();
   b2Vec2 force(0.0f, 0.0f), acceleration(0.0f, 0.0f), desiredVelocity(0.0f, 0.0f);
   float maxSpeed = b2Max(_maxVelocity.x, _maxVelocity.y);
+
+  if (_direction.x < 0) {
+    _animationManager->play("BANK_LEFT");
+  } else if (_direction.x > 0) {
+    _animationManager->play("BANK_RIGHT");
+  } else {
+    _animationManager->play("IDLE");
+  }
 
   if(_direction.x != 0) {
     acceleration.x = (_direction.x * _maxVelocity.x - velocity.x);

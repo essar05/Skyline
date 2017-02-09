@@ -24,7 +24,9 @@ Entity::Entity(int textureId, glm::vec4 uv, float width, float height, glm::vec2
 }
 
 Entity::~Entity() {
-  _body->GetWorld()->DestroyBody( _body );
+  if(_body != nullptr) {
+    _body->GetWorld()->DestroyBody( _body );
+  }
 }
 
 void Entity::setPosition(const glm::vec2& position) {

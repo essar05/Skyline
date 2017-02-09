@@ -30,6 +30,8 @@ class Level {
     void smoothStates();
     void resetSmoothStates();
 
+    void setBackground(Essengine::GLTexture* texture);
+
     b2World* getWorld();
     Player* getPlayer();
 
@@ -46,5 +48,8 @@ class Level {
     b2World* _world;
     b2GLDebugDraw _glDebugDrawInstance;
     ContactListener _contactListener;
+    unsigned int _backgroundId;
+    float _backgroundWidth;
+    float _backgroundHeight;
 
 };

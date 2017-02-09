@@ -8,6 +8,7 @@
 namespace Essengine {
 
   enum WindowMode {
+    NORMAL = 0x0,
     INVISIBLE = 0x1,
     FULLSCREEN = 0x2,
     BORDERLESS = 0X4,

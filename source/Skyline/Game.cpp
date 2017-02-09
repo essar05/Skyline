@@ -67,8 +67,9 @@ void Game::Run() {
     //smooth cameraPosition as well. maybe we could do it inside smoothStates so we don't have separated code but for now this will do
     const float oneMinusRatio = 1.f - _timestepAccumulatorRatio;
     glm::vec2 interpolatedCameraPosition = _timestepAccumulatorRatio * _cameraPosition + oneMinusRatio * _previousCameraPosition;
-    _camera.setPosition(interpolatedCameraPosition);
-
+    //_camera.setPosition(interpolatedCameraPosition);
+    _camera.setPosition(_cameraPosition);
+    
     _level->smoothStates();
     _level->getWorld()->ClearForces();
 
@@ -158,7 +159,7 @@ void Game::processInput(float deltaTime) {
   SDL_Event event;
 
   const float CAMERA_SPEED = 0.5f;
-  const float SCALE_SPEED = 1.0f;
+  const float SCALE_SPEED = 5.0f;
 
   while(SDL_PollEvent(&event) != 0) {
     switch(event.type) {
@@ -232,7 +233,7 @@ void Game::initSystem() {
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
   SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-  _window = new Essengine::Window(this->_title, (int) this->_width, (int) this->_height, 0);
+  _window = new Essengine::Window(this->_title, (int) this->_width, (int) this->_height, _windowMode);
   _window->SetVSync(_vSync);
 
   initShaders();

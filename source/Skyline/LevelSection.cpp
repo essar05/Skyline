@@ -57,12 +57,12 @@ void LevelSection::update() {
 
 void LevelSection::draw(float x, float y) {
   Essengine::SpriteBatch* spriteBatch = _game->getSpriteBatch();
-
+  /*
   glm::vec4 position(x, y, _width, _height);
   glm::vec4 uv(0.0f, 0.0f, 1.0f, 1.0f);
   Essengine::ColorRGBA8 color(255, 255, 255, 255);
   spriteBatch->draw(position, uv, _backgroundId, color, 0);
-
+  */
   Essengine::Camera2D* camera = _game->getMainCamera();
   EntityManager* entityManager = _game->getEntityManager();
   Entity* entity;

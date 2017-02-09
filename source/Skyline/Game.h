@@ -74,12 +74,13 @@ class Game : Essengine::IGame {
     float _timestepAccumulatorRatio = 0.0f;
     bool _debugMode = false;
     bool _limitFPS = false;
-    bool _vSync = 0;
+    bool _vSync = 1;
 
     float _height = 720.0f;
     float _width = 1280.0f;
     std::string _title = "Skyline 1.0";
     float _scrollSpeed = 10.0f;
+    Essengine::WindowMode _windowMode = Essengine::WindowMode::NORMAL;
 
     glm::vec2 _cameraPosition;
     glm::vec2 _previousCameraPosition;

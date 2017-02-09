@@ -22,7 +22,7 @@ namespace Essengine {
   void AnimationManager::play(std::string name) {
     auto it = _animations.find(name);
     if (it == _animations.end()) {
-      throw new ERuntimeException("Animation " + name + " is not defined");
+      throw ERuntimeException("Animation " + name + " is not defined");
     }
 
     _currentAnimation = name;
