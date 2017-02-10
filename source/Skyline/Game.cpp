@@ -233,7 +233,7 @@ void Game::initSystem() {
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
   SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-  _window = new Essengine::Window(this->_title, (int) this->_width, (int) this->_height, _windowMode);
+  _window = new Essengine::Window(this->_title, (int) this->_width, (int) this->_height, this->_windowMode);
   _window->SetVSync(_vSync);
 
   initShaders();

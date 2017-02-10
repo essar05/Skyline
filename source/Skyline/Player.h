@@ -25,5 +25,7 @@ class Player : public Entity {
     ProjectileSpawner _projectileSpawner;
     Essengine::AnimationManager* _animationManager;
 
+    float _horizontalScaleFactor = 1.0f;
+
 };
 

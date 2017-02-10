@@ -190,10 +190,15 @@ void Level::load(std::string levelName) {
 
     float sectionWidth = (float) document["sections"][i]["width"].GetDouble();
     float sectionHeight = (float) document["sections"][i]["height"].GetDouble();
-    std::string textureName = document["sections"][i]["background"].GetString();
+    std::string textureName = "";
+    if(document["sections"][i].HasMember("background")) {
+      textureName = document["sections"][i]["background"].GetString();
+    }
 
     LevelSection* section = new LevelSection(sectionWidth, sectionHeight);
-    section->setBackground(textureCache->getTexture("Textures/" + textureName)._id);
+    if(textureName != "") {
+      section->setBackground(textureCache->getTexture("Textures/" + textureName)._id);
+    }
 
     if(document["sections"][i].HasMember("objects") && document["sections"][i]["objects"].IsArray()) {
       for(rapidjson::SizeType j = 0; j < document["sections"][i]["objects"].Size(); j++) {

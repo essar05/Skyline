@@ -16,7 +16,6 @@ Player::Player(int textureId, glm::vec4 uv, float width, float height, glm::vec2
   idleAnimation->setPlaybackRate(10.0f / 60.0f);
   idleAnimation->setTextureAtlas(_playerAtlas);
   idleAnimation->setFrames(std::vector<std::string> {"Spaceship_default"});
-  _animationManager->play("IDLE");
 
   Essengine::Animation* bankLeftAnimation = _animationManager->add("BANK_LEFT");
   bankLeftAnimation->setPlaybackRate(1.0f / 60.f);
@@ -27,6 +26,12 @@ Player::Player(int textureId, glm::vec4 uv, float width, float height, glm::vec2
   bankRightAnimation->setPlaybackRate(1.0f / 60.f);
   bankRightAnimation->setTextureAtlas(_playerAtlas);
   bankRightAnimation->setFrames(std::vector<std::string> {"Spaceship_right01", "Spaceship_right02", "Spaceship_right03"});
+
+  _animationManager->play("IDLE");
+
+  glm::vec2 frameSize = idleAnimation->getTextureAtlas()->getSize(idleAnimation->getCurrentFrame());
+
+  _horizontalScaleFactor = _width / frameSize.x;
 }
 
 Player::~Player() { 
@@ -134,7 +139,10 @@ void Player::draw() {
     Essengine::SpriteBatch* spriteBatch = _game->getSpriteBatch();
     Essengine::TextureAtlas* textureAtlas = _animationManager->getCurrent()->getTextureAtlas();
     std::string currentAnimationFrame = _animationManager->getCurrent()->getCurrentFrame();
-    spriteBatch->draw(glm::vec4(screenPosition.x - _width / 2, screenPosition.y - _height / 2, _width, _height), textureAtlas->getUV(currentAnimationFrame), textureAtlas->getTextureId(), _color, 1);
+
+    float width = textureAtlas->getSize(currentAnimationFrame).x * _horizontalScaleFactor;
+
+    spriteBatch->draw(glm::vec4(screenPosition.x - width / 2, screenPosition.y - _height / 2, width, _height), textureAtlas->getUV(currentAnimationFrame), textureAtlas->getTextureId(), _color, 1);
   }
 }
 
