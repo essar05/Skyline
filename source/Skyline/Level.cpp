@@ -49,7 +49,7 @@ void Level::update(float deltaTime) {
   while(it != _sections.end()) {
     if(camera->getPosition().y / camera->getZoom() + viewportSize[1] / 2 < it->first) {
       break;
-    } else if(camera->getPosition().y / camera->getZoom() - viewportSize[1] / 2 > it->first + it->second->getHeight()) {
+    } else if(it->second->getHeight() > 0 && camera->getPosition().y / camera->getZoom() - viewportSize[1] / 2 > it->first + it->second->getHeight()) {
       delete it->second;
       endIt = ++it;
       deleteSection = true;
@@ -189,11 +189,19 @@ void Level::load(std::string levelName) {
     //check exists;
 
     float sectionWidth = (float) document["sections"][i]["width"].GetDouble();
-    float sectionHeight = (float) document["sections"][i]["height"].GetDouble();
-    std::string textureName = document["sections"][i]["background"].GetString();
-
+    float sectionHeight = 0.0f;
+    if (document["sections"][i].HasMember("height")) {
+      sectionHeight = (float) document["sections"][i]["height"].GetDouble();
+    }
+    std::string sectionBackground = "";
+    if (document["sections"][i].HasMember("background")) {
+      sectionBackground = document["sections"][i]["background"].GetString();
+    }
+    
     LevelSection* section = new LevelSection(sectionWidth, sectionHeight);
-    section->setBackground(textureCache->getTexture("Textures/" + textureName)._id);
+    if(sectionBackground != "") {
+      section->setBackground(textureCache->getTexture("Textures/" + sectionBackground)._id);
+    }
 
     if(document["sections"][i].HasMember("objects") && document["sections"][i]["objects"].IsArray()) {
       for(rapidjson::SizeType j = 0; j < document["sections"][i]["objects"].Size(); j++) {

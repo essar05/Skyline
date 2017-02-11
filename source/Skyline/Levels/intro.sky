@@ -2,53 +2,19 @@
   "defaultBackground": "Background_Tilable.png",
   "sections": [
     {
-      "background": "Background_Tilable.png",
-      "height": 1024,
-      "width": 1024
-    },
-    {
-      "background": "Background_Tilable.png",
-      "height": 1024,
       "width": 1024,
       "objects": [
         {
           "type": 3,
           "x": 732,
-          "y": 388
-        },
-        {
-          "type": 3,
-          "x": 200,
-          "y": 80
-        }
-      ]
-    },
-    {
-      "background": "Background_Tilable.png",
-      "height": 1024,
-      "width": 1024,
-      "objects": [
-        {
-          "type": 3,
-          "x": 732,
-          "y": 76
+          "y": 760
         },
         {
           "type": 3,
           "x": 420,
-          "y": 150
+          "y": 2000
         }
       ]
-    },
-    {
-      "background": "Background_Tilable.png",
-      "height": 1024,
-      "width": 1024
-    },
-    {
-      "background": "Background_Tilable.png",
-      "height": 1024,
-      "width": 1024
     }
   ]
 }
