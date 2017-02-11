@@ -16,5 +16,14 @@
         }
       ]
     }
+  ],
+  "decorations": [
+    {
+      "textureAtlas": "",
+      "textureName": "",
+      "scale": 1.0,
+      "parallax": true,
+      "layer": 1
+    }
   ]
 }

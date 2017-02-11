@@ -7,11 +7,15 @@ Player::Player() : Player(0, glm::vec4(0.0f), 0.0f, 0.0f, glm::vec2(0.0f, 0.0f))
 Player::Player(int textureId, glm::vec4 uv, float width, float height, glm::vec2 position) : Entity(textureId, uv, width, height, position) {
   _projectileSpawner = ProjectileSpawner(8.0f, glm::vec2(0.5f, 0.9f), 40.0f);
   _projectileSpawner.setSource(this->getType());
+  _projectileSpawner2 = ProjectileSpawner(8.0f, glm::vec2(0.5f, 0.9f), 40.0f);
+  _projectileSpawner2.setSource(this->getType());
+
+  // SPACESHIP
 
   Essengine::TextureAtlas * _playerAtlas = _game->getTextureCache()->getAtlas("Textures/player.png", "Textures/player.json");
 
   _animationManager = new Essengine::AnimationManager();
-
+  
   Essengine::Animation* idleAnimation = _animationManager->add("IDLE");
   idleAnimation->setPlaybackRate(10.0f / 60.0f);
   idleAnimation->setTextureAtlas(_playerAtlas);
@@ -34,6 +38,31 @@ Player::Player(int textureId, glm::vec4 uv, float width, float height, glm::vec2
   glm::vec2 frameSize = idleAnimation->getTextureAtlas()->getSize(idleAnimation->getCurrentFrame());
 
   _horizontalScaleFactor = _width / frameSize.x;
+
+  // THRUSTER
+
+  Essengine::TextureAtlas * _thrusterAtlas = _game->getTextureCache()->getAtlas("Textures/thruster.png", "Textures/thruster.json");
+
+  _thrusterAnimationManager = new Essengine::AnimationManager();
+
+  Essengine::Animation* thrusterIdleAnim = _thrusterAnimationManager->add("IDLE");
+  thrusterIdleAnim->setPlaybackRate(1.0f / 60.0f);
+  thrusterIdleAnim->setTextureAtlas(_thrusterAtlas);
+  std::vector<std::string> thrusterAnimationFrames;
+  for (int i = 0; i < 36; i++) {
+    std::string extraZero = "0";
+    if (i > 8) {
+      extraZero = "";
+    }
+    thrusterAnimationFrames.push_back("Thruster_" + extraZero + std::to_string(i + 1));
+  }
+  
+  thrusterIdleAnim->setFrames(thrusterAnimationFrames);
+
+  _thrusterAnimationManager->play("IDLE");
+
+  _thrusterWidth = _game->getMainCamera()->getWorldScalar(_thrusterWidth);
+  _thrusterHeight = _game->getMainCamera()->getWorldScalar(_thrusterHeight);
 }
 
 Player::~Player() { 
@@ -131,11 +160,16 @@ bool Player::update(float deltaTime) {
     _body->SetTransform(correctedPosition, _body->GetAngle());
   }
 
-  glm::vec2 position = Utils::toVec2(_body->GetPosition()) + glm::vec2(0.0f, _height / 2 + _projectileSpawner.getProjectileHeight());
+  glm::vec2 position = Utils::toVec2(_body->GetPosition()) + glm::vec2(- _width / 2 + 0.5f, _height / 2 + _projectileSpawner.getProjectileHeight() - 2.0f);
 
   _projectileSpawner.update(deltaTime, _isFiring, position, glm::vec2(0.0f, 50.0f));
 
+  position.x = position.x + _width - 1.0f;
+
+  _projectileSpawner2.update(deltaTime, _isFiring, position, glm::vec2(0.0f, 50.0f));
+
   _animationManager->update(deltaTime);
+  _thrusterAnimationManager->update(deltaTime);
 
   return true;
 }
@@ -151,7 +185,12 @@ void Player::draw() {
 
     float width = textureAtlas->getSize(currentAnimationFrame).x * _horizontalScaleFactor;
 
-    spriteBatch->draw(glm::vec4(screenPosition.x - width / 2, screenPosition.y - _height / 2, width, _height), textureAtlas->getUV(currentAnimationFrame), textureAtlas->getTextureId(), _color, 1);
+    spriteBatch->draw(glm::vec4(screenPosition.x - width / 2, screenPosition.y - _height / 2, width, _height), textureAtlas->getUV(currentAnimationFrame), textureAtlas->getTextureId(), _color, 2);
+
+    Essengine::TextureAtlas* thrusterTextureAtlas = _thrusterAnimationManager->getCurrent()->getTextureAtlas();
+    std::string thrusterCurrentAnimationFrame = _thrusterAnimationManager->getCurrent()->getCurrentFrame();
+    
+    spriteBatch->draw(glm::vec4(screenPosition.x - _thrusterWidth / 2, screenPosition.y - _height + 0.53f, _thrusterWidth, _thrusterHeight), thrusterTextureAtlas->getUV(thrusterCurrentAnimationFrame), thrusterTextureAtlas->getTextureId(), _color, 1);
   }
 }
 

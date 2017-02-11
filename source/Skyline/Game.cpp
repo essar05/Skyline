@@ -63,7 +63,7 @@ void Game::Run() {
       _level->resetSmoothStates();
       update(TIMESTEP);
     }
-    
+    true;
     //smooth cameraPosition as well. maybe we could do it inside smoothStates so we don't have separated code but for now this will do
     if (this->_isPaused == true) {
       _camera.setPosition(_cameraPosition);

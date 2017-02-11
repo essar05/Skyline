@@ -80,7 +80,7 @@ class Game : Essengine::IGame {
     float _width = 1280.0f;
     std::string _title = "Skyline 1.0";
     float _scrollSpeed = 10.0f;
-    Essengine::WindowMode _windowMode = Essengine::WindowMode::NORMAL;
+    Essengine::WindowMode _windowMode = Essengine::WindowMode::FULLSCREEN_DESKTOP;
 
     glm::vec2 _cameraPosition;
     glm::vec2 _previousCameraPosition;

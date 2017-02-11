@@ -23,9 +23,14 @@ class Player : public Entity {
     float _fireRate = 8.0f; //
     bool _isFiring = false;
     ProjectileSpawner _projectileSpawner;
+    ProjectileSpawner _projectileSpawner2;
     Essengine::AnimationManager* _animationManager;
+    Essengine::AnimationManager* _thrusterAnimationManager;
 
     float _horizontalScaleFactor = 1.0f;
+
+    float _thrusterHeight = 30.0f;
+    float _thrusterWidth = 30.0f;
 
 };
 
