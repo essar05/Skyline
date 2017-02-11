@@ -20,11 +20,15 @@ namespace Essengine {
   }
 
   void AnimationManager::play(std::string name) {
+    if (_currentAnimation == name) {
+      return;
+    }
+
     auto it = _animations.find(name);
     if (it == _animations.end()) {
       throw ERuntimeException("Animation " + name + " is not defined");
     }
-
+    
     _currentAnimation = name;
     _animations.find(_currentAnimation)->second->reset();
   }
@@ -35,6 +39,10 @@ namespace Essengine {
 
   Animation* AnimationManager::getCurrent() {
     return _animations.find(_currentAnimation)->second;
+  }
+
+  std::string AnimationManager::getCurrentAnimationName() {
+    return _currentAnimation;
   }
 
 }

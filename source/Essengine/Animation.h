@@ -13,12 +13,17 @@ namespace Essengine {
       void setTextureAtlas(TextureAtlas* atlas);
       void setFrames(std::vector<std::string> frames);
       void setPlaybackRate(float playbackRate);
+      void setRepeat(bool repeat);
+      void setReverse(bool reverse);
 
       void update(float deltaTime);
       void reset();
 
       std::string getCurrentFrame();
+      unsigned int getCurrentFrameNumber();
+      unsigned int getFrameCount();
       TextureAtlas* getTextureAtlas();
+      bool isReversed();
 
     private:
       std::vector<std::string> _frames;
@@ -27,6 +32,8 @@ namespace Essengine {
       unsigned int _frameCount;
       float _playbackRate;
       float _timeAccumulator;
+      bool _repeat = true;
+      bool _reverse = false;
 
   };
 

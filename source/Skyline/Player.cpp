@@ -5,7 +5,7 @@
 Player::Player() : Player(0, glm::vec4(0.0f), 0.0f, 0.0f, glm::vec2(0.0f, 0.0f)) { }
 
 Player::Player(int textureId, glm::vec4 uv, float width, float height, glm::vec2 position) : Entity(textureId, uv, width, height, position) {
-  _projectileSpawner = ProjectileSpawner(8.0f, glm::vec2(0.2f, 0.5f), 40.0f);
+  _projectileSpawner = ProjectileSpawner(8.0f, glm::vec2(0.5f, 0.9f), 40.0f);
   _projectileSpawner.setSource(this->getType());
 
   Essengine::TextureAtlas * _playerAtlas = _game->getTextureCache()->getAtlas("Textures/player.png", "Textures/player.json");
@@ -19,13 +19,15 @@ Player::Player(int textureId, glm::vec4 uv, float width, float height, glm::vec2
   _animationManager->play("IDLE");
 
   Essengine::Animation* bankLeftAnimation = _animationManager->add("BANK_LEFT");
-  bankLeftAnimation->setPlaybackRate(1.0f / 60.f);
+  bankLeftAnimation->setPlaybackRate(2.5f / 60.0f);
   bankLeftAnimation->setTextureAtlas(_playerAtlas);
+  bankLeftAnimation->setRepeat(false);
   bankLeftAnimation->setFrames(std::vector<std::string> {"Spaceship_left01", "Spaceship_left02", "Spaceship_left03"});
 
   Essengine::Animation* bankRightAnimation = _animationManager->add("BANK_RIGHT");
-  bankRightAnimation->setPlaybackRate(1.0f / 60.f);
+  bankRightAnimation->setPlaybackRate(2.5f / 60.f);
   bankRightAnimation->setTextureAtlas(_playerAtlas);
+  bankRightAnimation->setRepeat(false);
   bankRightAnimation->setFrames(std::vector<std::string> {"Spaceship_right01", "Spaceship_right02", "Spaceship_right03"});
 }
 
@@ -43,7 +45,14 @@ bool Player::update(float deltaTime) {
   } else if (_direction.x > 0) {
     _animationManager->play("BANK_RIGHT");
   } else {
-    _animationManager->play("IDLE");
+    if (_animationManager->getCurrentAnimationName() != "IDLE") {
+      Essengine::Animation* currentAnimation = _animationManager->getCurrent();
+      if (!currentAnimation->isReversed()) {
+        currentAnimation->setReverse(true);
+      } else if (currentAnimation->getCurrentFrameNumber() == 0) {
+        _animationManager->play("IDLE");
+      }
+    }
   }
 
   if(_direction.x != 0) {

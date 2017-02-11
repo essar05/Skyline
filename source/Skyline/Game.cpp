@@ -65,10 +65,13 @@ void Game::Run() {
     }
     
     //smooth cameraPosition as well. maybe we could do it inside smoothStates so we don't have separated code but for now this will do
-    const float oneMinusRatio = 1.f - _timestepAccumulatorRatio;
-    glm::vec2 interpolatedCameraPosition = _timestepAccumulatorRatio * _cameraPosition + oneMinusRatio * _previousCameraPosition;
-    //_camera.setPosition(interpolatedCameraPosition);
-    _camera.setPosition(_cameraPosition);
+    if (this->_isPaused == true) {
+      _camera.setPosition(_cameraPosition);
+    } else {
+      const float oneMinusRatio = 1.f - _timestepAccumulatorRatio;
+      glm::vec2 interpolatedCameraPosition = _timestepAccumulatorRatio * _cameraPosition + oneMinusRatio * _previousCameraPosition;
+      _camera.setPosition(interpolatedCameraPosition);
+    }
     
     _level->smoothStates();
     _level->getWorld()->ClearForces();
@@ -174,6 +177,10 @@ void Game::processInput(float deltaTime) {
     }
   }
 
+  if (_inputManager.isKeyDown(SDLK_ESCAPE)) {
+    _state = GameState::EXIT;
+  }
+
   if(_inputManager.isKeyDown(SDLK_w)) {
     _camera.setPosition(_camera.getPosition() + glm::vec2(0.0f, CAMERA_SPEED * deltaTime));
   }
@@ -258,7 +265,7 @@ void Game::initShaders() {
   _baseProgram->addAttribute("vertexPosition");
   _baseProgram->addAttribute("vertexColor");
   _baseProgram->addAttribute("vertexUV");
-
+  true;
   _baseProgram->linkShaders();
 }
 

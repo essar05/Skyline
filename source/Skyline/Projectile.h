@@ -2,6 +2,7 @@
 
 #include "Entity.h"
 #include <string>
+#include <AnimationManager.h>
 
 class Projectile : public Entity {
   public:
@@ -16,12 +17,15 @@ class Projectile : public Entity {
     int getType() override { return ET_PROJECTILE; }
     void contact(Entity* e) override;
 
+    void draw();
+
   protected:
     void createFixtures() override;
 
   private:
     int _source; //1 -> player, 2 -> enemies;
     float _damage;
+    Essengine::AnimationManager* _animationManager;
 
 };
 

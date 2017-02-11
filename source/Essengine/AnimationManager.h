@@ -14,6 +14,7 @@ namespace Essengine {
       void play(std::string name);
       void update(float deltaTime);
       Animation* getCurrent();
+      std::string getCurrentAnimationName();
 
     private:
       std::unordered_map<std::string, Animation*> _animations;
