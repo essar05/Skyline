@@ -32,6 +32,15 @@ namespace Essengine {
     return glm::vec4(0.0f);
   }
 
+  glm::vec2 TextureAtlas::getSize(std::string frameName) {
+    auto it = _frames.find(frameName);
+    if (it != _frames.end()) {
+      return glm::vec2(it->second->_width, it->second->_height);
+    }
+
+    return glm::vec2(0.0f);
+  }
+
   void TextureAtlas::loadMetadata(std::string metadataPath) {
     std::ifstream fileStream(metadataPath);
     std::string jsonData;

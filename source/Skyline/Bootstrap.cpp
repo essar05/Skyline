@@ -5,6 +5,11 @@
 int main(int argc, char* args[]) {
   Game* theInstance = Game::GetInstance();
 
+  /*
+  * default properties with overrides for level loading json
+  * add map decoration items on different layers, with parallax displacing
+  */
+
   try {
     theInstance->Boot();
 

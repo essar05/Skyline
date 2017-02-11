@@ -24,6 +24,7 @@ namespace Essengine {
       ~TextureAtlas();
 
       glm::vec4 getUV(std::string frameName);
+      glm::vec2 getSize(std::string frameName);
       GLuint getTextureId() { return _textureId; }
       
     private:

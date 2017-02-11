@@ -41,14 +41,14 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)..\lib\SDL2\include\;$(SolutionDir)..\lib\SDL2_Image\include\;$(SolutionDir)..\lib\glew\include\GL\;$(SolutionDir)..\lib\freeglut\include\;$(SolutionDir)..\lib\glm\;$(SolutionDir)..\lib\freetype\include\;$(SolutionDir)Essengine\Engine\;$(SolutionDir)Essengine\Errors\;$(SolutionDir)..\lib\rapidjson\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\lib\SDL2\include\;$(SolutionDir)..\lib\SDL2_Image\include\;$(SolutionDir)..\lib\glew\include\GL\;$(SolutionDir)..\lib\freeglut\include\;$(SolutionDir)..\lib\glm\;$(SolutionDir)..\lib\freetype\include\;$(SolutionDir)..\lib\rapidjson\;$(SolutionDir)Essengine\Engine\;$(SolutionDir)Essengine\Errors\;$(IncludePath)</IncludePath>
     <LibraryPath>
     </LibraryPath>
     <OutDir>$(SolutionDir)..\build\$(Configuration)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)..\build\obj\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)..\lib\SDL2\include\;$(SolutionDir)..\lib\SDL2_Image\include\;$(SolutionDir)..\lib\glew\include\GL\;$(SolutionDir)..\lib\freeglut\include\;$(SolutionDir)..\lib\glm\;$(SolutionDir)..\lib\freetype\include\;$(SolutionDir)Essengine\Engine\;$(SolutionDir)Essengine\Errors\;$(IncludePath)</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)..\lib\SDL2\include\;$(SolutionDir)..\lib\SDL2_Image\include\;$(SolutionDir)..\lib\glew\include\GL\;$(SolutionDir)..\lib\freeglut\include\;$(SolutionDir)..\lib\glm\;$(SolutionDir)..\lib\freetype\include\;E:\C++\Skyline\source\..\lib\rapidjson\;$(SolutionDir)Essengine\Engine\;$(SolutionDir)Essengine\Errors\;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)..\build\$(Configuration)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)..\build\obj\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
@@ -84,6 +84,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
