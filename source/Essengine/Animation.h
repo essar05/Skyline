@@ -15,8 +15,10 @@ namespace Essengine {
       void setPlaybackRate(float playbackRate);
       void setRepeat(bool repeat);
       void setReverse(bool reverse);
+      void setAutoStop(bool autoStop);
 
       void update(float deltaTime);
+      void stop();
       void reset();
 
       std::string getCurrentFrame();
@@ -24,6 +26,7 @@ namespace Essengine {
       unsigned int getFrameCount();
       TextureAtlas* getTextureAtlas();
       bool isReversed();
+      bool isPlaying();
 
     private:
       std::vector<std::string> _frames;
@@ -34,6 +37,8 @@ namespace Essengine {
       float _timeAccumulator;
       bool _repeat = true;
       bool _reverse = false;
+      bool _isPlaying = false;
+      bool _autoStop = false;
 
   };
 

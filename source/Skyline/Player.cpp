@@ -5,31 +5,31 @@
 Player::Player() : Player(0, glm::vec4(0.0f), 0.0f, 0.0f, glm::vec2(0.0f, 0.0f)) { }
 
 Player::Player(int textureId, glm::vec4 uv, float width, float height, glm::vec2 position) : Entity(textureId, uv, width, height, position) {
-  _projectileSpawner = ProjectileSpawner(8.0f, glm::vec2(0.5f, 0.9f), 40.0f);
-  _projectileSpawner.setSource(this->getType());
-  _projectileSpawner2 = ProjectileSpawner(8.0f, glm::vec2(0.5f, 0.9f), 40.0f);
-  _projectileSpawner2.setSource(this->getType());
+  _projectileSpawnerLeft = ProjectileSpawner(8.0f, glm::vec2(0.5f, 0.9f), 40.0f);
+  _projectileSpawnerLeft.setSource(this->getType());
+  _projectileSpawnerRight = ProjectileSpawner(8.0f, glm::vec2(0.5f, 0.9f), 40.0f);
+  _projectileSpawnerRight.setSource(this->getType());
 
   // SPACESHIP
 
-  Essengine::TextureAtlas * _playerAtlas = _game->getTextureCache()->getAtlas("Textures/player.png", "Textures/player.json");
+  Essengine::TextureAtlas * playerAtlas = _game->getTextureCache()->getAtlas("Textures/player.png", "Textures/player.json");
 
   _animationManager = new Essengine::AnimationManager();
   
   Essengine::Animation* idleAnimation = _animationManager->add("IDLE");
   idleAnimation->setPlaybackRate(10.0f / 60.0f);
-  idleAnimation->setTextureAtlas(_playerAtlas);
+  idleAnimation->setTextureAtlas(playerAtlas);
   idleAnimation->setFrames(std::vector<std::string> {"Spaceship_default"});
 
   Essengine::Animation* bankLeftAnimation = _animationManager->add("BANK_LEFT");
   bankLeftAnimation->setPlaybackRate(2.5f / 60.0f);
-  bankLeftAnimation->setTextureAtlas(_playerAtlas);
+  bankLeftAnimation->setTextureAtlas(playerAtlas);
   bankLeftAnimation->setRepeat(false);
   bankLeftAnimation->setFrames(std::vector<std::string> {"Spaceship_left01", "Spaceship_left02", "Spaceship_left03"});
 
   Essengine::Animation* bankRightAnimation = _animationManager->add("BANK_RIGHT");
   bankRightAnimation->setPlaybackRate(2.5f / 60.f);
-  bankRightAnimation->setTextureAtlas(_playerAtlas);
+  bankRightAnimation->setTextureAtlas(playerAtlas);
   bankRightAnimation->setRepeat(false);
   bankRightAnimation->setFrames(std::vector<std::string> {"Spaceship_right01", "Spaceship_right02", "Spaceship_right03"});
 
@@ -41,13 +41,13 @@ Player::Player(int textureId, glm::vec4 uv, float width, float height, glm::vec2
 
   // THRUSTER
 
-  Essengine::TextureAtlas * _thrusterAtlas = _game->getTextureCache()->getAtlas("Textures/thruster.png", "Textures/thruster.json");
+  Essengine::TextureAtlas * thrusterAtlas = _game->getTextureCache()->getAtlas("Textures/thruster.png", "Textures/thruster.json");
 
   _thrusterAnimationManager = new Essengine::AnimationManager();
 
   Essengine::Animation* thrusterIdleAnim = _thrusterAnimationManager->add("IDLE");
   thrusterIdleAnim->setPlaybackRate(1.0f / 60.0f);
-  thrusterIdleAnim->setTextureAtlas(_thrusterAtlas);
+  thrusterIdleAnim->setTextureAtlas(thrusterAtlas);
   std::vector<std::string> thrusterAnimationFrames;
   for (int i = 0; i < 36; i++) {
     std::string extraZero = "0";
@@ -63,10 +63,38 @@ Player::Player(int textureId, glm::vec4 uv, float width, float height, glm::vec2
 
   _thrusterWidth = _game->getMainCamera()->getWorldScalar(_thrusterWidth);
   _thrusterHeight = _game->getMainCamera()->getWorldScalar(_thrusterHeight);
+
+  //MUZZLE FLASH
+  Essengine::TextureAtlas * muzzleAtlas = _game->getTextureCache()->getAtlas("Textures/muzzle.png", "Textures/muzzle.json");
+
+  _muzzleLeftAnimationManager = new Essengine::AnimationManager();
+  _muzzleRightAnimationManager = new Essengine::AnimationManager();
+
+  std::vector<std::string> muzzleAnimationFrames;
+  for (int i = 0; i <= 16; i++) {
+    muzzleAnimationFrames.push_back("muzzle_1_" + std::to_string(i));
+  }
+
+  Essengine::Animation* muzzleLeftAnimation = _muzzleLeftAnimationManager->add("MUZZLE");
+  muzzleLeftAnimation->setPlaybackRate(0.8f / 60.0f);
+  muzzleLeftAnimation->setTextureAtlas(muzzleAtlas);
+  muzzleLeftAnimation->setFrames(muzzleAnimationFrames);
+  muzzleLeftAnimation->setRepeat(false);
+  muzzleLeftAnimation->setAutoStop(true);
+
+  Essengine::Animation* muzzleRightAnimation = _muzzleRightAnimationManager->add("MUZZLE");
+  muzzleRightAnimation->setPlaybackRate(0.8f / 60.0f);
+  muzzleRightAnimation->setTextureAtlas(muzzleAtlas);
+  muzzleRightAnimation->setFrames(muzzleAnimationFrames);
+  muzzleRightAnimation->setRepeat(false);
+  muzzleRightAnimation->setAutoStop(true);
 }
 
 Player::~Player() { 
   delete _animationManager;
+  delete _thrusterAnimationManager;
+  delete _muzzleLeftAnimationManager;
+  delete _muzzleRightAnimationManager;
 }
 
 bool Player::update(float deltaTime) {
@@ -74,6 +102,7 @@ bool Player::update(float deltaTime) {
   b2Vec2 force(0.0f, 0.0f), acceleration(0.0f, 0.0f), desiredVelocity(0.0f, 0.0f);
   float maxSpeed = b2Max(_maxVelocity.x, _maxVelocity.y);
 
+  //Determine animations
   if (_direction.x < 0) {
     _animationManager->play("BANK_LEFT");
   } else if (_direction.x > 0) {
@@ -89,6 +118,7 @@ bool Player::update(float deltaTime) {
     }
   }
 
+  //Handle Physics
   if(_direction.x != 0) {
     acceleration.x = (_direction.x * _maxVelocity.x - velocity.x);
   } else if(velocity.x != 0) {
@@ -160,16 +190,25 @@ bool Player::update(float deltaTime) {
     _body->SetTransform(correctedPosition, _body->GetAngle());
   }
 
-  glm::vec2 position = Utils::toVec2(_body->GetPosition()) + glm::vec2(- _width / 2 + 0.5f, _height / 2 + _projectileSpawner.getProjectileHeight() - 2.0f);
+  //Update Projectile Spawners
+  _projectileSpawnerLeftPosition = Utils::toVec2(_body->GetPosition()) + glm::vec2(-_width / 2 + 0.5f, _height / 2 + _projectileSpawnerLeft.getProjectileHeight() - 2.0f);
+  _projectileSpawnerRightPosition = _projectileSpawnerLeftPosition + glm::vec2(_width - 1.0f, 0.0f);
 
-  _projectileSpawner.update(deltaTime, _isFiring, position, glm::vec2(0.0f, 50.0f));
+  int projectilesSpawnedLeft = _projectileSpawnerLeft.update(deltaTime, _isFiring, _projectileSpawnerLeftPosition, glm::vec2(0.0f, 50.0f));
+  int projectilesSpawnedRight = _projectileSpawnerRight.update(deltaTime, _isFiring, _projectileSpawnerRightPosition, glm::vec2(0.0f, 50.0f));
 
-  position.x = position.x + _width - 1.0f;
+  if (projectilesSpawnedLeft > 0) {
+    _muzzleLeftAnimationManager->play("MUZZLE");
+    _muzzleLeftAnimationManager->getCurrent()->reset();
+    _muzzleRightAnimationManager->play("MUZZLE");
+    _muzzleRightAnimationManager->getCurrent()->reset();
+  }
 
-  _projectileSpawner2.update(deltaTime, _isFiring, position, glm::vec2(0.0f, 50.0f));
-
+  //Update Animations
   _animationManager->update(deltaTime);
   _thrusterAnimationManager->update(deltaTime);
+  _muzzleLeftAnimationManager->update(deltaTime);
+  _muzzleRightAnimationManager->update(deltaTime);
 
   return true;
 }
@@ -191,6 +230,18 @@ void Player::draw() {
     std::string thrusterCurrentAnimationFrame = _thrusterAnimationManager->getCurrent()->getCurrentFrame();
     
     spriteBatch->draw(glm::vec4(screenPosition.x - _thrusterWidth / 2, screenPosition.y - _height + 0.53f, _thrusterWidth, _thrusterHeight), thrusterTextureAtlas->getUV(thrusterCurrentAnimationFrame), thrusterTextureAtlas->getTextureId(), _color, 1);
+  
+    if (_muzzleLeftAnimationManager->isPlaying()) {
+      Essengine::TextureAtlas* muzzleLeftTextureAtlas = _muzzleLeftAnimationManager->getCurrent()->getTextureAtlas();
+      std::string muzzleLeftCurrentAnimationFrame = _muzzleLeftAnimationManager->getCurrent()->getCurrentFrame();
+
+      spriteBatch->draw(glm::vec4(_projectileSpawnerLeftPosition.x - 0.35f, _projectileSpawnerLeftPosition.y + 0.05f, 0.9f, 0.9f), muzzleLeftTextureAtlas->getUV(muzzleLeftCurrentAnimationFrame), muzzleLeftTextureAtlas->getTextureId(), _color, 1);
+
+      Essengine::TextureAtlas* muzzleRightTextureAtlas = _muzzleRightAnimationManager->getCurrent()->getTextureAtlas();
+      std::string muzzleRightCurrentAnimationFrame = _muzzleRightAnimationManager->getCurrent()->getCurrentFrame();
+
+      spriteBatch->draw(glm::vec4(_projectileSpawnerRightPosition.x - 0.40f, _projectileSpawnerRightPosition.y + 0.05f, 0.9f, 0.9f), muzzleRightTextureAtlas->getUV(muzzleRightCurrentAnimationFrame), muzzleRightTextureAtlas->getTextureId(), _color, 1);
+    }
   }
 }
 

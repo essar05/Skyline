@@ -22,10 +22,15 @@ class Player : public Entity {
     
     float _fireRate = 8.0f; //
     bool _isFiring = false;
-    ProjectileSpawner _projectileSpawner;
-    ProjectileSpawner _projectileSpawner2;
+    ProjectileSpawner _projectileSpawnerLeft;
+    ProjectileSpawner _projectileSpawnerRight;
     Essengine::AnimationManager* _animationManager;
     Essengine::AnimationManager* _thrusterAnimationManager;
+    Essengine::AnimationManager* _muzzleLeftAnimationManager;
+    Essengine::AnimationManager* _muzzleRightAnimationManager;
+
+    glm::vec2 _projectileSpawnerLeftPosition;
+    glm::vec2 _projectileSpawnerRightPosition;
 
     float _horizontalScaleFactor = 1.0f;
 

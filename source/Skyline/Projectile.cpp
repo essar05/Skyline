@@ -57,6 +57,7 @@ void Projectile::createFixtures() {
   b2FixtureDef boxFixtureDef;
   boxFixtureDef.shape = &boxShape;
   boxFixtureDef.density = 1;
+  boxFixtureDef.isSensor = 1;
 
   _body->CreateFixture(&boxFixtureDef);
   _body->SetBullet(true);

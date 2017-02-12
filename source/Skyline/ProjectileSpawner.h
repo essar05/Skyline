@@ -11,7 +11,7 @@ class ProjectileSpawner {
 
     void setFireRate(float fireRate) { _fireRate = fireRate; }
     void setSource(int source) { _source = source; }
-    void update(float deltaTime, bool isFiring, const glm::vec2& position, const glm::vec2& velocity);
+    int update(float deltaTime, bool isFiring, const glm::vec2& position, const glm::vec2& velocity);
     void spawn(int projectileCount, const glm::vec2& position, const glm::vec2& velocity);
 
     float getProjectileWidth() { return _projectileWidth; }

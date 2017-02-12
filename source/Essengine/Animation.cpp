@@ -26,8 +26,16 @@ namespace Essengine {
     _reverse = reverse;
   }
 
+  void Animation::setAutoStop(bool autoStop) {
+    _autoStop = autoStop;
+  }
+
   void Animation::update(float deltaTime) {
     bool isFinished = (_reverse == false && _currentFrame == _frameCount - 1) || (_reverse == true && _currentFrame == 0);
+    if (_autoStop && isFinished && !_repeat) {
+      _isPlaying = false;
+      return;
+    }
     if (_repeat || !isFinished) {
       _timeAccumulator += deltaTime;
       int framesElapsed = std::floor(_timeAccumulator / _playbackRate);
@@ -47,6 +55,11 @@ namespace Essengine {
     _currentFrame = 0;
     _timeAccumulator = 0.0f;
     _reverse = false;
+    _isPlaying = true;
+  }
+
+  void Animation::stop() {
+    _isPlaying = false;
   }
 
   std::string Animation::getCurrentFrame() {
@@ -67,6 +80,10 @@ namespace Essengine {
 
   bool Animation::isReversed() {
     return _reverse;
+  }
+
+  bool Animation::isPlaying() {
+    return _isPlaying;
   }
 
 }

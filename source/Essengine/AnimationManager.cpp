@@ -34,7 +34,9 @@ namespace Essengine {
   }
 
   void AnimationManager::update(float deltaTime) {
-    _animations.find(_currentAnimation)->second->update(deltaTime);
+    if(this->isPlaying()) {
+      _animations.find(_currentAnimation)->second->update(deltaTime);
+    }
   }
 
   Animation* AnimationManager::getCurrent() {
@@ -43,6 +45,10 @@ namespace Essengine {
 
   std::string AnimationManager::getCurrentAnimationName() {
     return _currentAnimation;
+  }
+
+  bool AnimationManager::isPlaying() {
+    return (_currentAnimation != "" && this->getCurrent()->isPlaying());
   }
 
 }
