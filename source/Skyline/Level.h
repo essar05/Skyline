@@ -30,7 +30,7 @@ class Level {
     void smoothStates();
     void resetSmoothStates();
 
-    void setBackground(Essengine::GLTexture* texture);
+    void setBackground(Ess2D::Texture2D* texture);
 
     b2World* getWorld();
     Player* getPlayer();

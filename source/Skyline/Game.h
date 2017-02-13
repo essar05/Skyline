@@ -6,7 +6,7 @@
 #include <RuntimeException.cpp>
 #include <IGame.h>
 #include <Window.h>
-#include <GLProgram.h>
+#include <Shader.h>
 #include <SpriteBatch.h>
 #include <Camera2D.h>
 #include <TextureCache.h>
@@ -21,7 +21,7 @@ enum class GameState { RUNNING, EXIT };
 class Level;
 class ProjectileManager;
 
-class Game : Essengine::IGame {
+class Game : Ess2D::IGame {
   public:
 	  void Boot();
 	  static Game* GetInstance();
@@ -30,9 +30,9 @@ class Game : Essengine::IGame {
 	  void Run();
     ~Game();
 
-    Essengine::SpriteBatch* getSpriteBatch();
-    Essengine::Camera2D* getMainCamera();
-    Essengine::TextureCache* getTextureCache();
+    Ess2D::SpriteBatch* getSpriteBatch();
+    Ess2D::Camera2D* getMainCamera();
+    Ess2D::TextureCache* getTextureCache();
     EntityManager* getEntityManager();
     Level* getLevel() { return _level; }
     ProjectileManager* getProjectileManager() { return _projectileManager; }
@@ -52,15 +52,15 @@ class Game : Essengine::IGame {
     void processInput(float deltaTime);
 
     static Game* instance;
-    Essengine::Window* _window;
-    Essengine::GLProgram* _baseProgram;
+    Ess2D::Window* _window;
+    Ess2D::Shader* _baseProgram;
     
-    Essengine::SpriteBatch _spriteBatch;
-    Essengine::Camera2D _camera;
-    Essengine::TextureCache _textureCache;
+    Ess2D::SpriteBatch _spriteBatch;
+    Ess2D::Camera2D _camera;
+    Ess2D::TextureCache _textureCache;
 
-    Essengine::InputManager _inputManager;
-    Essengine::FPSLimiter _fpsLimiter;
+    Ess2D::InputManager _inputManager;
+    Ess2D::FPSLimiter _fpsLimiter;
 
     GameState _state;
     Level* _level;
@@ -80,7 +80,7 @@ class Game : Essengine::IGame {
     float _width = 1280.0f;
     std::string _title = "Skyline 1.0";
     float _scrollSpeed = 10.0f;
-    Essengine::WindowMode _windowMode = Essengine::WindowMode::FULLSCREEN_DESKTOP;
+    Ess2D::WindowMode _windowMode = Ess2D::WindowMode::NORMAL;
 
     glm::vec2 _cameraPosition;
     glm::vec2 _previousCameraPosition;

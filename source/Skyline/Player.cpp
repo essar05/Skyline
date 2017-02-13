@@ -12,22 +12,22 @@ Player::Player(int textureId, glm::vec4 uv, float width, float height, glm::vec2
 
   // SPACESHIP
 
-  Essengine::TextureAtlas * playerAtlas = _game->getTextureCache()->getAtlas("Textures/player.png", "Textures/player.json");
+  Ess2D::TextureAtlas * playerAtlas = _game->getTextureCache()->getAtlas("Textures/player.png", "Textures/player.json");
 
-  _animationManager = new Essengine::AnimationManager();
+  _animationManager = new Ess2D::AnimationManager();
   
-  Essengine::Animation* idleAnimation = _animationManager->add("IDLE");
+  Ess2D::Animation* idleAnimation = _animationManager->add("IDLE");
   idleAnimation->setPlaybackRate(10.0f / 60.0f);
   idleAnimation->setTextureAtlas(playerAtlas);
   idleAnimation->setFrames(std::vector<std::string> {"Spaceship_default"});
 
-  Essengine::Animation* bankLeftAnimation = _animationManager->add("BANK_LEFT");
+  Ess2D::Animation* bankLeftAnimation = _animationManager->add("BANK_LEFT");
   bankLeftAnimation->setPlaybackRate(2.5f / 60.0f);
   bankLeftAnimation->setTextureAtlas(playerAtlas);
   bankLeftAnimation->setRepeat(false);
   bankLeftAnimation->setFrames(std::vector<std::string> {"Spaceship_left01", "Spaceship_left02", "Spaceship_left03"});
 
-  Essengine::Animation* bankRightAnimation = _animationManager->add("BANK_RIGHT");
+  Ess2D::Animation* bankRightAnimation = _animationManager->add("BANK_RIGHT");
   bankRightAnimation->setPlaybackRate(2.5f / 60.f);
   bankRightAnimation->setTextureAtlas(playerAtlas);
   bankRightAnimation->setRepeat(false);
@@ -41,11 +41,11 @@ Player::Player(int textureId, glm::vec4 uv, float width, float height, glm::vec2
 
   // THRUSTER
 
-  Essengine::TextureAtlas * thrusterAtlas = _game->getTextureCache()->getAtlas("Textures/thruster.png", "Textures/thruster.json");
+  Ess2D::TextureAtlas * thrusterAtlas = _game->getTextureCache()->getAtlas("Textures/thruster.png", "Textures/thruster.json");
 
-  _thrusterAnimationManager = new Essengine::AnimationManager();
+  _thrusterAnimationManager = new Ess2D::AnimationManager();
 
-  Essengine::Animation* thrusterIdleAnim = _thrusterAnimationManager->add("IDLE");
+  Ess2D::Animation* thrusterIdleAnim = _thrusterAnimationManager->add("IDLE");
   thrusterIdleAnim->setPlaybackRate(1.0f / 60.0f);
   thrusterIdleAnim->setTextureAtlas(thrusterAtlas);
   std::vector<std::string> thrusterAnimationFrames;
@@ -65,24 +65,24 @@ Player::Player(int textureId, glm::vec4 uv, float width, float height, glm::vec2
   _thrusterHeight = _game->getMainCamera()->getWorldScalar(_thrusterHeight);
 
   //MUZZLE FLASH
-  Essengine::TextureAtlas * muzzleAtlas = _game->getTextureCache()->getAtlas("Textures/muzzle.png", "Textures/muzzle.json");
+  Ess2D::TextureAtlas * muzzleAtlas = _game->getTextureCache()->getAtlas("Textures/muzzle.png", "Textures/muzzle.json");
 
-  _muzzleLeftAnimationManager = new Essengine::AnimationManager();
-  _muzzleRightAnimationManager = new Essengine::AnimationManager();
+  _muzzleLeftAnimationManager = new Ess2D::AnimationManager();
+  _muzzleRightAnimationManager = new Ess2D::AnimationManager();
 
   std::vector<std::string> muzzleAnimationFrames;
   for (int i = 0; i <= 16; i++) {
     muzzleAnimationFrames.push_back("muzzle_1_" + std::to_string(i));
   }
 
-  Essengine::Animation* muzzleLeftAnimation = _muzzleLeftAnimationManager->add("MUZZLE");
+  Ess2D::Animation* muzzleLeftAnimation = _muzzleLeftAnimationManager->add("MUZZLE");
   muzzleLeftAnimation->setPlaybackRate(0.8f / 60.0f);
   muzzleLeftAnimation->setTextureAtlas(muzzleAtlas);
   muzzleLeftAnimation->setFrames(muzzleAnimationFrames);
   muzzleLeftAnimation->setRepeat(false);
   muzzleLeftAnimation->setAutoStop(true);
 
-  Essengine::Animation* muzzleRightAnimation = _muzzleRightAnimationManager->add("MUZZLE");
+  Ess2D::Animation* muzzleRightAnimation = _muzzleRightAnimationManager->add("MUZZLE");
   muzzleRightAnimation->setPlaybackRate(0.8f / 60.0f);
   muzzleRightAnimation->setTextureAtlas(muzzleAtlas);
   muzzleRightAnimation->setFrames(muzzleAnimationFrames);
@@ -109,7 +109,7 @@ bool Player::update(float deltaTime) {
     _animationManager->play("BANK_RIGHT");
   } else {
     if (_animationManager->getCurrentAnimationName() != "IDLE") {
-      Essengine::Animation* currentAnimation = _animationManager->getCurrent();
+      Ess2D::Animation* currentAnimation = _animationManager->getCurrent();
       if (!currentAnimation->isReversed()) {
         currentAnimation->setReverse(true);
       } else if (currentAnimation->getCurrentFrameNumber() == 0) {
@@ -218,26 +218,26 @@ void Player::draw() {
     b2Vec2 bodyPosition = this->_body->GetPosition();
     glm::vec2 screenPosition = _position;
 
-    Essengine::SpriteBatch* spriteBatch = _game->getSpriteBatch();
-    Essengine::TextureAtlas* textureAtlas = _animationManager->getCurrent()->getTextureAtlas();
+    Ess2D::SpriteBatch* spriteBatch = _game->getSpriteBatch();
+    Ess2D::TextureAtlas* textureAtlas = _animationManager->getCurrent()->getTextureAtlas();
     std::string currentAnimationFrame = _animationManager->getCurrent()->getCurrentFrame();
 
     float width = textureAtlas->getSize(currentAnimationFrame).x * _horizontalScaleFactor;
 
     spriteBatch->draw(glm::vec4(screenPosition.x - width / 2, screenPosition.y - _height / 2, width, _height), textureAtlas->getUV(currentAnimationFrame), textureAtlas->getTextureId(), _color, 2);
 
-    Essengine::TextureAtlas* thrusterTextureAtlas = _thrusterAnimationManager->getCurrent()->getTextureAtlas();
+    Ess2D::TextureAtlas* thrusterTextureAtlas = _thrusterAnimationManager->getCurrent()->getTextureAtlas();
     std::string thrusterCurrentAnimationFrame = _thrusterAnimationManager->getCurrent()->getCurrentFrame();
     
     spriteBatch->draw(glm::vec4(screenPosition.x - _thrusterWidth / 2, screenPosition.y - _height + 0.53f, _thrusterWidth, _thrusterHeight), thrusterTextureAtlas->getUV(thrusterCurrentAnimationFrame), thrusterTextureAtlas->getTextureId(), _color, 1);
   
     if (_muzzleLeftAnimationManager->isPlaying()) {
-      Essengine::TextureAtlas* muzzleLeftTextureAtlas = _muzzleLeftAnimationManager->getCurrent()->getTextureAtlas();
+      Ess2D::TextureAtlas* muzzleLeftTextureAtlas = _muzzleLeftAnimationManager->getCurrent()->getTextureAtlas();
       std::string muzzleLeftCurrentAnimationFrame = _muzzleLeftAnimationManager->getCurrent()->getCurrentFrame();
 
       spriteBatch->draw(glm::vec4(_projectileSpawnerLeftPosition.x - 0.35f, _projectileSpawnerLeftPosition.y + 0.05f, 0.9f, 0.9f), muzzleLeftTextureAtlas->getUV(muzzleLeftCurrentAnimationFrame), muzzleLeftTextureAtlas->getTextureId(), _color, 1);
 
-      Essengine::TextureAtlas* muzzleRightTextureAtlas = _muzzleRightAnimationManager->getCurrent()->getTextureAtlas();
+      Ess2D::TextureAtlas* muzzleRightTextureAtlas = _muzzleRightAnimationManager->getCurrent()->getTextureAtlas();
       std::string muzzleRightCurrentAnimationFrame = _muzzleRightAnimationManager->getCurrent()->getCurrentFrame();
 
       spriteBatch->draw(glm::vec4(_projectileSpawnerRightPosition.x - 0.40f, _projectileSpawnerRightPosition.y + 0.05f, 0.9f, 0.9f), muzzleRightTextureAtlas->getUV(muzzleRightCurrentAnimationFrame), muzzleRightTextureAtlas->getTextureId(), _color, 1);

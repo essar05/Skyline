@@ -9,11 +9,11 @@ Projectile::Projectile(int textureId, glm::vec4 uv, float width, float height, g
   _source = source; 
   _damage = damage;
 
-  Essengine::TextureAtlas * _playerAtlas = _game->getTextureCache()->getAtlas("Textures/bullet.png", "Textures/bullet.json");
+  Ess2D::TextureAtlas * _playerAtlas = _game->getTextureCache()->getAtlas("Textures/bullet.png", "Textures/bullet.json");
 
-  _animationManager = new Essengine::AnimationManager();
+  _animationManager = new Ess2D::AnimationManager();
 
-  Essengine::Animation* idleAnimation = _animationManager->add("IDLE");
+  Ess2D::Animation* idleAnimation = _animationManager->add("IDLE");
   idleAnimation->setPlaybackRate(10.0f / 60.0f);
   idleAnimation->setTextureAtlas(_playerAtlas);
   idleAnimation->setFrames(std::vector<std::string> {"bullet_red_0", "bullet_red_1", "bullet_red_2", "bullet_red_3", "bullet_red_4", "bullet_red_5", "bullet_red_6", "bullet_red_7"});
@@ -36,8 +36,8 @@ void Projectile::draw() {
     b2Vec2 bodyPosition = this->_body->GetPosition();
     glm::vec2 screenPosition = _position;
 
-    Essengine::SpriteBatch* spriteBatch = _game->getSpriteBatch();
-    Essengine::TextureAtlas* textureAtlas = _animationManager->getCurrent()->getTextureAtlas();
+    Ess2D::SpriteBatch* spriteBatch = _game->getSpriteBatch();
+    Ess2D::TextureAtlas* textureAtlas = _animationManager->getCurrent()->getTextureAtlas();
     std::string currentAnimationFrame = _animationManager->getCurrent()->getCurrentFrame(); 
     spriteBatch->draw(glm::vec4(screenPosition.x - _width / 2, screenPosition.y - _height / 2, _width, _height), textureAtlas->getUV(currentAnimationFrame), textureAtlas->getTextureId(), _color, 1);
   }

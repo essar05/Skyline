@@ -4,7 +4,7 @@
 #include <iostream>
 #include <ResourceManager.h>
 #include <TextureCache.h>
-#include <GLTexture.h>
+#include <Texture2D.h>
 #include <windows.h>
 #include <algorithm>
 //#include <Psapi.h>
@@ -142,7 +142,7 @@ void Game::Render() {
 
   glUniformMatrix4fv(pLocation, 1, GL_FALSE, &(cameraMatrix[0][0]));
 
-  _spriteBatch.begin(Essengine::GlyphSortType::BACK_TO_FRONT);
+  _spriteBatch.begin(Ess2D::GlyphSortType::BACK_TO_FRONT);
 
   _level->draw();
   _projectileManager->draw();
@@ -209,7 +209,7 @@ void Game::processInput(float deltaTime) {
   }
 
   glm::vec2 direction = glm::vec2(0.0f, 0.0f);
-
+  
   if(_inputManager.isKeyDown(SDLK_LEFT)) {
     direction += glm::vec2(-1.0f, 0.0f);
   }
@@ -240,7 +240,7 @@ void Game::initSystem() {
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
   SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-  _window = new Essengine::Window(this->_title, (int) this->_width, (int) this->_height, this->_windowMode);
+  _window = new Ess2D::Window(this->_title, (int) this->_width, (int) this->_height, this->_windowMode);
   _window->SetVSync(_vSync);
 
   initShaders();
@@ -257,9 +257,9 @@ void Game::initSystem() {
 }
 
 void Game::initShaders() {
-  _baseProgram = new Essengine::GLProgram(true);
-  _baseProgram->loadShader(Essengine::ShaderType::VERTEX, "Shaders/Vertex.shader");
-  _baseProgram->loadShader(Essengine::ShaderType::FRAGMENT, "Shaders/Fragment.shader");
+  _baseProgram = new Ess2D::Shader(true);
+  _baseProgram->loadShader(Ess2D::ShaderType::VERTEX, "Shaders/Vertex.shader");
+  _baseProgram->loadShader(Ess2D::ShaderType::FRAGMENT, "Shaders/Fragment.shader");
   _baseProgram->compileShaders();
 
   _baseProgram->addAttribute("vertexPosition");
@@ -288,11 +288,11 @@ Game* Game::GetInstance() {
   return instance;
 }
 
-Essengine::SpriteBatch* Game::getSpriteBatch() {
+Ess2D::SpriteBatch* Game::getSpriteBatch() {
   return &_spriteBatch;
 }
 
-Essengine::Camera2D* Game::getMainCamera() {
+Ess2D::Camera2D* Game::getMainCamera() {
   return &_camera;
 }
 
@@ -308,6 +308,6 @@ EntityManager* Game::getEntityManager() {
   return _entityManager;
 }
 
-Essengine::TextureCache* Game::getTextureCache() {
+Ess2D::TextureCache* Game::getTextureCache() {
   return &_textureCache;
 }

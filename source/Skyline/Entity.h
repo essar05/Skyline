@@ -22,7 +22,7 @@ class Entity {
     void setPreviousPosition(const glm::vec2& position);
     void setDirection(const glm::vec2& direction);
     void setVelocity(const glm::vec2& velocity);
-    void setColor(const Essengine::ColorRGBA8& color) { _color = color; }
+    void setColor(const Ess2D::ColorRGBA8& color) { _color = color; }
     void setId(unsigned int id) { _id = id; }
 
     unsigned int getId() { return _id; }
@@ -67,7 +67,7 @@ class Entity {
 
     b2Body* _body;
     
-    Essengine::ColorRGBA8 _color;
+    Ess2D::ColorRGBA8 _color;
 
     float _collisionDamage = 0.0f;
 

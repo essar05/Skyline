@@ -12,7 +12,7 @@ Entity::Entity(int textureId, glm::vec4 uv, float width, float height, glm::vec2
 Entity::Entity(int textureId, glm::vec4 uv, float width, float height, glm::vec2 position, bool scaleToWorld) : _textureId(textureId), _uv(uv), _width(width), _height(height), _position(position) {
   _game = Game::GetInstance();
 
-  _color = Essengine::ColorRGBA8(225, 255, 255, 255);
+  _color = Ess2D::ColorRGBA8(225, 255, 255, 255);
 
   if(scaleToWorld) {
     _width = _game->getMainCamera()->getWorldScalar(_width);
@@ -69,9 +69,9 @@ bool Entity::collidesWith(Entity* anotherEntity) {
   bool result = collidesWith(anotherEntity->_width, anotherEntity->_height, glm::vec2(bPosition.x, bPosition.y));
 
   if(result) {
-    anotherEntity->setColor(Essengine::ColorRGBA8(235, 0, 0, 255));
+    anotherEntity->setColor(Ess2D::ColorRGBA8(235, 0, 0, 255));
   } else {
-    anotherEntity->setColor(Essengine::ColorRGBA8(255, 255, 255, 255));
+    anotherEntity->setColor(Ess2D::ColorRGBA8(255, 255, 255, 255));
   }
 
   return result;
@@ -97,7 +97,7 @@ void Entity::draw() {
     b2Vec2 bodyPosition = this->_body->GetPosition();
     glm::vec2 screenPosition = _position;
 
-    Essengine::SpriteBatch* spriteBatch = _game->getSpriteBatch();
+    Ess2D::SpriteBatch* spriteBatch = _game->getSpriteBatch();
     spriteBatch->draw(glm::vec4(screenPosition.x - _width / 2, screenPosition.y - _height / 2, _width, _height), _uv, _textureId, _color, 1);
   }
 }

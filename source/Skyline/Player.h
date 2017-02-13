@@ -24,10 +24,10 @@ class Player : public Entity {
     bool _isFiring = false;
     ProjectileSpawner _projectileSpawnerLeft;
     ProjectileSpawner _projectileSpawnerRight;
-    Essengine::AnimationManager* _animationManager;
-    Essengine::AnimationManager* _thrusterAnimationManager;
-    Essengine::AnimationManager* _muzzleLeftAnimationManager;
-    Essengine::AnimationManager* _muzzleRightAnimationManager;
+    Ess2D::AnimationManager* _animationManager;
+    Ess2D::AnimationManager* _thrusterAnimationManager;
+    Ess2D::AnimationManager* _muzzleLeftAnimationManager;
+    Ess2D::AnimationManager* _muzzleRightAnimationManager;
 
     glm::vec2 _projectileSpawnerLeftPosition;
     glm::vec2 _projectileSpawnerRightPosition;

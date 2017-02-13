@@ -19,11 +19,12 @@
   ],
   "decorations": [
     {
-      "textureAtlas": "",
-      "textureName": "",
+      "textureName": "Sun.png",
       "scale": 1.0,
       "parallax": true,
-      "layer": 1
+      "layer": 1,
+      "x": 600,
+      "y": 2000
     }
   ]
 }

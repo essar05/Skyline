@@ -42,7 +42,7 @@ void EntityManager::deleteEntity(unsigned int id, bool queued) {
 }
 
 void EntityManager::deleteQueuedEntities() {
-  for(int i = 0; i < _deleteQueue.size(); i++) {
+  for(unsigned int i = 0; i < _deleteQueue.size(); i++) {
     auto entityIt = _entities.find(_deleteQueue[i]);
     if(entityIt != _entities.end()) {
       delete entityIt->second;

@@ -3,21 +3,16 @@
 #include "Game.h"
 
 int main(int argc, char* args[]) {
-  Game* theInstance = Game::GetInstance();
-
-  /*
-  * default properties with overrides for level loading json
-  * add map decoration items on different layers, with parallax displacing
-  */
+  Game* game = Game::GetInstance();
 
   try {
-    theInstance->Boot();
+    game->Boot();
 
-    theInstance->Run();
+    game->Run();
 
-    theInstance->Destroy();
+    game->Destroy();
   }
-  catch (Essengine::ERuntimeException& anException) {
+  catch (Ess2D::ERuntimeException& anException) {
     std::cout << anException.getMessage() << std::endl;
   }
 

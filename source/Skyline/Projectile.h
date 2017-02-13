@@ -25,7 +25,7 @@ class Projectile : public Entity {
   private:
     int _source; //1 -> player, 2 -> enemies;
     float _damage;
-    Essengine::AnimationManager* _animationManager;
+    Ess2D::AnimationManager* _animationManager;
 
 };
 

@@ -49,7 +49,7 @@ void ProjectileManager::deleteProjectile(unsigned int index, bool queued) {
 }
 
 void ProjectileManager::deleteQueuedProjectiles() {
-  for(int i = 0; i < _deleteQueue.size(); i++) {
+  for(unsigned int i = 0; i < _deleteQueue.size(); i++) {
     auto it = _projectiles.find(_deleteQueue[i]);
     if(it != _projectiles.end()) {
       delete it->second;

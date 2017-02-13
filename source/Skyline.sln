@@ -3,12 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Essengine", "Essengine\Essengine.vcxproj", "{A40721E6-8768-4FB8-AA3B-9E958ADCB1DF}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Skyline", "Skyline\Skyline.vcxproj", "{05BC8DED-8BAE-4716-99CE-6BE1A2D98A9C}"
 	ProjectSection(ProjectDependencies) = postProject
-		{A40721E6-8768-4FB8-AA3B-9E958ADCB1DF} = {A40721E6-8768-4FB8-AA3B-9E958ADCB1DF}
+		{A16CFDF6-0519-4260-AE44-BDCE0D05E101} = {A16CFDF6-0519-4260-AE44-BDCE0D05E101}
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Ess2D", "Ess2D\Ess2D.vcxproj", "{A16CFDF6-0519-4260-AE44-BDCE0D05E101}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,16 +20,6 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A40721E6-8768-4FB8-AA3B-9E958ADCB1DF}.Debug|Any CPU.ActiveCfg = Debug|Win32
-		{A40721E6-8768-4FB8-AA3B-9E958ADCB1DF}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
-		{A40721E6-8768-4FB8-AA3B-9E958ADCB1DF}.Debug|Mixed Platforms.Build.0 = Debug|Win32
-		{A40721E6-8768-4FB8-AA3B-9E958ADCB1DF}.Debug|Win32.ActiveCfg = Debug|Win32
-		{A40721E6-8768-4FB8-AA3B-9E958ADCB1DF}.Debug|Win32.Build.0 = Debug|Win32
-		{A40721E6-8768-4FB8-AA3B-9E958ADCB1DF}.Release|Any CPU.ActiveCfg = Release|Win32
-		{A40721E6-8768-4FB8-AA3B-9E958ADCB1DF}.Release|Mixed Platforms.ActiveCfg = Release|Win32
-		{A40721E6-8768-4FB8-AA3B-9E958ADCB1DF}.Release|Mixed Platforms.Build.0 = Release|Win32
-		{A40721E6-8768-4FB8-AA3B-9E958ADCB1DF}.Release|Win32.ActiveCfg = Release|Win32
-		{A40721E6-8768-4FB8-AA3B-9E958ADCB1DF}.Release|Win32.Build.0 = Release|Win32
 		{05BC8DED-8BAE-4716-99CE-6BE1A2D98A9C}.Debug|Any CPU.ActiveCfg = Debug|Win32
 		{05BC8DED-8BAE-4716-99CE-6BE1A2D98A9C}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
 		{05BC8DED-8BAE-4716-99CE-6BE1A2D98A9C}.Debug|Mixed Platforms.Build.0 = Debug|Win32
@@ -40,6 +30,16 @@ Global
 		{05BC8DED-8BAE-4716-99CE-6BE1A2D98A9C}.Release|Mixed Platforms.Build.0 = Release|Win32
 		{05BC8DED-8BAE-4716-99CE-6BE1A2D98A9C}.Release|Win32.ActiveCfg = Release|Win32
 		{05BC8DED-8BAE-4716-99CE-6BE1A2D98A9C}.Release|Win32.Build.0 = Release|Win32
+		{A16CFDF6-0519-4260-AE44-BDCE0D05E101}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{A16CFDF6-0519-4260-AE44-BDCE0D05E101}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{A16CFDF6-0519-4260-AE44-BDCE0D05E101}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{A16CFDF6-0519-4260-AE44-BDCE0D05E101}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A16CFDF6-0519-4260-AE44-BDCE0D05E101}.Debug|Win32.Build.0 = Debug|Win32
+		{A16CFDF6-0519-4260-AE44-BDCE0D05E101}.Release|Any CPU.ActiveCfg = Release|Win32
+		{A16CFDF6-0519-4260-AE44-BDCE0D05E101}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{A16CFDF6-0519-4260-AE44-BDCE0D05E101}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{A16CFDF6-0519-4260-AE44-BDCE0D05E101}.Release|Win32.ActiveCfg = Release|Win32
+		{A16CFDF6-0519-4260-AE44-BDCE0D05E101}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -31,8 +31,8 @@ void Level::addSection(LevelSection* section) {
 }
 
 void Level::update(float deltaTime) {
-  Essengine::SpriteBatch* spriteBatch = _game->getSpriteBatch();
-  Essengine::Camera2D* camera = _game->getMainCamera();
+  Ess2D::SpriteBatch* spriteBatch = _game->getSpriteBatch();
+  Ess2D::Camera2D* camera = _game->getMainCamera();
   glm::vec2 viewportSize = camera->getWorldViewportSize();
 
   /*
@@ -73,18 +73,18 @@ void Level::update(float deltaTime) {
 }
 
 void Level::draw() {
-  Essengine::SpriteBatch* spriteBatch = _game->getSpriteBatch();
-  Essengine::Camera2D* camera = _game->getMainCamera();
+  Ess2D::SpriteBatch* spriteBatch = _game->getSpriteBatch();
+  Ess2D::Camera2D* camera = _game->getMainCamera();
   glm::vec2 viewportSize = camera->getWorldViewportSize();
   
   float bottomCameraEdge = camera->getPosition().y / camera->getZoom() - viewportSize[1] / 2;
   float topCameraEdge = camera->getPosition().y / camera->getZoom() + viewportSize[1] / 2;
-  int bgBottomPassedCount = floor(bottomCameraEdge / _backgroundHeight); // number of times the background image has repeated entirely below the bottom camera edge
-  int bgTopPassedCount = floor(topCameraEdge / _backgroundHeight); // number of times the background image has repeated entirely below the top camera edge
+  int bgBottomPassedCount = (int) floor(bottomCameraEdge / _backgroundHeight); // number of times the background image has repeated entirely below the bottom camera edge
+  int bgTopPassedCount = (int) floor(topCameraEdge / _backgroundHeight); // number of times the background image has repeated entirely below the top camera edge
 
   glm::vec4 position(0, _backgroundHeight * bgBottomPassedCount, _backgroundWidth, _backgroundHeight);
   glm::vec4 uv(0.0f, 0.0f, 1.0f, 1.0f);
-  Essengine::ColorRGBA8 color(255, 255, 255, 255);
+  Ess2D::ColorRGBA8 color(255, 255, 255, 255);
   spriteBatch->draw(position, uv, _backgroundId, color, 0);
 
   if (bgBottomPassedCount < bgTopPassedCount) {
@@ -147,9 +147,9 @@ void Level::resetSmoothStates() {
 void Level::load(std::string levelName) {
   //should probably think about discarding old level when loading a new one.
 
-  Essengine::TextureCache* textureCache = _game->getTextureCache();
+  Ess2D::TextureCache* textureCache = _game->getTextureCache();
   EntityManager* entityManager = _game->getEntityManager();
-  Essengine::Camera2D* camera = _game->getMainCamera();
+  Ess2D::Camera2D* camera = _game->getMainCamera();
 
   _world = new b2World(b2Vec2(0, 0));
   _world->SetAutoClearForces(false);
@@ -157,7 +157,7 @@ void Level::load(std::string levelName) {
   _world->SetContactListener(&_contactListener);
   _glDebugDrawInstance.SetFlags(b2Draw::e_shapeBit | b2Draw::e_centerOfMassBit);
 
-  Essengine::TextureAtlas* atlas = textureCache->getAtlas("Textures/player.png", "Textures/player.json");
+  Ess2D::TextureAtlas* atlas = textureCache->getAtlas("Textures/player.png", "Textures/player.json");
   //glm::vec4 uv = atlas->getUV("player");
   
   _player = new Player(atlas->getTextureId(), atlas->getUV("Spaceship_default"), 100.0f, 76.0f, glm::vec2(camera->getViewportSize().x / 2, 100.0f));
@@ -182,7 +182,7 @@ void Level::load(std::string levelName) {
   }
 
   if(!document.HasMember("sections") || !document["sections"].IsArray()) {
-    throw Essengine::ERuntimeException("Level file invalid: missing sections");
+    throw Ess2D::ERuntimeException("Level file invalid: missing sections");
   }
 
   for(rapidjson::SizeType i = 0; i < document["sections"].Size(); i++) {
@@ -209,7 +209,7 @@ void Level::load(std::string levelName) {
         float objectY = (float) document["sections"][i]["objects"][j]["y"].GetDouble() + camera->getScreenScalar(_height); //translate on y axis by _height because the initial coordinates are relative to the section bounds
         
         //create the entity, add it to the manager and then add it to the section.
-        Essengine::TextureAtlas* atlas = textureCache->getAtlas("Textures/spritesheet.png", "Textures/sprites.json");
+        Ess2D::TextureAtlas* atlas = textureCache->getAtlas("Textures/spritesheet.png", "Textures/sprites.json");
         Entity* e = new Entity(atlas->getTextureId(), atlas->getUV("enemy"), 100.0f, 115.0f, glm::vec2(objectX, objectY));
         e->createB2Data();
         section->addObject(entityManager->addEntity(e));
@@ -220,7 +220,7 @@ void Level::load(std::string levelName) {
   }
 }
 
-void Level::setBackground(Essengine::GLTexture* texture) {
+void Level::setBackground(Ess2D::Texture2D* texture) {
   _backgroundId = texture->_id;
 
   _backgroundWidth = _game->getMainCamera()->getWorldViewportSize().x;
