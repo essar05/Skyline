@@ -2,6 +2,7 @@
 
 #include <unordered_map>
 #include "LevelSection.h"
+#include "LevelDecoration.h"
 #include <SpriteBatch.h>
 #include <TextureCache.h>
 #include "EntityManager.h"
@@ -24,6 +25,7 @@ class Level {
     ~Level();
 
     void addSection(LevelSection* section);
+    void addDecoration(LevelDecoration* decoration, int layer);
     void draw();
     void load(std::string levelName);
     void update(float deltaTime);
@@ -45,11 +47,17 @@ class Level {
     std::map<float, LevelSection*> _sections;
     std::map<float, LevelSection*>::iterator _renderStartIt;
 
+    std::map<int, std::vector<LevelDecoration*>> _decorations;
+    std::vector<int> _decorationLayers;
+
     b2World* _world;
     b2GLDebugDraw _glDebugDrawInstance;
     ContactListener _contactListener;
     unsigned int _backgroundId;
     float _backgroundWidth;
     float _backgroundHeight;
+
+    static bool compareDecorationYPosition(LevelDecoration* a, LevelDecoration* b);
+    static bool compareDecorationLayerDesc(int y1, int y2);
 
 };

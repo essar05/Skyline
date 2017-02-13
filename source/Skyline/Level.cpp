@@ -19,15 +19,7 @@ Level::~Level() {
 
     it++;
   }
-}
-
-void Level::addSection(LevelSection* section) {
-  this->_sections[_height] = section;
-  _height += section->getHeight(); //already scaled to world
-
-  if(_sections.size() == 1) {
-    _renderStartIt = _sections.begin();
-  }
+  //DELETE DECORATIONS !!!!!
 }
 
 void Level::update(float deltaTime) {
@@ -79,17 +71,54 @@ void Level::draw() {
   
   float bottomCameraEdge = camera->getPosition().y / camera->getZoom() - viewportSize[1] / 2;
   float topCameraEdge = camera->getPosition().y / camera->getZoom() + viewportSize[1] / 2;
+  bottomCameraEdge -= (camera->getPosition().y / camera->getZoom()) / 50.f;
+
   int bgBottomPassedCount = (int) floor(bottomCameraEdge / _backgroundHeight); // number of times the background image has repeated entirely below the bottom camera edge
   int bgTopPassedCount = (int) floor(topCameraEdge / _backgroundHeight); // number of times the background image has repeated entirely below the top camera edge
+  
+                                                                         //FIX REPEATABLE BG
 
-  glm::vec4 position(0, _backgroundHeight * bgBottomPassedCount, _backgroundWidth, _backgroundHeight);
+  glm::vec4 position(0, bottomCameraEdge, _backgroundWidth, _backgroundHeight);
   glm::vec4 uv(0.0f, 0.0f, 1.0f, 1.0f);
   Ess2D::ColorRGBA8 color(255, 255, 255, 255);
   spriteBatch->draw(position, uv, _backgroundId, color, 0);
 
   if (bgBottomPassedCount < bgTopPassedCount) {
     position = glm::vec4(0, _backgroundHeight * bgTopPassedCount, _backgroundWidth, _backgroundHeight);
-    spriteBatch->draw(position, uv, _backgroundId, color, 0);
+    //spriteBatch->draw(position, uv, _backgroundId, color, 0);
+  }
+  
+  for (unsigned int i = 0; i < _decorationLayers.size(); i++) {
+    auto decorationsIt = _decorations.find(_decorationLayers[i]);
+    if (decorationsIt == _decorations.end()) {
+      continue;
+    }
+
+    int layer = _decorationLayers[i];
+    for (unsigned int j = 0; j < decorationsIt->second.size();) {
+      LevelDecoration* decoration = decorationsIt->second[j];
+
+      float cameraY = camera->getPosition().y / camera->getZoom();
+      float decorationY = decoration->getY();
+      float deltaY = cameraY - decorationY;
+      float parallaxDisplacement = 0.9f;
+      if (layer == 2) {
+        parallaxDisplacement = 0.6f;
+      }
+      decorationY += deltaY * parallaxDisplacement;
+
+      if (camera->getPosition().y / camera->getZoom() - viewportSize[1] / 2 > decorationY + decoration->getHeight() / 2) {
+        decorationsIt->second.erase(decorationsIt->second.begin() + j);
+        continue;
+      } else if (camera->getPosition().y / camera->getZoom() + viewportSize[1] / 2 < decorationY - decoration->getHeight() / 2) {
+        break;
+      }
+
+      position = glm::vec4(decoration->getX() - decoration->getWidth() / 2, decorationY - decoration->getHeight() / 2, decoration->getWidth(), decoration->getHeight());
+      spriteBatch->draw(position, uv, decoration->getTextureId(), color, layer);
+
+      j++;
+    }
   }
 
   /*
@@ -181,6 +210,7 @@ void Level::load(std::string levelName) {
     this->setBackground( &(textureCache->getTexture("Textures/" + defaultBackground)) );
   }
 
+  //LOAD SECTIONS
   if(!document.HasMember("sections") || !document["sections"].IsArray()) {
     throw Ess2D::ERuntimeException("Level file invalid: missing sections");
   }
@@ -218,6 +248,52 @@ void Level::load(std::string levelName) {
 
     this->addSection(section);
   }
+
+  //LOAD DECORATIONS
+  if (document.HasMember("decorations") && document["decorations"].IsArray()) {
+    for (rapidjson::SizeType i = 0; i < document["decorations"].Size(); i++) {
+
+      float x = (float) document["decorations"][i]["x"].GetDouble();
+      float y = (float) document["decorations"][i]["y"].GetDouble();
+      std::string textureName = document["decorations"][i]["textureName"].GetString();
+      int layer = document["decorations"][i]["layer"].GetInt();
+      float scale = 1.0f;
+      if (document["decorations"][i].HasMember("scale")) {
+        scale = (float) document["decorations"][i]["scale"].GetDouble();
+      }
+      
+      Ess2D::Texture2D texture = textureCache->getTexture("Textures/" + textureName);
+
+      LevelDecoration* decoration = new LevelDecoration(texture._id, x, y, (float) texture._width, (float) texture._height, scale);
+      
+      this->addDecoration(decoration, layer);
+    }
+  }
+}
+
+
+void Level::addSection(LevelSection* section) {
+  this->_sections[_height] = section;
+  _height += section->getHeight(); //already scaled to world
+
+  if (_sections.size() == 1) {
+    _renderStartIt = _sections.begin();
+  }
+}
+
+
+void Level::addDecoration(LevelDecoration* decoration, int layer) {
+  std::map<int, std::vector<LevelDecoration*>>::iterator it = _decorations.find(layer);
+  if (it == _decorations.end()) {
+    it = _decorations.insert(std::make_pair(layer, std::vector<LevelDecoration*>())).first;
+
+    _decorationLayers.push_back(layer);
+    std::stable_sort(_decorationLayers.begin(), _decorationLayers.end(), compareDecorationLayerDesc);
+  }
+
+  it->second.push_back(decoration);
+
+  std::stable_sort(it->second.begin(), it->second.end(), compareDecorationYPosition);
 }
 
 void Level::setBackground(Ess2D::Texture2D* texture) {
@@ -233,4 +309,12 @@ b2World* Level::getWorld() {
 
 Player* Level::getPlayer() {
   return _player;
+}
+
+bool Level::compareDecorationYPosition(LevelDecoration* a, LevelDecoration* b) {
+  return a->getY() < b->getY();
+}
+
+bool Level::compareDecorationLayerDesc(int y1, int y2) {
+  return y1 > y2;
 }

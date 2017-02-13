@@ -37,7 +37,7 @@ namespace Ess2D {
 
     std::printf("OpenGL Version: %s\n", glGetString(GL_VERSION));
 
-    glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
     //Set VSYNC to disabled
     SDL_GL_SetSwapInterval(0);

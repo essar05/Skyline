@@ -21,6 +21,7 @@ class Projectile : public Entity {
 
   protected:
     void createFixtures() override;
+    int _depth = 8999;
 
   private:
     int _source; //1 -> player, 2 -> enemies;

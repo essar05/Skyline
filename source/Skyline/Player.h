@@ -17,6 +17,7 @@ class Player : public Entity {
     void contact(Entity* e) override;
 
   private:
+
     glm::vec2 _defaultVelocity = glm::vec2(0.0f, 10.0f);
     glm::vec2 _maxVelocity = glm::vec2(20.0f, 20.0f);
     

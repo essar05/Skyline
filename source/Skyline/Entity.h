@@ -54,6 +54,7 @@ class Entity {
     virtual void createFixtures();
 
     unsigned int _id = NULL;
+    int _depth = 9000;
     float _health = 100.0f;
     float _width;
     float _height;

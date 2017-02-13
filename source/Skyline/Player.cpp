@@ -224,23 +224,23 @@ void Player::draw() {
 
     float width = textureAtlas->getSize(currentAnimationFrame).x * _horizontalScaleFactor;
 
-    spriteBatch->draw(glm::vec4(screenPosition.x - width / 2, screenPosition.y - _height / 2, width, _height), textureAtlas->getUV(currentAnimationFrame), textureAtlas->getTextureId(), _color, 2);
+    spriteBatch->draw(glm::vec4(screenPosition.x - width / 2, screenPosition.y - _height / 2, width, _height), textureAtlas->getUV(currentAnimationFrame), textureAtlas->getTextureId(), _color, _depth);
 
     Ess2D::TextureAtlas* thrusterTextureAtlas = _thrusterAnimationManager->getCurrent()->getTextureAtlas();
     std::string thrusterCurrentAnimationFrame = _thrusterAnimationManager->getCurrent()->getCurrentFrame();
     
-    spriteBatch->draw(glm::vec4(screenPosition.x - _thrusterWidth / 2, screenPosition.y - _height + 0.53f, _thrusterWidth, _thrusterHeight), thrusterTextureAtlas->getUV(thrusterCurrentAnimationFrame), thrusterTextureAtlas->getTextureId(), _color, 1);
+    spriteBatch->draw(glm::vec4(screenPosition.x - _thrusterWidth / 2, screenPosition.y - _height + 0.53f, _thrusterWidth, _thrusterHeight), thrusterTextureAtlas->getUV(thrusterCurrentAnimationFrame), thrusterTextureAtlas->getTextureId(), _color, _depth - 1);
   
     if (_muzzleLeftAnimationManager->isPlaying()) {
       Ess2D::TextureAtlas* muzzleLeftTextureAtlas = _muzzleLeftAnimationManager->getCurrent()->getTextureAtlas();
       std::string muzzleLeftCurrentAnimationFrame = _muzzleLeftAnimationManager->getCurrent()->getCurrentFrame();
 
-      spriteBatch->draw(glm::vec4(_projectileSpawnerLeftPosition.x - 0.35f, _projectileSpawnerLeftPosition.y + 0.05f, 0.9f, 0.9f), muzzleLeftTextureAtlas->getUV(muzzleLeftCurrentAnimationFrame), muzzleLeftTextureAtlas->getTextureId(), _color, 1);
+      spriteBatch->draw(glm::vec4(_projectileSpawnerLeftPosition.x - 0.35f, _projectileSpawnerLeftPosition.y + 0.05f, 0.9f, 0.9f), muzzleLeftTextureAtlas->getUV(muzzleLeftCurrentAnimationFrame), muzzleLeftTextureAtlas->getTextureId(), _color, _depth - 1);
 
       Ess2D::TextureAtlas* muzzleRightTextureAtlas = _muzzleRightAnimationManager->getCurrent()->getTextureAtlas();
       std::string muzzleRightCurrentAnimationFrame = _muzzleRightAnimationManager->getCurrent()->getCurrentFrame();
 
-      spriteBatch->draw(glm::vec4(_projectileSpawnerRightPosition.x - 0.40f, _projectileSpawnerRightPosition.y + 0.05f, 0.9f, 0.9f), muzzleRightTextureAtlas->getUV(muzzleRightCurrentAnimationFrame), muzzleRightTextureAtlas->getTextureId(), _color, 1);
+      spriteBatch->draw(glm::vec4(_projectileSpawnerRightPosition.x - 0.40f, _projectileSpawnerRightPosition.y + 0.05f, 0.9f, 0.9f), muzzleRightTextureAtlas->getUV(muzzleRightCurrentAnimationFrame), muzzleRightTextureAtlas->getTextureId(), _color, _depth - 1);
     }
   }
 }

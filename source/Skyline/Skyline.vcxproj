@@ -72,9 +72,9 @@
       <AdditionalOptions>/verbose:lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PostBuildEvent>
-      <Command>cmd /c xcopy ".\Resources\Textures" "$(TargetDir)Textures\" /y
-cmd /c xcopy ".\Resources\Shaders" "$(TargetDir)Shaders\" /y
-cmd /c xcopy ".\Levels" "$(TargetDir)Levels\" /y</Command>
+      <Command>cmd /c xcopy ".\Resources\Textures" "$(TargetDir)Textures\" /y /S
+cmd /c xcopy ".\Resources\Shaders" "$(TargetDir)Shaders\" /y /S
+cmd /c xcopy ".\Levels" "$(TargetDir)Levels\" /y /S</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -97,9 +97,9 @@ cmd /c xcopy ".\Levels" "$(TargetDir)Levels\" /y</Command>
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);freeglut.lib;glew32.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;opengl32.lib;freetype255d.lib;Box2D.lib;Ess2D.lib</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>cmd /c xcopy ".\Resources\Textures" "$(TargetDir)Textures\" /y
-cmd /c xcopy ".\Resources\Shaders" "$(TargetDir)Shaders\" /y
-cmd /c xcopy ".\Levels" "$(TargetDir)Levels\" /y</Command>
+      <Command>cmd /c xcopy ".\Resources\Textures" "$(TargetDir)Textures\" /y /S
+cmd /c xcopy ".\Resources\Shaders" "$(TargetDir)Shaders\" /y /S
+cmd /c xcopy ".\Levels" "$(TargetDir)Levels\" /y /S</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

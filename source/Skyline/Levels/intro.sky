@@ -1,5 +1,5 @@
 {
-  "defaultBackground": "Background_Tilable.png",
+  "defaultBackground": "Background/Background_Tilable.png",
   "sections": [
     {
       "width": 1024,
@@ -17,14 +17,23 @@
       ]
     }
   ],
+  "parallax": {
+
+  },
   "decorations": [
     {
-      "textureName": "Sun.png",
-      "scale": 1.0,
-      "parallax": true,
+      "textureName": "Background/Sun.png",
+      "scale": 0.15,
       "layer": 1,
       "x": 600,
-      "y": 2000
+      "y": 2500
+    },
+	  {
+      "textureName": "Background/Blue_Planet.png",
+      "scale": 0.5,
+      "layer": 2,
+      "x": 400,
+      "y": 2100
     }
   ]
 }

@@ -98,7 +98,7 @@ void Entity::draw() {
     glm::vec2 screenPosition = _position;
 
     Ess2D::SpriteBatch* spriteBatch = _game->getSpriteBatch();
-    spriteBatch->draw(glm::vec4(screenPosition.x - _width / 2, screenPosition.y - _height / 2, _width, _height), _uv, _textureId, _color, 1);
+    spriteBatch->draw(glm::vec4(screenPosition.x - _width / 2, screenPosition.y - _height / 2, _width, _height), _uv, _textureId, _color, _depth);
   }
 }
 

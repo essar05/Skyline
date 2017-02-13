@@ -21,9 +21,9 @@ namespace Ess2D {
 
     //limit FPS
     if(_limitFPS && _maxFPS > 0 && 1000.0f / _maxFPS > _frameTime) {
-      SDL_Delay(1000.0f / _maxFPS - _frameTime);
+      SDL_Delay((Uint32) 1000.0f / _maxFPS - _frameTime);
     }
-
+     
     //calculate FPS
     calculateFPS();
 

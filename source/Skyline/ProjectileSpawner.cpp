@@ -38,7 +38,7 @@ void ProjectileSpawner::spawn(int projectileCount, const glm::vec2& position, co
   Game* gameInstance = Game::GetInstance();
 
   for(int i = 0; i < projectileCount; i++) {
-    Projectile* projectile = new Projectile(gameInstance->getTextureCache()->getTexture("Textures/tesx.png")._id, glm::vec4(0.0f, 0.0f, 1.0f, 1.0f),
+    Projectile* projectile = new Projectile(0, glm::vec4(0.0f, 0.0f, 1.0f, 1.0f),
                                             _projectileWidth, _projectileHeight, glm::vec2(position.x, position.y), _source, _projectileDamage);
     projectile->createB2Data();
     projectile->setVelocity(velocity);
