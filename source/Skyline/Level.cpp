@@ -76,7 +76,7 @@ void Level::draw() {
   int bgBottomPassedCount = (int) floor(bottomCameraEdge / _backgroundHeight); // number of times the background image has repeated entirely below the bottom camera edge
   int bgTopPassedCount = (int) floor(topCameraEdge / _backgroundHeight); // number of times the background image has repeated entirely below the top camera edge
   
-                                                                         //FIX REPEATABLE BG
+  //FIX REPEATABLE BG
 
   glm::vec4 position(0, bottomCameraEdge, _backgroundWidth, _backgroundHeight);
   glm::vec4 uv(0.0f, 0.0f, 1.0f, 1.0f);
@@ -115,7 +115,7 @@ void Level::draw() {
       }
 
       position = glm::vec4(decoration->getX() - decoration->getWidth() / 2, decorationY - decoration->getHeight() / 2, decoration->getWidth(), decoration->getHeight());
-      spriteBatch->draw(position, uv, decoration->getTextureId(), color, layer);
+      spriteBatch->draw(position, uv, decoration->getTextureId(), color, (float) layer);
 
       j++;
     }

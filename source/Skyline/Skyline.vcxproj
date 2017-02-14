@@ -42,15 +42,15 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)..\lib\SDL2\include\;$(SolutionDir)..\lib\SDL2_Image\include\;$(SolutionDir)..\lib\glew\include\GL\;$(SolutionDir)..\lib\freeglut\include\;$(SolutionDir)..\lib\glm\;$(SolutionDir)..\lib\freetype\include\;$(SolutionDir)Ess2D\Errors\;$(SolutionDir)Ess2D\;$(SolutionDir)..\lib\rapidjson\;$(SolutionDir)..\lib\box2d\include\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)..\lib\freetype\lib\;$(SolutionDir)..\lib\freeglut\lib\;$(SolutionDir)..\lib\glew\lib\;$(SolutionDir)..\lib\SDL2_Image\lib\;$(SolutionDir)..\lib\box2d\lib\;$(SolutionDir)..\lib\SDL2\lib\;$(SolutionDir)..\build\$(Configuration)\Ess2D\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)..\lib\SDL2\include\;$(SolutionDir)..\lib\SDL2_Image\include\;$(SolutionDir)..\lib\glew\include\GL\;$(SolutionDir)..\lib\freeglut\include\;$(SolutionDir)..\lib\glm\;$(SolutionDir)..\lib\freetype\include\;$(SolutionDir)Ess2D\Errors\;$(SolutionDir)Ess2D\;$(SolutionDir)..\lib\rapidjson\;$(SolutionDir)..\lib\box2d\include\;$(SolutionDir)..\lib\FMOD\lowlevel\include\;$(SolutionDir)..\lib\FMOD\studio\include\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)..\lib\freetype\lib\;$(SolutionDir)..\lib\freeglut\lib\;$(SolutionDir)..\lib\glew\lib\;$(SolutionDir)..\lib\SDL2_Image\lib\;$(SolutionDir)..\lib\box2d\lib\;$(SolutionDir)..\lib\SDL2\lib\;$(SolutionDir)..\lib\FMOD\lowlevel\lib\;$(SolutionDir)..\lib\FMOD\studio\lib\;$(SolutionDir)..\build\$(Configuration)\Ess2D\;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)..\build\$(Configuration)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)..\build\obj\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)..\lib\SDL2\include\;$(SolutionDir)..\lib\SDL2_Image\include\;$(SolutionDir)..\lib\glew\include\GL\;$(SolutionDir)..\lib\freeglut\include\;$(SolutionDir)..\lib\glm\;$(SolutionDir)..\lib\freetype\include\;$(SolutionDir)Ess2D;$(SolutionDir)Ess2D\Errors\;$(SolutionDir)..\lib\rapidjson\;$(SolutionDir)..\lib\box2d\include\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)..\lib\freetype\lib\;$(SolutionDir)..\lib\freeglut\lib\;$(SolutionDir)..\lib\glew\lib\;$(SolutionDir)..\lib\SDL2_Image\lib\;$(SolutionDir)..\lib\box2d\lib\Release\;$(SolutionDir)..\lib\SDL2\lib\;$(SolutionDir)..\build\$(Configuration)\Ess2D\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)..\lib\SDL2\include\;$(SolutionDir)..\lib\SDL2_Image\include\;$(SolutionDir)..\lib\glew\include\GL\;$(SolutionDir)..\lib\freeglut\include\;$(SolutionDir)..\lib\glm\;$(SolutionDir)..\lib\freetype\include\;$(SolutionDir)Ess2D;$(SolutionDir)Ess2D\Errors\;$(SolutionDir)..\lib\rapidjson\;$(SolutionDir)..\lib\box2d\include\;$(SolutionDir)..\lib\FMOD\lowlevel\include\;$(SolutionDir)..\lib\FMOD\studio\include\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)..\lib\freetype\lib\;$(SolutionDir)..\lib\freeglut\lib\;$(SolutionDir)..\lib\glew\lib\;$(SolutionDir)..\lib\SDL2_Image\lib\;$(SolutionDir)..\lib\box2d\lib\Release\;$(SolutionDir)..\lib\SDL2\lib\;$(SolutionDir)..\build\$(Configuration)\Ess2D\;$(SolutionDir)..\lib\FMOD\lowlevel\lib\;$(SolutionDir)..\lib\FMOD\studio\lib\;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)..\build\$(Configuration)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)..\build\obj\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
@@ -66,7 +66,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>freeglut.lib;glew32.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;opengl32.lib;freetype255d.lib;Box2D.lib;Ess2D.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>freeglut.lib;glew32.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;opengl32.lib;freetype255d.lib;Box2D.lib;fmodL_vc.lib;fmodstudioL_vc.lib;Ess2D.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>
       </EntryPointSymbol>
       <AdditionalOptions>/verbose:lib %(AdditionalOptions)</AdditionalOptions>
@@ -94,7 +94,7 @@ cmd /c xcopy ".\Levels" "$(TargetDir)Levels\" /y /S</Command>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);freeglut.lib;glew32.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;opengl32.lib;freetype255d.lib;Box2D.lib;Ess2D.lib</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);freeglut.lib;glew32.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;opengl32.lib;freetype255d.lib;Box2D.lib;fmod_vc.lib;fmodstudio_vc.lib;Ess2D.lib</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>cmd /c xcopy ".\Resources\Textures" "$(TargetDir)Textures\" /y /S

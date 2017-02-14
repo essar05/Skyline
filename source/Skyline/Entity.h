@@ -63,7 +63,7 @@ class Entity {
     glm::vec2 _direction = glm::vec2(0.0f);
     glm::vec2 _velocity = glm::vec2(0.0f);
     
-    int _textureId;
+    GLuint _textureId;
     glm::vec4 _uv;
 
     b2Body* _body;
