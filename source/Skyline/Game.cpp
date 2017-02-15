@@ -30,6 +30,11 @@ void Game::Boot() {
 
   _level = new Level();
   _level->load("intro");
+
+  _audioManager.loadBank("Sounds/Master Bank.bank", FMOD_STUDIO_LOAD_BANK_NORMAL);
+  _audioManager.loadBank("Sounds/Master Bank.strings.bank", FMOD_STUDIO_LOAD_BANK_NORMAL);
+  _audioManager.loadBank("Sounds/Music.bank", FMOD_STUDIO_LOAD_BANK_NORMAL);
+  _audioManager.loadBank("Sounds/Effects.bank", FMOD_STUDIO_LOAD_BANK_NORMAL);
 }
 
 void Game::Run() {
@@ -42,6 +47,9 @@ void Game::Run() {
   std::chrono::high_resolution_clock::time_point previousTicks = std::chrono::high_resolution_clock::now(); // microseconds
   std::chrono::high_resolution_clock::time_point newTicks = previousTicks; // microseconds
   float frametime = 0.0f;
+
+  _audioManager.playEvent("event:/music/heavyrain_david");
+  _audioManager.playEvent("event:/effects/ambience_ship");
 
   while(_state == GameState::RUNNING) {
     _fpsLimiter.begin();
@@ -75,6 +83,8 @@ void Game::Run() {
     
     _level->smoothStates();
     _level->getWorld()->ClearForces();
+
+    _audioManager.update();
 
     Render();
 
@@ -310,4 +320,8 @@ EntityManager* Game::getEntityManager() {
 
 Ess2D::TextureCache* Game::getTextureCache() {
   return &_textureCache;
+}
+
+Ess2D::AudioManager* Game::getAudioManager() {
+  return &_audioManager;
 }

@@ -44,6 +44,8 @@ void ProjectileSpawner::spawn(int projectileCount, const glm::vec2& position, co
     projectile->setVelocity(velocity);
     projectile->spawn();
     gameInstance->getProjectileManager()->add(projectile);
+
+    gameInstance->getAudioManager()->playEvent("event:/effects/laser_shot", true);
   }
 }
 

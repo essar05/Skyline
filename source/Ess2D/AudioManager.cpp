@@ -5,16 +5,9 @@
 namespace Ess2D {
 
   AudioManager::AudioManager() {
-    FMOD_RESULT result;
-
-    result = FMOD::Studio::System::create(&_fmod);
-    _errorCheck(result);
-
-    result = _fmod->initialize(512, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, 0);
-    _errorCheck(result);
-
-    result = _fmod->getLowLevelSystem(&_fmodLowLevel);
-    _errorCheck(result);
+    _errorCheck( FMOD::Studio::System::create(&_fmod) );
+    _errorCheck( _fmod->initialize(512, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, 0) );
+    _errorCheck( _fmod->getLowLevelSystem(&_fmodLowLevel) );
   }
 
   AudioManager::~AudioManager() {
@@ -22,8 +15,78 @@ namespace Ess2D {
     _errorCheck(_fmod->release());
   }
 
+  void AudioManager::loadBank(const std::string &bankName, FMOD_STUDIO_LOAD_BANK_FLAGS flags) {
+    auto it = _banks.find(bankName);
+    if (it != _banks.end()) {
+      return;
+    }
+
+    FMOD::Studio::Bank* bank = nullptr;
+    _errorCheck( _fmod->loadBankFile(bankName.c_str(), flags, &bank) );
+    if (bank) {
+      _banks[bankName] = bank;
+    }
+  }
+
+  void AudioManager::loadEvent(const std::string &eventName) {
+    auto it = _events.find(eventName);
+    if (it != _events.end()) {
+      return;
+    }
+
+    FMOD::Studio::EventDescription* eventDescription = nullptr;
+    _errorCheck( _fmod->getEvent(eventName.c_str(), &eventDescription) );
+    if (eventDescription) {
+      _events[eventName] = eventDescription;
+
+      FMOD::Studio::EventInstance* eventInstance = nullptr;
+      _errorCheck( eventDescription->createInstance(&eventInstance) );
+      if (eventInstance) {
+        _eventInstances[eventName] = eventInstance;
+      }
+    }
+  }
+
+  void AudioManager::playEvent(const std::string &eventName, bool newInstance) {
+    auto it = _events.find(eventName);
+    if (it == _events.end()) {
+      this->loadEvent(eventName);
+      it = _events.find(eventName);
+      if (it == _events.end()) {
+        return;
+      }
+    }
+
+    FMOD::Studio::EventInstance* eventInstance = nullptr;
+    if (newInstance) {
+      _errorCheck( it->second->createInstance(&eventInstance) );
+      _errorCheck( eventInstance->start() );
+      _errorCheck( eventInstance->release() );
+    } else {
+      auto itInstance = _eventInstances.find(eventName);
+      if (itInstance == _eventInstances.end()) {
+        _errorCheck( it->second->createInstance(&eventInstance) );
+        _eventInstances[eventName] = eventInstance;
+      } else {
+        eventInstance = itInstance->second;
+      }
+
+      _errorCheck( eventInstance->start() );
+    }
+  }
+
+  void AudioManager::stopEvent(const std::string &eventName, bool immediate) {
+    auto it = _eventInstances.find(eventName);
+    if (it == _eventInstances.end()) {
+      return;
+    }
+
+    FMOD_STUDIO_STOP_MODE stopMode = immediate ? FMOD_STUDIO_STOP_IMMEDIATE : FMOD_STUDIO_STOP_ALLOWFADEOUT;
+    _errorCheck( it->second->stop(stopMode) );
+  }
+
   void AudioManager::update() {
-    _errorCheck(_fmod->update());
+    _errorCheck( _fmod->update() );
   }
 
   void AudioManager::_errorCheck(FMOD_RESULT result) {

@@ -15,6 +15,7 @@
 #include "Level.h"
 #include "EntityManager.h"
 #include "ProjectileManager.h"
+#include <AudioManager.h>
 
 enum class GameState { RUNNING, EXIT };
 
@@ -33,6 +34,7 @@ class Game : Ess2D::IGame {
     Ess2D::SpriteBatch* getSpriteBatch();
     Ess2D::Camera2D* getMainCamera();
     Ess2D::TextureCache* getTextureCache();
+    Ess2D::AudioManager* getAudioManager();
     EntityManager* getEntityManager();
     Level* getLevel() { return _level; }
     ProjectileManager* getProjectileManager() { return _projectileManager; }
@@ -54,13 +56,12 @@ class Game : Ess2D::IGame {
     static Game* instance;
     Ess2D::Window* _window;
     Ess2D::Shader* _baseProgram;
-    
     Ess2D::SpriteBatch _spriteBatch;
     Ess2D::Camera2D _camera;
     Ess2D::TextureCache _textureCache;
-
     Ess2D::InputManager _inputManager;
     Ess2D::FPSLimiter _fpsLimiter;
+    Ess2D::AudioManager _audioManager;
 
     GameState _state;
     Level* _level;

@@ -74,6 +74,7 @@
     <PostBuildEvent>
       <Command>cmd /c xcopy ".\Resources\Textures" "$(TargetDir)Textures\" /y /S
 cmd /c xcopy ".\Resources\Shaders" "$(TargetDir)Shaders\" /y /S
+cmd /c xcopy ".\Resources\Sounds" "$(TargetDir)Sounds\" /y /S
 cmd /c xcopy ".\Levels" "$(TargetDir)Levels\" /y /S</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -99,6 +100,7 @@ cmd /c xcopy ".\Levels" "$(TargetDir)Levels\" /y /S</Command>
     <PostBuildEvent>
       <Command>cmd /c xcopy ".\Resources\Textures" "$(TargetDir)Textures\" /y /S
 cmd /c xcopy ".\Resources\Shaders" "$(TargetDir)Shaders\" /y /S
+cmd /c xcopy ".\Resources\Sounds" "$(TargetDir)Sounds\" /y /S
 cmd /c xcopy ".\Levels" "$(TargetDir)Levels\" /y /S</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
