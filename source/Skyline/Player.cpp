@@ -11,7 +11,6 @@ Player::Player(int textureId, glm::vec4 uv, float width, float height, glm::vec2
   _projectileSpawnerRight.setSource(this->getType());
 
   // SPACESHIP
-
   Ess2D::TextureAtlas * playerAtlas = _game->getTextureCache()->getAtlas("Textures/player.png", "Textures/player.json");
 
   _animationManager = new Ess2D::AnimationManager();

@@ -12,6 +12,9 @@
 #include <TextureCache.h>
 #include <InputManager.h>
 #include <Timing.h>
+#include "SceneRenderer.h"
+#include "FBORenderer.h"
+#include <FrameBufferObject.h>
 #include "Level.h"
 #include "EntityManager.h"
 #include "ProjectileManager.h"
@@ -38,6 +41,7 @@ class Game : Ess2D::IGame {
     EntityManager* getEntityManager();
     Level* getLevel() { return _level; }
     ProjectileManager* getProjectileManager() { return _projectileManager; }
+    SceneRenderer* getSceneRenderer();
     float getWidth();
     float getHeight();
     float getTimeStepAccumulatorRatio() { return _timestepAccumulatorRatio; }
@@ -46,23 +50,22 @@ class Game : Ess2D::IGame {
     Game();
 
   private:
-    void initShaders();
     void initSystem();
     void update(float deltaTime);
-    void updateObjects(float deltaTime);
-    void updateProjectiles(float deltaTime);
     void processInput(float deltaTime);
 
     static Game* instance;
     Ess2D::Window* _window;
-    Ess2D::Shader* _baseProgram;
     Ess2D::SpriteBatch _spriteBatch;
     Ess2D::Camera2D _camera;
     Ess2D::TextureCache _textureCache;
     Ess2D::InputManager _inputManager;
     Ess2D::FPSLimiter _fpsLimiter;
     Ess2D::AudioManager _audioManager;
+    Ess2D::FrameBufferObject* _sceneFBO;
 
+    SceneRenderer* _sceneRenderer;
+    FBORenderer* _fboRenderer;
     GameState _state;
     Level* _level;
     EntityManager* _entityManager;

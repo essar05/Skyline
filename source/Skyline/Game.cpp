@@ -48,8 +48,9 @@ void Game::Run() {
   std::chrono::high_resolution_clock::time_point newTicks = previousTicks; // microseconds
   float frametime = 0.0f;
 
-  _audioManager.playEvent("event:/music/heavyrain_david");
-  _audioManager.playEvent("event:/effects/ambience_ship");
+  //temporarily disabled, cause it's very annoying when debugging (perhaps when playing too, lol)
+  //_audioManager.playEvent("event:/music/heavyrain_david");
+  //_audioManager.playEvent("event:/effects/ambience_ship");
 
   while(_state == GameState::RUNNING) {
     _fpsLimiter.begin();
@@ -66,10 +67,10 @@ void Game::Run() {
     _timestepAccumulatorRatio = _timestepAccumulator / TIMESTEP;
 
     const int nStepsClamped = std::min(nSteps, MAX_FRAMES_SIMULATED);
-    processInput(TIMESTEP * nStepsClamped);
+    this->processInput(TIMESTEP * nStepsClamped);
     for(int i = 0; i < nStepsClamped; i++) {
       _level->resetSmoothStates();
-      update(TIMESTEP);
+      this->update(TIMESTEP);
     }
     
     //smooth cameraPosition as well. maybe we could do it inside smoothStates so we don't have separated code but for now this will do
@@ -84,7 +85,7 @@ void Game::Run() {
     _level->smoothStates();
     _level->getWorld()->ClearForces();
 
-    _audioManager.update();
+    _camera.update();
 
     Render();
 
@@ -108,62 +109,26 @@ void Game::update(float deltaTime) {
     _previousCameraPosition = _cameraPosition;
     _cameraPosition = _cameraPosition + glm::vec2(0.0f, this->_scrollSpeed * _camera.getZoom()) * deltaTime;
     
-    updateProjectiles(deltaTime);
-    updateObjects(deltaTime);
+    _projectileManager->update(deltaTime);
     _level->update(deltaTime);
     _entityManager->deleteQueuedEntities();
     _projectileManager->deleteQueuedProjectiles();
   }
-}
-
-void Game::updateObjects(float deltaTime) {
-  /*Entity* entity;
-  std::vector<unsigned int> activeObjects = _level->getActiveObjects();
-  for(unsigned int i = 0; i < activeObjects.size(); i++) {
-    entity = _entityManager.getEntity(activeObjects[i]);
-    if(entity == nullptr) {
-      continue;
-    }
-
-    //_player->collidesWith(entity);
-  }*/
-}
-
-void Game::updateProjectiles(float deltaTime) {
-  _projectileManager->update(deltaTime);
+  _audioManager.update();
 }
 
 void Game::Render() {
   glClearDepth(1.0);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-  _baseProgram->use();
-  _camera.update();
-
-  glActiveTexture(GL_TEXTURE0);
-  GLint textureLocation = _baseProgram->getUniformLocation("textureSampler");
-  glUniform1i(textureLocation, 0);
-
-  GLint useTextureLocation = _baseProgram->getUniformLocation("useTexture");
-  glUniform1i(useTextureLocation, 1);
-
-  GLint pLocation = _baseProgram->getUniformLocation("P");
-  glm::mat4 cameraMatrix = _camera.getCameraMatrix();
-
-  glUniformMatrix4fv(pLocation, 1, GL_FALSE, &(cameraMatrix[0][0]));
-
-  _spriteBatch.begin(Ess2D::GlyphSortType::BACK_TO_FRONT);
-
-  _level->draw();
-  _projectileManager->draw();
-
-  _spriteBatch.end();
-  _spriteBatch.render();
-
-  glUniform1i(useTextureLocation, 0);
-  this->getLevel()->getWorld()->DrawDebugData();
-
-  _baseProgram->unuse();
+  //bind FBO, all rendering will be done to this FBO's color buffer
+  _sceneFBO->bind();
+  //render scene
+  _sceneRenderer->render();
+  //unbind FBO, rendering will now be done to screen
+  _sceneFBO->unbind();
+  //render the FBO color texture.
+  _fboRenderer->render(_width, _height, _sceneFBO->getColorTextureId());
 
   _window->SwapBuffer();
 }
@@ -253,7 +218,9 @@ void Game::initSystem() {
   _window = new Ess2D::Window(this->_title, (int) this->_width, (int) this->_height, this->_windowMode);
   _window->SetVSync(_vSync);
 
-  initShaders();
+  _sceneRenderer = new SceneRenderer();
+  _fboRenderer = new FBORenderer();
+  _sceneFBO = new Ess2D::FrameBufferObject(_window, (GLsizei) _width, (GLsizei) _height, Ess2D::DepthBufferType::NONE);
 
   _camera.init((int) this->_width, (int) this->_height);
   _camera.setScale(32.0f);
@@ -266,22 +233,11 @@ void Game::initSystem() {
   _fpsLimiter.init(_maxFPS, _limitFPS);
 }
 
-void Game::initShaders() {
-  _baseProgram = new Ess2D::Shader(true);
-  _baseProgram->loadShader(Ess2D::ShaderType::VERTEX, "Shaders/Vertex.shader");
-  _baseProgram->loadShader(Ess2D::ShaderType::FRAGMENT, "Shaders/Fragment.shader");
-  _baseProgram->compileShaders();
-
-  _baseProgram->addAttribute("vertexPosition");
-  _baseProgram->addAttribute("vertexColor");
-  _baseProgram->addAttribute("vertexUV");
-  true;
-  _baseProgram->linkShaders();
-}
-
 void Game::Destroy() {
+  delete _sceneRenderer;
+  delete _fboRenderer;
+  delete _sceneFBO;
   delete _window;
-  delete _baseProgram;
   delete _entityManager;
   _entityManager = nullptr;
   delete _projectileManager;
@@ -324,4 +280,8 @@ Ess2D::TextureCache* Game::getTextureCache() {
 
 Ess2D::AudioManager* Game::getAudioManager() {
   return &_audioManager;
+}
+
+SceneRenderer* Game::getSceneRenderer() {
+  return _sceneRenderer;
 }

@@ -111,6 +111,7 @@ cmd /c xcopy ".\Levels" "$(TargetDir)Levels\" /y /S</Command>
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="FBORenderer.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LevelDecoration.cpp" />
     <ClCompile Include="LevelSection.cpp" />
@@ -118,6 +119,7 @@ cmd /c xcopy ".\Levels" "$(TargetDir)Levels\" /y /S</Command>
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="ProjectileManager.cpp" />
     <ClCompile Include="ProjectileSpawner.cpp" />
+    <ClCompile Include="SceneRenderer.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -133,6 +135,7 @@ cmd /c xcopy ".\Levels" "$(TargetDir)Levels\" /y /S</Command>
     <ClInclude Include="EntityManager.h" />
     <ClInclude Include="EntityType.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="FBORenderer.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelDecoration.h" />
     <ClInclude Include="LevelSection.h" />
@@ -140,6 +143,7 @@ cmd /c xcopy ".\Levels" "$(TargetDir)Levels\" /y /S</Command>
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="ProjectileManager.h" />
     <ClInclude Include="ProjectileSpawner.h" />
+    <ClInclude Include="SceneRenderer.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

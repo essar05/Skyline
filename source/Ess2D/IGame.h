@@ -10,7 +10,6 @@ namespace Ess2D {
       virtual void Run() = 0;
       virtual ~IGame() {}
 
-      
   };
 
 }

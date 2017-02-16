@@ -100,6 +100,7 @@
     <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="Camera2D.cpp" />
     <ClCompile Include="Errors\RuntimeException.cpp" />
+    <ClCompile Include="FrameBufferObject.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Texture2D.cpp" />
     <ClCompile Include="InputManager.cpp" />
@@ -116,6 +117,8 @@
     <ClInclude Include="AnimationManager.h" />
     <ClInclude Include="AudioManager.h" />
     <ClInclude Include="Camera2D.h" />
+    <ClInclude Include="FrameBufferObject.h" />
+    <ClInclude Include="Renderer.h" />
     <ClInclude Include="Texture2D.h" />
     <ClInclude Include="IGame.h" />
     <ClInclude Include="InputManager.h" />
