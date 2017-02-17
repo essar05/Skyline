@@ -118,7 +118,6 @@
     <ClInclude Include="AudioManager.h" />
     <ClInclude Include="Camera2D.h" />
     <ClInclude Include="FrameBufferObject.h" />
-    <ClInclude Include="Renderer.h" />
     <ClInclude Include="Texture2D.h" />
     <ClInclude Include="IGame.h" />
     <ClInclude Include="InputManager.h" />
