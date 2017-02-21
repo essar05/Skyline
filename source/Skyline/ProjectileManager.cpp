@@ -10,6 +10,7 @@ ProjectileManager::~ProjectileManager() {
   auto it = _projectiles.begin();
   while(it != _projectiles.end()) {
       delete it->second;
+      it++;
   }
   _projectiles.clear();
 }

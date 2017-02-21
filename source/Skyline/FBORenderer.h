@@ -1,14 +1,22 @@
 #pragma once
 #include <Shader.h>
+#include <FrameBufferObject.h>
 
 class FBORenderer {
   public:
     FBORenderer();
     ~FBORenderer();
 
-    void render(float imageWidth, float imageHeight, GLuint textureId);
+    virtual void render(Ess2D::FrameBufferObject* fbo);
+    virtual void initShader();
+    void drawFullscreenQuad(GLuint textureId);
     
-  private:
+  protected:
+    virtual void initVertexAttributeObject();
+
     Ess2D::Shader* _shader;
+    GLuint _vao;
+    GLuint _vbo;
+
 };
 

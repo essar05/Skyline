@@ -82,4 +82,12 @@ namespace Ess2D {
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthBufferId);
   }
 
+  GLsizei FrameBufferObject::getWidth() {
+    return _width;
+  }
+
+  GLsizei FrameBufferObject::getHeight() {
+    return _height;
+  }
+
 }

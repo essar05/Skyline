@@ -21,6 +21,8 @@ namespace Ess2D {
 
       GLuint getColorTextureId();
       GLuint getDepthTextureId();
+      GLsizei getWidth();
+      GLsizei getHeight();
 
     private:
       void createFrameBuffer();

@@ -1,48 +1,78 @@
 #include "FBORenderer.h"
-#include "Game.h"
+#include <Vertex.h>
+#include <vector>
+#include <glm\glm.hpp>
 
 FBORenderer::FBORenderer() {
-  _shader = new Ess2D::Shader(false);
-
-  _shader->loadShader(Ess2D::ShaderType::VERTEX, "Shaders/Vertex.shader");
-  _shader->loadShader(Ess2D::ShaderType::FRAGMENT, "Shaders/Fragment.shader");
-  _shader->compileShaders();
-
-  _shader->addAttribute("vertexPosition");
-  _shader->addAttribute("vertexColor");
-  _shader->addAttribute("vertexUV");
-  _shader->linkShaders();
 }
 
 FBORenderer::~FBORenderer() {
   delete _shader;
 }
 
-void FBORenderer::render(float imageWidth, float imageHeight, GLuint textureId) {
-  Game* game = Game::GetInstance();
+void FBORenderer::initShader() {
+  _shader = new Ess2D::Shader(false);
 
-  _shader->use();
+  _shader->loadShader(Ess2D::ShaderType::VERTEX, "Shaders/FBOV.shader");
+  _shader->loadShader(Ess2D::ShaderType::FRAGMENT, "Shaders/FBOF.shader");
+  _shader->compileShaders();
 
+  _shader->addAttribute("vertexPosition");
+  _shader->addAttribute("vertexColor");
+  _shader->addAttribute("vertexUV");
+  _shader->linkShaders();
+
+  initVertexAttributeObject();
+}
+
+void FBORenderer::initVertexAttributeObject() {
+  glGenVertexArrays(1, &_vao);
+  glBindVertexArray(_vao);
+  glGenBuffers(1, &_vbo);
+  glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+
+  glEnableVertexAttribArray(0);
+  glEnableVertexAttribArray(1);
+  glEnableVertexAttribArray(2);
+
+  glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Ess2D::Vertex), (void*) offsetof(Ess2D::Vertex, position));
+  glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Ess2D::Vertex), (void*) offsetof(Ess2D::Vertex, color));
+  glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Ess2D::Vertex), (void*) offsetof(Ess2D::Vertex, uv));
+
+  glBindVertexArray(0);
+}
+
+void FBORenderer::drawFullscreenQuad(GLuint textureId) {
   glActiveTexture(GL_TEXTURE0);
   GLint textureLocation = _shader->getUniformLocation("textureSampler");
   glUniform1i(textureLocation, 0);
 
-  GLint useTextureLocation = _shader->getUniformLocation("useTexture");
-  glUniform1i(useTextureLocation, 1);
+  Ess2D::Glyph glyph(glm::vec4(-1.0f, -1.0f, 2.0f, 2.0f), glm::vec4(0.0f, 1.0f, 1.0f, -1.0f), textureId, Ess2D::ColorRGBA8(225, 255, 255, 255), 0.0f);
+  std::vector<Ess2D::Vertex> vertices;
+  vertices.resize(6);
+  vertices[0] = glyph.topLeft;
+  vertices[1] = glyph.bottomLeft;
+  vertices[2] = glyph.bottomRight;
+  vertices[3] = glyph.bottomRight;
+  vertices[4] = glyph.topRight;
+  vertices[5] = glyph.topLeft;
 
-  GLint pLocation = _shader->getUniformLocation("P");
-  glm::mat4 cameraMatrix = glm::ortho(0.0f, game->getWidth(), 0.0f, game->getHeight());
+  glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+  glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Ess2D::Vertex), vertices.data(), GL_STATIC_DRAW);
+  glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-  glUniformMatrix4fv(pLocation, 1, GL_FALSE, &(cameraMatrix[0][0]));
+  glBindVertexArray(_vao);
 
-  game->getSpriteBatch()->begin(Ess2D::GlyphSortType::BACK_TO_FRONT);
+  glBindTexture(GL_TEXTURE_2D, glyph.textureId);
+  glDrawArrays(GL_TRIANGLES, 0, 6);
 
-  //UV Coords flipped, cause FBOs are flipped.
-  glm::vec4 uv(0.0f, 1.0f, 1.0f, -1.0f);
-  game->getSpriteBatch()->draw(glm::vec4(0, 0, imageWidth, imageHeight), uv, textureId, Ess2D::ColorRGBA8(225, 255, 255, 255), 0.0f);
+  glBindVertexArray(0);
+}
 
-  game->getSpriteBatch()->end();
-  game->getSpriteBatch()->render();
+void FBORenderer::render(Ess2D::FrameBufferObject* fbo) {
+  _shader->use();
+
+  drawFullscreenQuad(fbo->getColorTextureId());
 
   _shader->unuse();
 }

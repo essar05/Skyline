@@ -107,20 +107,25 @@ cmd /c xcopy ".\Levels" "$(TargetDir)Levels\" /y /S</Command>
   <ItemGroup>
     <ClCompile Include="b2GLDebugDraw.cpp" />
     <ClCompile Include="Bootstrap.cpp" />
+    <ClCompile Include="PostProcessing\CombineFilter.cpp" />
     <ClCompile Include="ContactListener.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="FBORenderer.cpp" />
+    <ClCompile Include="PostProcessing\HighlightsFilter.cpp" />
+    <ClCompile Include="PostProcessing\HorizontalBlur.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LevelDecoration.cpp" />
     <ClCompile Include="LevelSection.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PostProcessing.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="ProjectileManager.cpp" />
     <ClCompile Include="ProjectileSpawner.cpp" />
     <ClCompile Include="SceneRenderer.cpp" />
     <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="PostProcessing\VerticalBlur.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
@@ -130,21 +135,26 @@ cmd /c xcopy ".\Levels" "$(TargetDir)Levels\" /y /S</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="b2GLDebugDraw.h" />
+    <ClInclude Include="PostProcessing\CombineFilter.h" />
     <ClInclude Include="ContactListener.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityManager.h" />
     <ClInclude Include="EntityType.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="FBORenderer.h" />
+    <ClInclude Include="PostProcessing\HighlightsFilter.h" />
+    <ClInclude Include="PostProcessing\HorizontalBlur.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelDecoration.h" />
     <ClInclude Include="LevelSection.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PostProcessing.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="ProjectileManager.h" />
     <ClInclude Include="ProjectileSpawner.h" />
     <ClInclude Include="SceneRenderer.h" />
     <ClInclude Include="Utils.h" />
+    <ClInclude Include="PostProcessing\VerticalBlur.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

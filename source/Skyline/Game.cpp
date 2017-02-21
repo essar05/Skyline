@@ -128,7 +128,10 @@ void Game::Render() {
   //unbind FBO, rendering will now be done to screen
   _sceneFBO->unbind();
   //render the FBO color texture.
-  _fboRenderer->render(_width, _height, _sceneFBO->getColorTextureId());
+
+  _postProcessing->applyEffects(_sceneFBO);
+
+  _fboRenderer->render(_postProcessing->getResult());
 
   _window->SwapBuffer();
 }
@@ -220,7 +223,9 @@ void Game::initSystem() {
 
   _sceneRenderer = new SceneRenderer();
   _fboRenderer = new FBORenderer();
+  _fboRenderer->initShader();
   _sceneFBO = new Ess2D::FrameBufferObject(_window, (GLsizei) _width, (GLsizei) _height, Ess2D::DepthBufferType::NONE);
+  _postProcessing = new PostProcessing();
 
   _camera.init((int) this->_width, (int) this->_height);
   _camera.setScale(32.0f);
@@ -236,6 +241,7 @@ void Game::initSystem() {
 void Game::Destroy() {
   delete _sceneRenderer;
   delete _fboRenderer;
+  delete _postProcessing;
   delete _sceneFBO;
   delete _window;
   delete _entityManager;
@@ -243,6 +249,7 @@ void Game::Destroy() {
   delete _projectileManager;
   _projectileManager = nullptr;
   delete _level;
+  _level = nullptr;
   
   delete this;
 }
@@ -284,4 +291,8 @@ Ess2D::AudioManager* Game::getAudioManager() {
 
 SceneRenderer* Game::getSceneRenderer() {
   return _sceneRenderer;
+}
+
+Ess2D::Window* Game::getWindow() {
+  return _window;
 }

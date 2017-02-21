@@ -19,11 +19,13 @@
 #include "EntityManager.h"
 #include "ProjectileManager.h"
 #include <AudioManager.h>
+#include "PostProcessing.h"
 
 enum class GameState { RUNNING, EXIT };
 
 class Level;
 class ProjectileManager;
+class PostProcessing;
 
 class Game : Ess2D::IGame {
   public:
@@ -38,6 +40,7 @@ class Game : Ess2D::IGame {
     Ess2D::Camera2D* getMainCamera();
     Ess2D::TextureCache* getTextureCache();
     Ess2D::AudioManager* getAudioManager();
+    Ess2D::Window* getWindow();
     EntityManager* getEntityManager();
     Level* getLevel() { return _level; }
     ProjectileManager* getProjectileManager() { return _projectileManager; }
@@ -66,6 +69,7 @@ class Game : Ess2D::IGame {
 
     SceneRenderer* _sceneRenderer;
     FBORenderer* _fboRenderer;
+    PostProcessing* _postProcessing;
     GameState _state;
     Level* _level;
     EntityManager* _entityManager;

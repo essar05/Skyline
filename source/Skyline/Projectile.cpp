@@ -21,6 +21,7 @@ Projectile::Projectile(int textureId, glm::vec4 uv, float width, float height, g
 }
 
 Projectile::~Projectile() {
+  delete _animationManager;
 }
 
 bool Projectile::update(float deltaTime) {
