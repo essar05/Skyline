@@ -7,9 +7,9 @@ PostProcessing::PostProcessing() {
   _horizontalBlur->initShader();
   _verticalBlur = new VerticalBlur(2);
   _verticalBlur->initShader();
-  _horizontalBlur2 = new HorizontalBlur(4);
+  _horizontalBlur2 = new HorizontalBlur(8);
   _horizontalBlur2->initShader();
-  _verticalBlur2 = new VerticalBlur(4);
+  _verticalBlur2 = new VerticalBlur(8);
   _verticalBlur2->initShader();
 
   _highlightsFilter = new HighlightsFilter(0.5);
@@ -18,7 +18,7 @@ PostProcessing::PostProcessing() {
   _combineFilter = new CombineFilter();
   _combineFilter->initShader();
   _combineFilter->setBlendMode(CombineFilterBlendMode::SCREEN);
-  _combineFilter->setBloomIntensity(0.55f);
+  _combineFilter->setBloomIntensity(1.2f);
 }
 
 PostProcessing::~PostProcessing() {

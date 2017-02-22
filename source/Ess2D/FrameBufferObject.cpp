@@ -32,7 +32,7 @@ namespace Ess2D {
 
   void FrameBufferObject::unbind() {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    glViewport(0, 0, (GLsizei) _window->GetWidth(), (GLsizei) _window->GetHeight());
+    glViewport(0, 0, (GLsizei) _window->GetCurrentWidth(), (GLsizei) _window->GetCurrentHeight());
   }
 
   void FrameBufferObject::bindToRead() {

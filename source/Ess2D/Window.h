@@ -25,11 +25,15 @@ namespace Ess2D {
 
       int GetWidth() { return _width; }
       int GetHeight() { return _height; }
+      int GetCurrentWidth() { return _currentWidth; }
+      int GetCurrentHeight() { return _currentHeight; }
       int GetMonitorRefreshRate();
 
     private:
       int _height;
       int _width;
+      int _currentWidth;
+      int _currentHeight;
       SDL_Window* _sdlWindow;
 
   };

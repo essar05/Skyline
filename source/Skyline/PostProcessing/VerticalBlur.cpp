@@ -4,7 +4,7 @@ VerticalBlur::VerticalBlur() : VerticalBlur(1) {}
 
 VerticalBlur::VerticalBlur(int downScaling) {
   _game = Game::GetInstance();
-  _targetFBO = new Ess2D::FrameBufferObject(_game->getWindow(), _game->getWidth() / downScaling, _game->getHeight() / downScaling, Ess2D::DepthBufferType::RENDER_BUFFER);
+  _targetFBO = new Ess2D::FrameBufferObject(_game->getWindow(), _game->getWindow()->GetCurrentWidth() / downScaling, _game->getWindow()->GetCurrentHeight() / downScaling, Ess2D::DepthBufferType::RENDER_BUFFER);
 }
 
 VerticalBlur::~VerticalBlur() {}

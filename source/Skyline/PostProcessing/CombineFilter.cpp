@@ -4,7 +4,7 @@ CombineFilter::CombineFilter() : CombineFilter(1) {}
 
 CombineFilter::CombineFilter(int downScaling) {
   _game = Game::GetInstance();
-  _targetFBO = new Ess2D::FrameBufferObject(_game->getWindow(), (GLsizei) (_game->getWidth() / downScaling), (GLsizei) (_game->getHeight() / downScaling), Ess2D::DepthBufferType::RENDER_BUFFER);
+  _targetFBO = new Ess2D::FrameBufferObject(_game->getWindow(), (GLsizei) (_game->getWindow()->GetCurrentWidth() / downScaling), (GLsizei) (_game->getWindow()->GetCurrentHeight() / downScaling), Ess2D::DepthBufferType::RENDER_BUFFER);
 }
 
 CombineFilter::~CombineFilter() {}

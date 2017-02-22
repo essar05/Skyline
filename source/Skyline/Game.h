@@ -81,11 +81,11 @@ class Game : Ess2D::IGame {
     float _timestepAccumulator = 0.0f;
     float _timestepAccumulatorRatio = 0.0f;
     bool _debugMode = false;
-    bool _limitFPS = true;
+    bool _limitFPS = false;
     bool _vSync = 0;
 
-    float _height = 720.0f;
     float _width = 1280.0f;
+    float _height = 720.0f;
     std::string _title = "Skyline 1.0";
     float _scrollSpeed = 10.0f;
     Ess2D::WindowMode _windowMode = Ess2D::WindowMode::NORMAL;

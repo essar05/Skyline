@@ -24,6 +24,8 @@ namespace Ess2D {
       throw Ess2D::ERuntimeException(SDL_GetError());
     }
 
+    SDL_GetWindowSize(_sdlWindow, &_currentWidth, &_currentHeight);
+
     //Create OpenGL Context;
     SDL_GLContext glContext = SDL_GL_CreateContext(_sdlWindow);
     if (glContext == NULL) {
