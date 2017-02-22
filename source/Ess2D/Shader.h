@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include <glew.h>
+#include <GL/glew.h>
 #include <stdlib.h>
 #include <fstream>
 #include <map>

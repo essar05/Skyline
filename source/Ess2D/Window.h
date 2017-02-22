@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SDL.h>
-#include <glew.h>
+#include <GL/glew.h>
 #include <string>
 #include "RuntimeException.cpp"
 

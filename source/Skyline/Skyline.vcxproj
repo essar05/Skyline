@@ -42,14 +42,14 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)..\lib\SDL2\include\;$(SolutionDir)..\lib\SDL2_Image\include\;$(SolutionDir)..\lib\glew\include\GL\;$(SolutionDir)..\lib\freeglut\include\;$(SolutionDir)..\lib\glm\;$(SolutionDir)..\lib\freetype\include\;$(SolutionDir)Ess2D\Errors\;$(SolutionDir)Ess2D\;$(SolutionDir)..\lib\rapidjson\;$(SolutionDir)..\lib\box2d\include\;$(SolutionDir)..\lib\FMOD\lowlevel\include\;$(SolutionDir)..\lib\FMOD\studio\include\;$(SolutionDir)..\lib\CEGUI\include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\lib\SDL2\include\;$(SolutionDir)..\lib\SDL2_Image\include\;$(SolutionDir)..\lib\glew\include\;$(SolutionDir)..\lib\freeglut\include\;$(SolutionDir)..\lib\glm\;$(SolutionDir)..\lib\freetype\include\;$(SolutionDir)Ess2D\Errors\;$(SolutionDir)Ess2D\;$(SolutionDir)..\lib\rapidjson\;$(SolutionDir)..\lib\box2d\include\;$(SolutionDir)..\lib\FMOD\lowlevel\include\;$(SolutionDir)..\lib\FMOD\studio\include\;$(SolutionDir)..\lib\CEGUI\include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)..\build\$(Configuration)\Ess2D\;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)..\build\$(Configuration)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)..\build\obj\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)..\lib\SDL2\include\;$(SolutionDir)..\lib\SDL2_Image\include\;$(SolutionDir)..\lib\glew\include\GL\;$(SolutionDir)..\lib\freeglut\include\;$(SolutionDir)..\lib\glm\;$(SolutionDir)..\lib\freetype\include\;$(SolutionDir)Ess2D;$(SolutionDir)Ess2D\Errors\;$(SolutionDir)..\lib\rapidjson\;$(SolutionDir)..\lib\box2d\include\;$(SolutionDir)..\lib\FMOD\lowlevel\include\;$(SolutionDir)..\lib\FMOD\studio\include\;$(SolutionDir)..\lib\CEGUI\include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\lib\SDL2\include\;$(SolutionDir)..\lib\SDL2_Image\include\;$(SolutionDir)..\lib\glew\include\;$(SolutionDir)..\lib\freeglut\include\;$(SolutionDir)..\lib\glm\;$(SolutionDir)..\lib\freetype\include\;$(SolutionDir)Ess2D;$(SolutionDir)Ess2D\Errors\;$(SolutionDir)..\lib\rapidjson\;$(SolutionDir)..\lib\box2d\include\;$(SolutionDir)..\lib\FMOD\lowlevel\include\;$(SolutionDir)..\lib\FMOD\studio\include\;$(SolutionDir)..\lib\CEGUI\include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)..\build\$(Configuration)\Ess2D\;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)..\build\$(Configuration)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)..\build\obj\$(Configuration)\$(ProjectName)\</IntDir>
@@ -75,6 +75,7 @@
       <Command>cmd /c xcopy ".\Resources\Textures" "$(TargetDir)Textures\" /y /S
 cmd /c xcopy ".\Resources\Shaders" "$(TargetDir)Shaders\" /y /S
 cmd /c xcopy ".\Resources\Sounds" "$(TargetDir)Sounds\" /y /S
+cmd /c xcopy ".\Resources\GUI" "$(TargetDir)GUI\" /y /S
 cmd /c xcopy ".\Levels" "$(TargetDir)Levels\" /y /S</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -101,6 +102,7 @@ cmd /c xcopy ".\Levels" "$(TargetDir)Levels\" /y /S</Command>
       <Command>cmd /c xcopy ".\Resources\Textures" "$(TargetDir)Textures\" /y /S
 cmd /c xcopy ".\Resources\Shaders" "$(TargetDir)Shaders\" /y /S
 cmd /c xcopy ".\Resources\Sounds" "$(TargetDir)Sounds\" /y /S
+cmd /c xcopy ".\Resources\GUI" "$(TargetDir)GUI\" /y /S
 cmd /c xcopy ".\Levels" "$(TargetDir)Levels\" /y /S</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

@@ -23,6 +23,15 @@ void Game::Boot() {
 
   initSystem();
 
+  _gui.init("GUI");
+  _gui.loadScheme("TaharezLook.scheme");
+  _gui.loadScheme("AlfiskoSkin.scheme");
+  _gui.setFont("DejaVuSans-10");
+  CEGUI::PushButton* button = static_cast<CEGUI::PushButton*> (
+      _gui.createWidget("AlfiskoSkin/Button", glm::vec4(0.5f, 0.5f, 0.1f, 0.05f), glm::vec4(0.0f), "Button")
+    );
+  button->setText("Test GUI");
+
   _state = GameState::RUNNING;
 
   _entityManager = new EntityManager;
@@ -120,19 +129,26 @@ void Game::update(float deltaTime) {
 void Game::Render() {
   glClearDepth(1.0);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  
   //bind FBO, all rendering will be done to this FBO's color buffer
   _sceneFBO->bind();
   //render scene
   _sceneRenderer->render();
   //unbind FBO, rendering will now be done to screen
   _sceneFBO->unbind();
-  //render the FBO color texture.
-
+  
+  //apply post processing effects
   _postProcessing->applyEffects(_sceneFBO);
 
+  //render the FBO color texture.
   _fboRenderer->render(_postProcessing->getResult());
 
+  //draw GUI
+  _gui.draw();
+
+  //swap front and back buffer to display stuff to screen
   _window->SwapBuffer();
 }
 

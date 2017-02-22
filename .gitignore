@@ -13,6 +13,7 @@
 /build/Debug/Skyline/Shaders
 /build/Debug/Skyline/Sounds
 /build/Debug/Skyline/Textures
+/build/Debug/Skyline/GUI
 /build/Release/Skyline/Skyline.exe
 /build/Release/Skyline/*.iobj
 /build/Release/Skyline/*.ipdb
@@ -20,3 +21,4 @@
 /build/Release/Skyline/Shaders
 /build/Release/Skyline/Sounds
 /build/Release/Skyline/Textures
+/build/Release/Skyline/GUI

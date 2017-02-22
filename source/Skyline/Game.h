@@ -2,7 +2,7 @@
 #define GAME_H
 
 #include <SDL.h>
-#include <glew.h>
+#include <GL/glew.h>
 #include <RuntimeException.cpp>
 #include <IGame.h>
 #include <Window.h>
@@ -20,6 +20,7 @@
 #include "ProjectileManager.h"
 #include <AudioManager.h>
 #include "PostProcessing.h"
+#include <GUI.h>
 
 enum class GameState { RUNNING, EXIT };
 
@@ -66,6 +67,7 @@ class Game : Ess2D::IGame {
     Ess2D::FPSLimiter _fpsLimiter;
     Ess2D::AudioManager _audioManager;
     Ess2D::FrameBufferObject* _sceneFBO;
+    Ess2D::GUI _gui;
 
     SceneRenderer* _sceneRenderer;
     FBORenderer* _fboRenderer;

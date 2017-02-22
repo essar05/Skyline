@@ -1,7 +1,7 @@
 #pragma once
 #include <Shader.h>
 #include "../FBORenderer.h"
-#include <glew.h>
+#include <GL/glew.h>
 #include "../Game.h"
 
 enum class CombineFilterBlendMode {

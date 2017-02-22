@@ -18,7 +18,7 @@ PostProcessing::PostProcessing() {
   _combineFilter = new CombineFilter();
   _combineFilter->initShader();
   _combineFilter->setBlendMode(CombineFilterBlendMode::SCREEN);
-  _combineFilter->setBloomIntensity(1.2f);
+  _combineFilter->setBloomIntensity(1.0f);
 }
 
 PostProcessing::~PostProcessing() {

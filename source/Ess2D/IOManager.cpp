@@ -1,5 +1,5 @@
 #include "IOManager.h"
-#include <glew.h>
+#include <GL/glew.h>
 #include <SDL_image.h>
 #include "Errors\RuntimeException.cpp"
 
