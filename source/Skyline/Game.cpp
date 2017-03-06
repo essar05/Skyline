@@ -32,6 +32,13 @@ void Game::Boot() {
     );
   button->setText("Test GUI");
 
+  _gui.setMouseCursor("TaharezLook/MouseArrow");
+  _gui.showMouseCursor();
+
+  CEGUI::Editbox* editbox = static_cast<CEGUI::Editbox*> (
+    _gui.createWidget("AlfiskoSkin/Editbox", glm::vec4(0.2f, 0.2f, 0.1f, 0.05f), glm::vec4(0.0f), "Editbox")
+    );
+
   _state = GameState::RUNNING;
 
   _entityManager = new EntityManager;
@@ -58,8 +65,8 @@ void Game::Run() {
   float frametime = 0.0f;
 
   //temporarily disabled, cause it's very annoying when debugging (perhaps when playing too, lol)
-  //_audioManager.playEvent("event:/music/heavyrain_david");
-  //_audioManager.playEvent("event:/effects/ambience_ship");
+  _audioManager.playEvent("event:/music/heavyrain_david");
+  _audioManager.playEvent("event:/effects/ambience_ship");
 
   while(_state == GameState::RUNNING) {
     _fpsLimiter.begin();
@@ -76,8 +83,9 @@ void Game::Run() {
     _timestepAccumulatorRatio = _timestepAccumulator / TIMESTEP;
 
     const int nStepsClamped = std::min(nSteps, MAX_FRAMES_SIMULATED);
-    this->processInput(TIMESTEP * nStepsClamped);
+    //this->processInput(TIMESTEP * nStepsClamped);
     for(int i = 0; i < nStepsClamped; i++) {
+      this->processInput(TIMESTEP);
       _level->resetSmoothStates();
       this->update(TIMESTEP);
     }
@@ -169,6 +177,8 @@ void Game::processInput(float deltaTime) {
       case SDL_KEYUP:
         _inputManager.releaseKey(event.key.keysym.sym);
     }
+
+    _gui.onSDLEvent(event);
   }
 
   if (_inputManager.isKeyDown(SDLK_ESCAPE)) {
