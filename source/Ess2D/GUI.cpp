@@ -1,4 +1,5 @@
 #include "GUI.h"
+#include <SDL_timer.h>
 
 namespace Ess2D {
 
@@ -48,7 +49,16 @@ namespace Ess2D {
   void GUI::update() {
     unsigned int elapsed;
 
-    _context->injectTimePulse();
+    if(_lastTimeStamp) {
+      elapsed = 0;
+      _lastTimeStamp = SDL_GetTicks();
+    } else {
+      unsigned int currentTime = SDL_GetTicks();
+      elapsed = currentTime - _lastTimeStamp;
+      _lastTimeStamp = currentTime;
+    }
+
+    _context->injectTimePulse(elapsed);
   }
 
   void GUI::loadScheme(const std::string& schemeFile) {
@@ -196,6 +206,8 @@ namespace Ess2D {
   }
 
   void GUI::onSDLEvent(SDL_Event& event) {
+    CEGUI::utf32 codePoint;
+
     switch(event.type) {
       case SDL_MOUSEMOTION:
         _context->injectMousePosition(event.motion.x, event.motion.y);
@@ -207,7 +219,14 @@ namespace Ess2D {
         _context->injectKeyUp(SDLKeyToCEGUIKey(event.key.keysym.sym));
         break;
       case SDL_TEXTINPUT:
+        /* UNICODE AIN'T WORKING BTW */
 
+        codePoint = 0;
+        for(int i = 0; event.text.text[i] != '\0'; i++) {
+          //left shift it by i times 8 bits to put it in the right position
+          codePoint |= ( (CEGUI::utf32)* (unsigned char*) &event.text.text[i] ) << (i * 8);
+        }
+        _context->injectChar(codePoint);
         break;
       case SDL_MOUSEBUTTONDOWN:
         _context->injectMouseButtonDown(SDLButtonToCEGUIButton(event.button.button));

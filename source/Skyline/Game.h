@@ -55,6 +55,7 @@ class Game : Ess2D::IGame {
 
   private:
     void initSystem();
+    void initUI();
     void update(float deltaTime);
     void processInput(float deltaTime);
 

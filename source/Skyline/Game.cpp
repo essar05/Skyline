@@ -22,22 +22,7 @@ void Game::Boot() {
   std::cout << "Booting from " << SDL_GetBasePath() << std::endl;
 
   initSystem();
-
-  _gui.init("GUI");
-  _gui.loadScheme("TaharezLook.scheme");
-  _gui.loadScheme("AlfiskoSkin.scheme");
-  _gui.setFont("DejaVuSans-10");
-  CEGUI::PushButton* button = static_cast<CEGUI::PushButton*> (
-      _gui.createWidget("AlfiskoSkin/Button", glm::vec4(0.5f, 0.5f, 0.1f, 0.05f), glm::vec4(0.0f), "Button")
-    );
-  button->setText("Test GUI");
-
-  _gui.setMouseCursor("TaharezLook/MouseArrow");
-  _gui.showMouseCursor();
-
-  CEGUI::Editbox* editbox = static_cast<CEGUI::Editbox*> (
-    _gui.createWidget("AlfiskoSkin/Editbox", glm::vec4(0.2f, 0.2f, 0.1f, 0.05f), glm::vec4(0.0f), "Editbox")
-    );
+  initUI();
 
   _state = GameState::RUNNING;
 
@@ -262,6 +247,26 @@ void Game::initSystem() {
 
   _spriteBatch.init();
   _fpsLimiter.init(_maxFPS, _limitFPS);
+}
+
+void Game::initUI() {
+  _gui.init("GUI");
+  _gui.loadScheme("TaharezLook.scheme");
+  _gui.loadScheme("AlfiskoSkin.scheme");
+  _gui.setFont("DejaVuSans-10");
+
+  CEGUI::PushButton* button = static_cast<CEGUI::PushButton*> (
+    _gui.createWidget("AlfiskoSkin/Button", glm::vec4(0.5f, 0.5f, 0.1f, 0.05f), glm::vec4(0.0f), "Button")
+    );
+  button->setWantsMultiClickEvents(false);
+  button->setText("Test GUI");
+
+  _gui.setMouseCursor("TaharezLook/MouseArrow");
+  _gui.showMouseCursor();
+
+  CEGUI::Editbox* editbox = static_cast<CEGUI::Editbox*> (
+    _gui.createWidget("AlfiskoSkin/Editbox", glm::vec4(0.2f, 0.2f, 0.1f, 0.05f), glm::vec4(0.0f), "Editbox")
+    );
 }
 
 void Game::Destroy() {

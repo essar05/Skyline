@@ -35,5 +35,7 @@ namespace Ess2D {
       CEGUI::GUIContext* _context = nullptr;
       CEGUI::Window* _root = nullptr;
 
+      unsigned int _lastTimeStamp = 0;
+
   };
 }
