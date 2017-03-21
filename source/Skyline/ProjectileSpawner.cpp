@@ -18,14 +18,22 @@ ProjectileSpawner::~ProjectileSpawner() {
 }
 
 int ProjectileSpawner::update(float deltaTime, bool isFiring, const glm::vec2& position, const glm::vec2& velocity) {
-  _fireRateCounter += _fireRate * deltaTime;
+  if(isFiring || _fireRateCounter < 1) {
+    _fireRateCounter += _fireRate * deltaTime;
+  }
+
   int projectileCount = (int)floor(_fireRateCounter);
+
+  std::cout << projectileCount << std::endl;
 
   if (isFiring && projectileCount > 0) {
     spawn(projectileCount, position, velocity);
+    _fireRateCounter -= projectileCount;
   }
 
-  _fireRateCounter -= projectileCount;
+  if(!isFiring && projectileCount > 0) {
+    _fireRateCounter = 1;
+  }
   
   if (!isFiring) {
     projectileCount = 0;

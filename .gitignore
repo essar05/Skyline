@@ -22,3 +22,4 @@
 /build/Release/Skyline/Sounds
 /build/Release/Skyline/Textures
 /build/Release/Skyline/GUI
+/build/Debug/Skyline/*.log

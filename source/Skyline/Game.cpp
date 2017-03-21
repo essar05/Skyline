@@ -229,6 +229,8 @@ void Game::initSystem() {
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
   SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
+  SDL_ShowCursor(false);
+
   _window = new Ess2D::Window(this->_title, (int) this->_width, (int) this->_height, this->_windowMode);
   _window->SetVSync(_vSync);
 
@@ -255,7 +257,7 @@ void Game::initUI() {
   _gui.loadScheme("AlfiskoSkin.scheme");
   _gui.setFont("DejaVuSans-10");
 
-  CEGUI::PushButton* button = static_cast<CEGUI::PushButton*> (
+  /*CEGUI::PushButton* button = static_cast<CEGUI::PushButton*> (
     _gui.createWidget("AlfiskoSkin/Button", glm::vec4(0.5f, 0.5f, 0.1f, 0.05f), glm::vec4(0.0f), "Button")
     );
   button->setWantsMultiClickEvents(false);
@@ -266,7 +268,7 @@ void Game::initUI() {
 
   CEGUI::Editbox* editbox = static_cast<CEGUI::Editbox*> (
     _gui.createWidget("AlfiskoSkin/Editbox", glm::vec4(0.2f, 0.2f, 0.1f, 0.05f), glm::vec4(0.0f), "Editbox")
-    );
+    );*/
 }
 
 void Game::Destroy() {

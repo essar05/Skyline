@@ -15,6 +15,7 @@ class Player : public Entity {
     bool update(float deltaTime) override;
     int getType() override { return ET_PLAYER; }
     void contact(Entity* e) override;
+    void correctProjectileSpawnersPosition(const std::string& currentPlayerFrame);
 
   private:
 

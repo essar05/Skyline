@@ -139,7 +139,7 @@ bool Player::update(float deltaTime) {
   _body->ApplyLinearImpulse(force, _body->GetWorldCenter(), true);
 
   float currentSpeed = velocity.Length();
-  if(currentSpeed > maxSpeed) {
+  if(currentSpeed > maxSpeed && _direction.y != 0) {
     _body->SetLinearVelocity((maxSpeed / currentSpeed) * velocity);
   }
 
@@ -190,13 +190,15 @@ bool Player::update(float deltaTime) {
   }
 
   //Update Projectile Spawners
-  _projectileSpawnerLeftPosition = Utils::toVec2(_body->GetPosition()) + glm::vec2(-_width / 2 + 0.5f, _height / 2 + _projectileSpawnerLeft.getProjectileHeight() - 2.0f);
+  _projectileSpawnerLeftPosition = glm::vec2(-_width / 2 + 0.5f, _height / 2 + _projectileSpawnerLeft.getProjectileHeight() - 2.0f);
   _projectileSpawnerRightPosition = _projectileSpawnerLeftPosition + glm::vec2(_width - 1.0f, 0.0f);
 
-  int projectilesSpawnedLeft = _projectileSpawnerLeft.update(deltaTime, _isFiring, _projectileSpawnerLeftPosition, glm::vec2(0.0f, 50.0f));
-  int projectilesSpawnedRight = _projectileSpawnerRight.update(deltaTime, _isFiring, _projectileSpawnerRightPosition, glm::vec2(0.0f, 50.0f));
+  correctProjectileSpawnersPosition(_animationManager->getCurrent()->getCurrentFrame());
 
-  if (projectilesSpawnedLeft > 0) {
+  int projectilesSpawnedLeft = _projectileSpawnerLeft.update(deltaTime, _isFiring, Utils::toVec2(_body->GetPosition()) + _projectileSpawnerLeftPosition + glm::vec2(0.0f, 1.0f), glm::vec2(0.0f, 50.0f));
+  int projectilesSpawnedRight = _projectileSpawnerRight.update(deltaTime, _isFiring, Utils::toVec2(_body->GetPosition()) + _projectileSpawnerRightPosition + glm::vec2(0.0f, 1.0f), glm::vec2(0.0f, 50.0f));
+
+  if(projectilesSpawnedLeft > 0) {
     _muzzleLeftAnimationManager->play("MUZZLE");
     _muzzleLeftAnimationManager->getCurrent()->reset();
     _muzzleRightAnimationManager->play("MUZZLE");
@@ -213,34 +215,56 @@ bool Player::update(float deltaTime) {
 }
 
 void Player::draw() {
-  if (_isSpawned) {
+  if(_isSpawned) {
     b2Vec2 bodyPosition = this->_body->GetPosition();
     glm::vec2 screenPosition = _position;
-
+    
     Ess2D::SpriteBatch* spriteBatch = _game->getSpriteBatch();
     Ess2D::TextureAtlas* textureAtlas = _animationManager->getCurrent()->getTextureAtlas();
     std::string currentAnimationFrame = _animationManager->getCurrent()->getCurrentFrame();
 
     float width = textureAtlas->getSize(currentAnimationFrame).x * _horizontalScaleFactor;
 
-    spriteBatch->draw(glm::vec4(screenPosition.x - width / 2, screenPosition.y - _height / 2, width, _height), textureAtlas->getUV(currentAnimationFrame), textureAtlas->getTextureId(), _color, (float) _depth);
+    spriteBatch->draw(glm::vec4(screenPosition.x - width / 2, screenPosition.y - _height / 2, width, _height), textureAtlas->getUV(currentAnimationFrame), textureAtlas->getTextureId(), _color, (float)_depth);
 
     Ess2D::TextureAtlas* thrusterTextureAtlas = _thrusterAnimationManager->getCurrent()->getTextureAtlas();
     std::string thrusterCurrentAnimationFrame = _thrusterAnimationManager->getCurrent()->getCurrentFrame();
-    
-    spriteBatch->draw(glm::vec4(screenPosition.x - _thrusterWidth / 2, screenPosition.y - _height + 0.53f, _thrusterWidth, _thrusterHeight), thrusterTextureAtlas->getUV(thrusterCurrentAnimationFrame), thrusterTextureAtlas->getTextureId(), _color, (float) _depth - 1);
-  
-    if (_muzzleLeftAnimationManager->isPlaying()) {
+
+    spriteBatch->draw(glm::vec4(screenPosition.x - _thrusterWidth / 2, screenPosition.y - _height + 0.53f, _thrusterWidth, _thrusterHeight), thrusterTextureAtlas->getUV(thrusterCurrentAnimationFrame), thrusterTextureAtlas->getTextureId(), _color, (float)_depth - 1);
+
+    if(_muzzleLeftAnimationManager->isPlaying()) {
       Ess2D::TextureAtlas* muzzleLeftTextureAtlas = _muzzleLeftAnimationManager->getCurrent()->getTextureAtlas();
       std::string muzzleLeftCurrentAnimationFrame = _muzzleLeftAnimationManager->getCurrent()->getCurrentFrame();
 
-      spriteBatch->draw(glm::vec4(_projectileSpawnerLeftPosition.x - 0.35f, _projectileSpawnerLeftPosition.y + 0.05f, 0.9f, 0.9f), muzzleLeftTextureAtlas->getUV(muzzleLeftCurrentAnimationFrame), muzzleLeftTextureAtlas->getTextureId(), _color, (float) _depth - 1);
+      glm::vec2 leftMuzzlePosition = screenPosition + _projectileSpawnerLeftPosition + glm::vec2(-0.35f, -0.05f);
+      spriteBatch->draw(glm::vec4(leftMuzzlePosition, 0.9f, 0.9f), muzzleLeftTextureAtlas->getUV(muzzleLeftCurrentAnimationFrame), muzzleLeftTextureAtlas->getTextureId(), _color, (float)_depth - 1);
 
       Ess2D::TextureAtlas* muzzleRightTextureAtlas = _muzzleRightAnimationManager->getCurrent()->getTextureAtlas();
       std::string muzzleRightCurrentAnimationFrame = _muzzleRightAnimationManager->getCurrent()->getCurrentFrame();
 
-      spriteBatch->draw(glm::vec4(_projectileSpawnerRightPosition.x - 0.40f, _projectileSpawnerRightPosition.y + 0.05f, 0.9f, 0.9f), muzzleRightTextureAtlas->getUV(muzzleRightCurrentAnimationFrame), muzzleRightTextureAtlas->getTextureId(), _color, (float) _depth - 1);
+      glm::vec2 rightMuzzlePosition = screenPosition + _projectileSpawnerRightPosition + glm::vec2(-0.40f, -0.05f);
+      spriteBatch->draw(glm::vec4(rightMuzzlePosition, 0.9f, 0.9f), muzzleRightTextureAtlas->getUV(muzzleRightCurrentAnimationFrame), muzzleRightTextureAtlas->getTextureId(), _color, (float)_depth - 1);
     }
+  }
+}
+
+void Player::correctProjectileSpawnersPosition(const std::string& currentPlayerFrame) {
+  if(currentPlayerFrame == "Spaceship_left01") {
+    _projectileSpawnerLeftPosition += glm::vec2(0.1f, 0.0f);
+  } else if(currentPlayerFrame == "Spaceship_left02") {
+    _projectileSpawnerLeftPosition += glm::vec2(0.25f, 0.0f);
+    _projectileSpawnerRightPosition += glm::vec2(-0.05f, 0.0f);
+  } else if(currentPlayerFrame == "Spaceship_left03") {
+    _projectileSpawnerLeftPosition += glm::vec2(0.45f, 0.0f);
+    _projectileSpawnerRightPosition += glm::vec2(-0.17f, 0.0f);
+  } else if(currentPlayerFrame == "Spaceship_right01") {
+    _projectileSpawnerRightPosition += glm::vec2(-0.1f, 0.0f);
+  } else if(currentPlayerFrame == "Spaceship_right02") {
+    _projectileSpawnerRightPosition += glm::vec2(-0.25f, 0.0f);
+    _projectileSpawnerLeftPosition += glm::vec2(0.05f, 0.0f);
+  } else if(currentPlayerFrame == "Spaceship_right03") {
+    _projectileSpawnerRightPosition += glm::vec2(-0.45f, 0.0f);
+    _projectileSpawnerLeftPosition += glm::vec2(0.17f, 0.0f);
   }
 }
 
