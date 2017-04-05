@@ -105,6 +105,8 @@
     <ClCompile Include="Errors\RuntimeException.cpp" />
     <ClCompile Include="FrameBufferObject.cpp" />
     <ClCompile Include="GUI.cpp" />
+    <ClCompile Include="IGame.cpp" />
+    <ClCompile Include="ScreenManager.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Texture2D.cpp" />
     <ClCompile Include="InputManager.cpp" />
@@ -123,6 +125,8 @@
     <ClInclude Include="Camera2D.h" />
     <ClInclude Include="FrameBufferObject.h" />
     <ClInclude Include="GUI.h" />
+    <ClInclude Include="IGameScreen.h" />
+    <ClInclude Include="ScreenManager.h" />
     <ClInclude Include="Texture2D.h" />
     <ClInclude Include="IGame.h" />
     <ClInclude Include="InputManager.h" />

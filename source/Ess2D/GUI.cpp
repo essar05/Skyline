@@ -58,7 +58,7 @@ namespace Ess2D {
       _lastTimeStamp = currentTime;
     }
 
-    _context->injectTimePulse(elapsed);
+    _context->injectTimePulse((float) elapsed);
   }
 
   void GUI::loadScheme(const std::string& schemeFile) {
@@ -210,7 +210,7 @@ namespace Ess2D {
 
     switch(event.type) {
       case SDL_MOUSEMOTION:
-        _context->injectMousePosition(event.motion.x, event.motion.y);
+        _context->injectMousePosition((float) event.motion.x, (float) event.motion.y);
         break;
       case SDL_KEYDOWN:
         _context->injectKeyDown(SDLKeyToCEGUIKey(event.key.keysym.sym));

@@ -1,6 +1,7 @@
 #include "Timing.h"
 #include <SDL.h>
 #include <iostream>
+#include <algorithm>
 
 namespace Ess2D {
 
@@ -21,7 +22,7 @@ namespace Ess2D {
 
     //limit FPS
     if(_limitFPS && _maxFPS > 0 && 1000.0f / _maxFPS > _frameTime) {
-      SDL_Delay((Uint32) 1000.0f / _maxFPS - _frameTime);
+      SDL_Delay((Uint32) (1000.0f / _maxFPS - _frameTime));
     }
      
     //calculate FPS
@@ -72,5 +73,29 @@ namespace Ess2D {
     }
   }
 
+  TimestepAccumulator::TimestepAccumulator() {}
+
+  TimestepAccumulator::~TimestepAccumulator() {}
+
+  void TimestepAccumulator::init() {
+    _prevTicks = std::chrono::high_resolution_clock::now(); // microseconds
+    _newTicks = _prevTicks; // microseconds
+    _frametime = 0.0f;
+  }
+
+  int TimestepAccumulator::step() {
+    _newTicks = std::chrono::high_resolution_clock::now(); // microseconds
+    _frametime = std::chrono::duration_cast<std::chrono::microseconds>(_newTicks - _prevTicks).count() / 1000.0f; //in miliseconds
+    _prevTicks = _newTicks;
+
+    _accumulator += _frametime / 1000.0f;
+    const int nSteps = static_cast<int> (std::floor(_accumulator / _timestep));
+    if(nSteps > 0) {
+      _accumulator -= nSteps * _timestep;
+    }
+    _accumulatorRatio = _accumulator / _timestep;
+
+    return std::min(nSteps, _maxFramesSimulated);
+  }
 
 }

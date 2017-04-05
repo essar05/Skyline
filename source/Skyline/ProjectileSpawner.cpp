@@ -24,8 +24,6 @@ int ProjectileSpawner::update(float deltaTime, bool isFiring, const glm::vec2& p
 
   int projectileCount = (int)floor(_fireRateCounter);
 
-  std::cout << projectileCount << std::endl;
-
   if (isFiring && projectileCount > 0) {
     spawn(projectileCount, position, velocity);
     _fireRateCounter -= projectileCount;
@@ -51,7 +49,7 @@ void ProjectileSpawner::spawn(int projectileCount, const glm::vec2& position, co
     projectile->createB2Data();
     projectile->setVelocity(velocity);
     projectile->spawn();
-    gameInstance->getProjectileManager()->add(projectile);
+    gameInstance->getGameplayScreen()->getProjectileManager()->add(projectile);
 
     gameInstance->getAudioManager()->playEvent("event:/effects/laser_shot", true);
   }

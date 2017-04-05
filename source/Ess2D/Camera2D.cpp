@@ -39,6 +39,16 @@ namespace Ess2D {
     }
   }
 
+  void Camera2D::smoothState(float timestepAccumulatorRatio, bool isGamePaused) {
+    if(isGamePaused) {
+      setPosition(_futurePosition);
+    } else {
+      const float oneMinusRatio = 1.f - timestepAccumulatorRatio;
+      glm::vec2 interpolatedCameraPosition = timestepAccumulatorRatio * _futurePosition + oneMinusRatio * _previousPosition;
+      setPosition(interpolatedCameraPosition);
+    }
+  }
+
   //get the camera size within the world
   glm::vec2 Camera2D::getWorldViewportSize() {
     return glm::vec2((_screenWidth / _zoom) / _scale, (_screenHeight / _zoom) / _scale);

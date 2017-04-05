@@ -13,10 +13,13 @@ namespace Ess2D {
       void update();
 
       void setPosition(const glm::vec2& position) { _position = position; _doUpdate = true; }
+      void setFuturePosition(const glm::vec2& position) { _previousPosition = _futurePosition; _futurePosition = position; }
       void setScale(float scale) { _scale = scale; _doUpdate = true; }
       void setZoom(float zoom) { _zoom = zoom; _doUpdate = true; }
+      void smoothState(float timestepAccumulatorRatio, bool isGamePaused);
 
       glm::vec2 getPosition();
+      glm::vec2 getPreviousPosition() { return _previousPosition; }
       float getScale() { return _scale; }
       float getZoom() { return _zoom; }
       glm::vec2 getWorldViewportSize();
@@ -40,6 +43,9 @@ namespace Ess2D {
       glm::vec2 _position;
       glm::mat4 _cameraMatrix;
       glm::mat4 _orthoMatrix;
+
+      glm::vec2 _futurePosition;
+      glm::vec2 _previousPosition;
 
   };
 }

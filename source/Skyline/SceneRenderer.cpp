@@ -31,20 +31,20 @@ void SceneRenderer::render() {
   glUniform1i(useTextureLocation, 1);
 
   GLint pLocation = _shader->getUniformLocation("P");
-  glm::mat4 cameraMatrix = game->getMainCamera()->getCameraMatrix();
+  glm::mat4 cameraMatrix = game->getGameplayScreen()->getMainCamera()->getCameraMatrix();
 
   glUniformMatrix4fv(pLocation, 1, GL_FALSE, &(cameraMatrix[0][0]));
 
-  game->getSpriteBatch()->begin(Ess2D::GlyphSortType::BACK_TO_FRONT);
+  game->getGameplayScreen()->getSpriteBatch()->begin(Ess2D::GlyphSortType::BACK_TO_FRONT);
 
-  game->getLevel()->draw();
-  game->getProjectileManager()->draw();
+  game->getGameplayScreen()->getLevel()->draw();
+  game->getGameplayScreen()->getProjectileManager()->draw();
 
-  game->getSpriteBatch()->end();
-  game->getSpriteBatch()->render();
+  game->getGameplayScreen()->getSpriteBatch()->end();
+  game->getGameplayScreen()->getSpriteBatch()->render();
 
   glUniform1i(useTextureLocation, 0);
-  game->getLevel()->getWorld()->DrawDebugData();
+  game->getGameplayScreen()->getLevel()->getWorld()->DrawDebugData();
 
   _shader->unuse();
 }

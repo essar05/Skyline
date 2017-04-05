@@ -5,13 +5,13 @@
 
 LevelSection::LevelSection(float width, float height) {
   _game = Game::GetInstance();
-  _width = _game->getMainCamera()->getWorldScalar(width);
-  _height = _game->getMainCamera()->getWorldScalar(height);
+  _width = _game->getGameplayScreen()->getMainCamera()->getWorldScalar(width);
+  _height = _game->getGameplayScreen()->getMainCamera()->getWorldScalar(height);
 }
 
 LevelSection::~LevelSection() {
-  EntityManager* entityManager = _game->getEntityManager();
-  Level* level = _game->getLevel();
+  EntityManager* entityManager = _game->getGameplayScreen()->getEntityManager();
+  Level* level = _game->getGameplayScreen()->getLevel();
 
   if(entityManager != nullptr) {
     for(unsigned int k = 0; k < _objects.size(); k++) {
@@ -23,8 +23,8 @@ LevelSection::~LevelSection() {
 }
 
 void LevelSection::update() {
-  EntityManager* entityManager = _game->getEntityManager();
-  Level* level = _game->getLevel();
+  EntityManager* entityManager = _game->getGameplayScreen()->getEntityManager();
+  Level* level = _game->getGameplayScreen()->getLevel();
   Entity* entity;
 
   for(unsigned int k = 0; k < _objects.size();) {
@@ -56,15 +56,15 @@ void LevelSection::update() {
 }
 
 void LevelSection::draw(float x, float y) {
-  Ess2D::SpriteBatch* spriteBatch = _game->getSpriteBatch();
+  Ess2D::SpriteBatch* spriteBatch = _game->getGameplayScreen()->getSpriteBatch();
   /*
   glm::vec4 position(x, y, _width, _height);
   glm::vec4 uv(0.0f, 0.0f, 1.0f, 1.0f);
   Ess2D::ColorRGBA8 color(255, 255, 255, 255);
   spriteBatch->draw(position, uv, _backgroundId, color, 0);
   */
-  Ess2D::Camera2D* camera = _game->getMainCamera();
-  EntityManager* entityManager = _game->getEntityManager();
+  Ess2D::Camera2D* camera = _game->getGameplayScreen()->getMainCamera();
+  EntityManager* entityManager = _game->getGameplayScreen()->getEntityManager();
   Entity* entity;
 
   for(unsigned int k = 0; k < _objects.size();) {
@@ -90,6 +90,6 @@ void LevelSection::addObject(unsigned int objectId) {
 }
 
 bool LevelSection::compareObjectYPosition(unsigned int a, unsigned int b) {
-  EntityManager* entityManager = Game::GetInstance()->getEntityManager();
+  EntityManager* entityManager = Game::GetInstance()->getGameplayScreen()->getEntityManager();
   return (entityManager->getEntity(a)->getPosition().y < entityManager->getEntity(b)->getPosition().y);
 }

@@ -9,7 +9,7 @@ Projectile::Projectile(int textureId, glm::vec4 uv, float width, float height, g
   _source = source; 
   _damage = damage;
 
-  Ess2D::TextureAtlas * _playerAtlas = _game->getTextureCache()->getAtlas("Textures/bullet.png", "Textures/bullet.json");
+  Ess2D::TextureAtlas * _playerAtlas = _game->getGameplayScreen()->getTextureCache()->getAtlas("Textures/bullet.png", "Textures/bullet.json");
 
   _animationManager = new Ess2D::AnimationManager();
 
@@ -37,7 +37,7 @@ void Projectile::draw() {
     b2Vec2 bodyPosition = this->_body->GetPosition();
     glm::vec2 screenPosition = _position;
 
-    Ess2D::SpriteBatch* spriteBatch = _game->getSpriteBatch();
+    Ess2D::SpriteBatch* spriteBatch = _game->getGameplayScreen()->getSpriteBatch();
     Ess2D::TextureAtlas* textureAtlas = _animationManager->getCurrent()->getTextureAtlas();
     std::string currentAnimationFrame = _animationManager->getCurrent()->getCurrentFrame(); 
     spriteBatch->draw(glm::vec4(screenPosition.x - _width / 2, screenPosition.y - _height / 2, _width, _height), textureAtlas->getUV(currentAnimationFrame), textureAtlas->getTextureId(), _color, (float) _depth);
@@ -47,7 +47,7 @@ void Projectile::draw() {
 void Projectile::contact(Entity* e) {
   if(e->getType() == ET_ENTITY && _source == ET_PLAYER) { //todo change to ET_DAMAGE
     e->applyDamage(this->getDamage());
-    _game->getProjectileManager()->deleteProjectile(this->getId(), true);
+    _game->getGameplayScreen()->getProjectileManager()->deleteProjectile(this->getId(), true);
   }
 }
 

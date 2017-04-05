@@ -5,10 +5,10 @@ LevelDecoration::LevelDecoration(GLuint textureId, float x, float y, float width
   Game* game = Game::GetInstance();
 
   _textureId = textureId;
-  _x = game->getMainCamera()->getWorldScalar(x);
-  _y = game->getMainCamera()->getWorldScalar(y);
-  _width = game->getMainCamera()->getWorldScalar(width * scale);
-  _height = game->getMainCamera()->getWorldScalar(height * scale);
+  _x = game->getGameplayScreen()->getMainCamera()->getWorldScalar(x);
+  _y = game->getGameplayScreen()->getMainCamera()->getWorldScalar(y);
+  _width = game->getGameplayScreen()->getMainCamera()->getWorldScalar(width * scale);
+  _height = game->getGameplayScreen()->getMainCamera()->getWorldScalar(height * scale);
 }
 
 LevelDecoration::~LevelDecoration() {}

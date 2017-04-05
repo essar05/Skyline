@@ -6,11 +6,9 @@ int main(int argc, char* args[]) {
   Game* game = Game::GetInstance();
 
   try {
-    game->Boot();
-
-    game->Run();
-
-    game->Destroy();
+    game->boot();
+    game->run();
+    game->destroy();
   }
   catch (Ess2D::ERuntimeException& anException) {
     std::cout << anException.getMessage() << std::endl;

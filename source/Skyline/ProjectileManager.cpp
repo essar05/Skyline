@@ -22,7 +22,7 @@ void ProjectileManager::add(Projectile* projectile) {
 
 void ProjectileManager::update(float deltaTime) {
   Game* gameInstance = Game::GetInstance();
-  Player* player = gameInstance->getLevel()->getPlayer();
+  Player* player = gameInstance->getGameplayScreen()->getLevel()->getPlayer();
 
   auto it = _projectiles.begin();
   while(it != _projectiles.end()) {

@@ -23,8 +23,8 @@ Level::~Level() {
 }
 
 void Level::update(float deltaTime) {
-  Ess2D::SpriteBatch* spriteBatch = _game->getSpriteBatch();
-  Ess2D::Camera2D* camera = _game->getMainCamera();
+  Ess2D::SpriteBatch* spriteBatch = _game->getGameplayScreen()->getSpriteBatch();
+  Ess2D::Camera2D* camera = _game->getGameplayScreen()->getMainCamera();
   glm::vec2 viewportSize = camera->getWorldViewportSize();
 
   /*
@@ -65,8 +65,8 @@ void Level::update(float deltaTime) {
 }
 
 void Level::draw() {
-  Ess2D::SpriteBatch* spriteBatch = _game->getSpriteBatch();
-  Ess2D::Camera2D* camera = _game->getMainCamera();
+  Ess2D::SpriteBatch* spriteBatch = _game->getGameplayScreen()->getSpriteBatch();
+  Ess2D::Camera2D* camera = _game->getGameplayScreen()->getMainCamera();
   glm::vec2 viewportSize = camera->getWorldViewportSize();
   
   float bottomCameraEdge = camera->getPosition().y / camera->getZoom() - viewportSize[1] / 2;
@@ -145,7 +145,7 @@ void Level::draw() {
 }
 
 void Level::smoothStates() {
-  const float timestepAccumulatorRatio = _game->getTimeStepAccumulatorRatio();
+  const float timestepAccumulatorRatio = _game->getTimestepAccumulator()->getAccumulatorRatio();
 
   for(b2Body * b = _world->GetBodyList(); b != NULL; b = b->GetNext()) {
     if(b->GetType() == b2_staticBody) {
@@ -176,9 +176,9 @@ void Level::resetSmoothStates() {
 void Level::load(std::string levelName) {
   //should probably think about discarding old level when loading a new one.
 
-  Ess2D::TextureCache* textureCache = _game->getTextureCache();
-  EntityManager* entityManager = _game->getEntityManager();
-  Ess2D::Camera2D* camera = _game->getMainCamera();
+  Ess2D::TextureCache* textureCache = _game->getGameplayScreen()->getTextureCache();
+  EntityManager* entityManager = _game->getGameplayScreen()->getEntityManager();
+  Ess2D::Camera2D* camera = _game->getGameplayScreen()->getMainCamera();
 
   _world = new b2World(b2Vec2(0, 0));
   _world->SetAutoClearForces(false);
@@ -299,7 +299,7 @@ void Level::addDecoration(LevelDecoration* decoration, int layer) {
 void Level::setBackground(Ess2D::Texture2D* texture) {
   _backgroundId = texture->_id;
 
-  _backgroundWidth = _game->getMainCamera()->getWorldViewportSize().x;
+  _backgroundWidth = _game->getGameplayScreen()->getMainCamera()->getWorldViewportSize().x;
   _backgroundHeight = texture->_height * (_backgroundWidth / texture->_width);
 }
 

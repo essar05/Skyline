@@ -28,4 +28,27 @@ namespace Ess2D {
 
   };
 
+  class TimestepAccumulator {
+    public:
+      TimestepAccumulator();
+      ~TimestepAccumulator();
+
+      void init();
+      int step();
+
+      float getTimestep() { return _timestep; }
+      float getAccumulator() { return _accumulator; }
+      float getAccumulatorRatio() { return _accumulatorRatio; }
+
+    private:
+      int _maxFramesSimulated = 6;
+      float _timestep = 1.0f / 60.f;
+      float _frametime = 0.0f;
+      float _accumulator = 0.0f;
+      float _accumulatorRatio = 0.0f;
+      std::chrono::high_resolution_clock::time_point _prevTicks;
+      std::chrono::high_resolution_clock::time_point _newTicks;
+
+  };
+
 }

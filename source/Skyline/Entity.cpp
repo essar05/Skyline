@@ -15,9 +15,9 @@ Entity::Entity(int textureId, glm::vec4 uv, float width, float height, glm::vec2
   _color = Ess2D::ColorRGBA8(225, 255, 255, 255);
 
   if(scaleToWorld) {
-    _width = _game->getMainCamera()->getWorldScalar(_width);
-    _height = _game->getMainCamera()->getWorldScalar(_height);
-    _position = _game->getMainCamera()->getWorldCoordinates(_position);
+    _width = _game->getGameplayScreen()->getMainCamera()->getWorldScalar(_width);
+    _height = _game->getGameplayScreen()->getMainCamera()->getWorldScalar(_height);
+    _position = _game->getGameplayScreen()->getMainCamera()->getWorldCoordinates(_position);
   }
 
   _previousPosition = _position;
@@ -78,8 +78,8 @@ bool Entity::collidesWith(Entity* anotherEntity) {
 }
 
 bool Entity::inViewport() {
-  glm::vec2 viewportSize = _game->getMainCamera()->getWorldViewportSize();
-  glm::vec2 cameraPosition = _game->getMainCamera()->getPosition() / _game->getMainCamera()->getZoom();
+  glm::vec2 viewportSize = _game->getGameplayScreen()->getMainCamera()->getWorldViewportSize();
+  glm::vec2 cameraPosition = _game->getGameplayScreen()->getMainCamera()->getPosition() / _game->getGameplayScreen()->getMainCamera()->getZoom();
 
   return collidesWith(viewportSize.x, viewportSize.y, cameraPosition);
 }
@@ -97,7 +97,7 @@ void Entity::draw() {
     b2Vec2 bodyPosition = this->_body->GetPosition();
     glm::vec2 screenPosition = _position;
 
-    Ess2D::SpriteBatch* spriteBatch = _game->getSpriteBatch();
+    Ess2D::SpriteBatch* spriteBatch = _game->getGameplayScreen()->getSpriteBatch();
     spriteBatch->draw(glm::vec4(screenPosition.x - _width / 2, screenPosition.y - _height / 2, _width, _height), _uv, _textureId, _color, (float) _depth);
   }
 }
@@ -131,7 +131,7 @@ void Entity::createBody() {
   bodyDef.position.Set(_position.x, _position.y);
   bodyDef.angle = 0;
   bodyDef.fixedRotation = true;
-  _body = _game->getLevel()->getWorld()->CreateBody(&bodyDef);
+  _body = _game->getGameplayScreen()->getLevel()->getWorld()->CreateBody(&bodyDef);
 }
 
 void Entity::createFixtures() {

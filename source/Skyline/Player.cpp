@@ -11,7 +11,7 @@ Player::Player(int textureId, glm::vec4 uv, float width, float height, glm::vec2
   _projectileSpawnerRight.setSource(this->getType());
 
   // SPACESHIP
-  Ess2D::TextureAtlas * playerAtlas = _game->getTextureCache()->getAtlas("Textures/player.png", "Textures/player.json");
+  Ess2D::TextureAtlas * playerAtlas = _game->getGameplayScreen()->getTextureCache()->getAtlas("Textures/player.png", "Textures/player.json");
 
   _animationManager = new Ess2D::AnimationManager();
   
@@ -40,7 +40,7 @@ Player::Player(int textureId, glm::vec4 uv, float width, float height, glm::vec2
 
   // THRUSTER
 
-  Ess2D::TextureAtlas * thrusterAtlas = _game->getTextureCache()->getAtlas("Textures/thruster.png", "Textures/thruster.json");
+  Ess2D::TextureAtlas * thrusterAtlas = _game->getGameplayScreen()->getTextureCache()->getAtlas("Textures/thruster.png", "Textures/thruster.json");
 
   _thrusterAnimationManager = new Ess2D::AnimationManager();
 
@@ -60,11 +60,11 @@ Player::Player(int textureId, glm::vec4 uv, float width, float height, glm::vec2
 
   _thrusterAnimationManager->play("IDLE");
 
-  _thrusterWidth = _game->getMainCamera()->getWorldScalar(_thrusterWidth);
-  _thrusterHeight = _game->getMainCamera()->getWorldScalar(_thrusterHeight);
+  _thrusterWidth = _game->getGameplayScreen()->getMainCamera()->getWorldScalar(_thrusterWidth);
+  _thrusterHeight = _game->getGameplayScreen()->getMainCamera()->getWorldScalar(_thrusterHeight);
 
   //MUZZLE FLASH
-  Ess2D::TextureAtlas * muzzleAtlas = _game->getTextureCache()->getAtlas("Textures/muzzle.png", "Textures/muzzle.json");
+  Ess2D::TextureAtlas * muzzleAtlas = _game->getGameplayScreen()->getTextureCache()->getAtlas("Textures/muzzle.png", "Textures/muzzle.json");
 
   _muzzleLeftAnimationManager = new Ess2D::AnimationManager();
   _muzzleRightAnimationManager = new Ess2D::AnimationManager();
@@ -150,8 +150,8 @@ bool Player::update(float deltaTime) {
     _body->GetPosition().y + _body->GetLinearVelocity().y * deltaTime + (acceleration.y * deltaTime * deltaTime) / 2
   );
 
-  glm::vec2 viewportSize = _game->getMainCamera()->getWorldViewportSize();
-  glm::vec2 cameraPosition = _game->getMainCamera()->getPosition() / _game->getMainCamera()->getZoom();
+  glm::vec2 viewportSize = _game->getGameplayScreen()->getMainCamera()->getWorldViewportSize();
+  glm::vec2 cameraPosition = _game->getGameplayScreen()->getMainCamera()->getPosition() / _game->getGameplayScreen()->getMainCamera()->getZoom();
   b2Vec2 correctedPosition = _body->GetPosition();
   b2Vec2 correctionAcceleration = b2Vec2(0.0f, 0.0f);
   b2Vec2 currentVelocity = _body->GetLinearVelocity();
@@ -219,7 +219,7 @@ void Player::draw() {
     b2Vec2 bodyPosition = this->_body->GetPosition();
     glm::vec2 screenPosition = _position;
     
-    Ess2D::SpriteBatch* spriteBatch = _game->getSpriteBatch();
+    Ess2D::SpriteBatch* spriteBatch = _game->getGameplayScreen()->getSpriteBatch();
     Ess2D::TextureAtlas* textureAtlas = _animationManager->getCurrent()->getTextureAtlas();
     std::string currentAnimationFrame = _animationManager->getCurrent()->getCurrentFrame();
 
@@ -271,7 +271,7 @@ void Player::correctProjectileSpawnersPosition(const std::string& currentPlayerF
 void Player::contact(Entity* e) {
   if(e->getType() == ET_ENTITY) {
     applyDamage(e->getCollisionDamage());
-    _game->getEntityManager()->deleteEntity(e->getId(), true);
+    _game->getGameplayScreen()->getEntityManager()->deleteEntity(e->getId(), true);
   }
 }
 
