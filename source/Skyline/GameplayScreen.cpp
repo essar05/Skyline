@@ -31,7 +31,9 @@ void GameplayScreen::build() {
   _camera.init((int)_game->getWidth(), (int)_game->getHeight());
   _camera.setScale(32.0f);
   _camera.setZoom(_game->getWidth() / 1024.0f);
-  _camera.setPosition(_camera.getWorldCoordinates(glm::vec2(_game->getWidth() / 2, _game->getHeight() / 2)));
+  glm::vec2 initialCameraPosition = _camera.getWorldCoordinates(glm::vec2(_game->getWidth() / 2, _game->getHeight() / 2));
+  _camera.setPosition(initialCameraPosition);
+  _camera.setFuturePosition(initialCameraPosition);
 
   _spriteBatch.init();
 
@@ -84,7 +86,7 @@ void GameplayScreen::update(float deltaTime, int simulationSteps) {
     _level->resetSmoothStates();
 
     if(!_isPaused) {
-      _camera.setFuturePosition(_camera.getPreviousPosition() + glm::vec2(0.0f, this->_scrollSpeed * _camera.getZoom()) * deltaTime);
+      _camera.setFuturePosition(_camera.getFuturePosition() + glm::vec2(0.0f, this->_scrollSpeed * _camera.getZoom()) * deltaTime);
 
       _projectileManager->update(deltaTime);
       _level->update(deltaTime);

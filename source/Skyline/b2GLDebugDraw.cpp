@@ -1,5 +1,5 @@
 #include "b2GLDebugDraw.h"
-#include <glew.h>
+#include <GL/glew.h>
 
 void b2GLDebugDraw::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color) {
   GLfloat* vert = new GLfloat[vertexCount * 6];

@@ -13,6 +13,18 @@ namespace Ess2D {
 
   Camera2D::~Camera2D() {}
 
+  void Camera2D::setFuturePosition(const glm::vec2& position) {
+    if(!_isFuturePositionSet) {
+      _previousPosition = position;
+      _futurePosition = position;
+      _isFuturePositionSet = true;
+      return;
+    }
+
+    _previousPosition = _futurePosition; 
+    _futurePosition = position; 
+  }
+
   void Camera2D::init(int screenWdith, int screenHeight) {
     _screenWidth = screenWdith;
     _screenHeight = screenHeight;
