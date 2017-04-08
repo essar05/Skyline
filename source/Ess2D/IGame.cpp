@@ -6,7 +6,9 @@ namespace Ess2D {
     _screenManager = new ScreenManager();
   }
 
-  IGame::~IGame() {}
+  IGame::~IGame() {
+    delete _window;
+  }
 
   void IGame::boot() {
     std::cout << "Booting from " << SDL_GetBasePath() << std::endl;
@@ -17,14 +19,13 @@ namespace Ess2D {
 
   void IGame::destroy() {
     if(_state != GameState::DESTROYED) {
+      _state = GameState::DESTROYED;
+
       SDL_StopTextInput();
       if(_screenManager) {
         delete _screenManager;
       }
-      delete _window;
       onExit();
-
-      _state = GameState::DESTROYED;
     }
   }
 
@@ -95,6 +96,7 @@ namespace Ess2D {
 
   void IGame::update(float deltaTime, int simulationSteps) {
     if(_currentScreen) {
+      std::cout << "Asd" << std::endl;
       switch(_currentScreen->getState()) {
         case ScreenState::RUNNING:
           _currentScreen->update(deltaTime, simulationSteps);
@@ -102,6 +104,7 @@ namespace Ess2D {
         case ScreenState::CHANGE_NEXT:
           _currentScreen->onExit();
           _currentScreen = _screenManager->moveNext();
+          std::cout << "change next";
           if(_currentScreen != nullptr) {
             _currentScreen->setRunning();
             _currentScreen->onEntry();
@@ -131,8 +134,6 @@ namespace Ess2D {
   void IGame::render() {
     if(_currentScreen && _currentScreen->getState() == ScreenState::RUNNING) {
       _currentScreen->draw();
-    } else {
-      destroy();
     }
   }
 

@@ -7,9 +7,10 @@
 #include <IGame.h>
 #include <AudioManager.h>
 #include "GameplayScreen.h"
-
+#include "MainMenuScreen.h"
 
 class GameplayScreen;
+class MainMenuScreen;
 
 class Game : public Ess2D::IGame {
   public:
@@ -42,6 +43,7 @@ class Game : public Ess2D::IGame {
   private:
     static Game* instance;
     GameplayScreen* _gameplayScreen;
+    MainMenuScreen* _mainMenuScreen;
 
 };
 

@@ -12,6 +12,7 @@
 #include "SceneRenderer.h"
 #include "FBORenderer.h"
 #include "PostProcessing.h"
+#include "ScreenIndices.h"
 
 class Level;
 class ProjectileManager;

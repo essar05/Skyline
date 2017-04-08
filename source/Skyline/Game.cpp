@@ -17,9 +17,12 @@ Game::~Game() {}
 Game* Game::instance = NULL;
 
 void Game::addScreens() {
+  _mainMenuScreen = new MainMenuScreen;
   _gameplayScreen = new GameplayScreen;
+
+  _screenManager->addScreen(_mainMenuScreen);
   _screenManager->addScreen(_gameplayScreen);
-  _screenManager->setScreen(_gameplayScreen->getIndex());
+  _screenManager->setScreen(_mainMenuScreen->getIndex());
 }
 
 void Game::onInit() {
@@ -35,32 +38,12 @@ void Game::onInit() {
 
 void Game::onExit() {
   delete _gameplayScreen;
+  delete _mainMenuScreen;
 }
 
 void Game::onUpdate() {
   _audioManager.update();
 }
-
-/*
-void Game::initUI() {
-  _gui.init("GUI");
-  _gui.loadScheme("TaharezLook.scheme");
-  _gui.loadScheme("AlfiskoSkin.scheme");
-  _gui.setFont("OpenSans-Bold");
-
-  CEGUI::PushButton* button = static_cast<CEGUI::PushButton*> (
-    _gui.createWidget("AlfiskoSkin/Button", glm::vec4(0.5f, 0.5f, 0.1f, 0.05f), glm::vec4(0.0f), "Button")
-    );
-  button->setWantsMultiClickEvents(false);
-  button->setText("Test GUI");
-
-  _gui.setMouseCursor("TaharezLook/MouseArrow");
-  _gui.showMouseCursor();
-
-  CEGUI::Editbox* editbox = static_cast<CEGUI::Editbox*> (
-    _gui.createWidget("AlfiskoSkin/Editbox", glm::vec4(0.2f, 0.2f, 0.1f, 0.05f), glm::vec4(0.0f), "Editbox")
-    );
-}*/
 
 Game* Game::GetInstance() {
   if (instance == NULL) {

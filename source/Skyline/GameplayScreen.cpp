@@ -3,6 +3,7 @@
 
 GameplayScreen::GameplayScreen() {
   _game = Game::GetInstance();
+  _screenIndex = SCREEN_INDEX_GAMEPLAY;
 }
 
 GameplayScreen::~GameplayScreen() {}
@@ -12,7 +13,7 @@ int GameplayScreen::getNextScreenIndex() const {
 }
 
 int GameplayScreen::getPreviousScreenIndex() const {
-  return SCREEN_INDEX_NO_SCREEN;
+  return SCREEN_INDEX_MAINMENU;
 }
 
 

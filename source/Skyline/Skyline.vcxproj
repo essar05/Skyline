@@ -110,6 +110,7 @@ cmd /c xcopy ".\Levels" "$(TargetDir)Levels\" /y /S</Command>
     <ClCompile Include="b2GLDebugDraw.cpp" />
     <ClCompile Include="Bootstrap.cpp" />
     <ClCompile Include="GameplayScreen.cpp" />
+    <ClCompile Include="MainMenuScreen.cpp" />
     <ClCompile Include="PostProcessing\CombineFilter.cpp" />
     <ClCompile Include="ContactListener.cpp" />
     <ClCompile Include="Entity.cpp" />
@@ -139,6 +140,7 @@ cmd /c xcopy ".\Levels" "$(TargetDir)Levels\" /y /S</Command>
   <ItemGroup>
     <ClInclude Include="b2GLDebugDraw.h" />
     <ClInclude Include="GameplayScreen.h" />
+    <ClInclude Include="MainMenuScreen.h" />
     <ClInclude Include="PostProcessing\CombineFilter.h" />
     <ClInclude Include="ContactListener.h" />
     <ClInclude Include="Entity.h" />
@@ -157,6 +159,7 @@ cmd /c xcopy ".\Levels" "$(TargetDir)Levels\" /y /S</Command>
     <ClInclude Include="ProjectileManager.h" />
     <ClInclude Include="ProjectileSpawner.h" />
     <ClInclude Include="SceneRenderer.h" />
+    <ClInclude Include="ScreenIndices.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="PostProcessing\VerticalBlur.h" />
   </ItemGroup>
