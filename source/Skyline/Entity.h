@@ -12,18 +12,20 @@ class Entity {
   public:
     Entity();
     Entity(int textureId, glm::vec4 uv, float width, float height, glm::vec2 position);
-    Entity(int textureId, glm::vec4 uv, float width, float height, glm::vec2 position, bool scaleToWorld);
+    Entity(int textureId, glm::vec4 uv, float width, float height, glm::vec2 position, float angle);
+    Entity(int textureId, glm::vec4 uv, float width, float height, glm::vec2 position, float angle, bool scaleToWorld);
     ~Entity();
 
     virtual void draw();
     virtual bool update(float deltaTime);
 
+    void setId(unsigned int id) { _id = id; }
     void setPosition(const glm::vec2& position);
     void setPreviousPosition(const glm::vec2& position);
     void setDirection(const glm::vec2& direction);
     void setVelocity(const glm::vec2& velocity);
     void setColor(const Ess2D::ColorRGBA8& color) { _color = color; }
-    void setId(unsigned int id) { _id = id; }
+    void setAngle(float angle);
 
     unsigned int getId() { return _id; }
     virtual int getType() { return ET_ENTITY; }
@@ -62,6 +64,7 @@ class Entity {
     glm::vec2 _previousPosition;
     glm::vec2 _direction = glm::vec2(0.0f);
     glm::vec2 _velocity = glm::vec2(0.0f);
+    float _angle;
     
     GLuint _textureId;
     glm::vec4 _uv;

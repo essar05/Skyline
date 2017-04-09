@@ -77,6 +77,12 @@ namespace Ess2D {
     return window;
   }
 
+  CEGUI::Window* GUI::loadLayout(const std::string& layout, const std::string& name) {
+    CEGUI::Window *newWindow = CEGUI::WindowManager::getSingleton().loadLayoutFromFile("GameMenu.layout");
+    _root->addChild(newWindow);
+    return newWindow;
+  }
+
   void GUI::setWidgetDestRect(CEGUI::Window* widget, const glm::vec4& destRectPercentage, const glm::vec4& destRectPixel) {
     widget->setPosition(CEGUI::UVector2(CEGUI::UDim(destRectPercentage.x, destRectPixel.x), CEGUI::UDim(destRectPercentage.y, destRectPixel.y)));
     widget->setSize(CEGUI::USize(CEGUI::UDim(destRectPercentage.z, destRectPixel.z), CEGUI::UDim(destRectPercentage.w, destRectPixel.w)));

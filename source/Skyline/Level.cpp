@@ -296,6 +296,23 @@ void Level::addDecoration(LevelDecoration* decoration, int layer) {
   std::stable_sort(it->second.begin(), it->second.end(), compareDecorationYPosition);
 }
 
+LevelSection* Level::getSection(int index) {
+  auto it = _sections.begin();
+  int k = 0;
+  while(it != _sections.end()) {
+    if(k == index) {
+      return it->second;
+    }
+    
+    if(k > index) {
+      throw Ess2D::ERuntimeException("Level Section index out of bounds");
+    }
+
+    k++;
+    it++;
+  }
+}
+
 void Level::setBackground(Ess2D::Texture2D* texture) {
   _backgroundId = texture->_id;
 

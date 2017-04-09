@@ -32,6 +32,8 @@ class Level {
     void smoothStates();
     void resetSmoothStates();
 
+    LevelSection* getSection(int index);
+
     void setBackground(Ess2D::Texture2D* texture);
 
     b2World* getWorld();

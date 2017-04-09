@@ -4,8 +4,8 @@
 Projectile::Projectile() {
 }
 
-Projectile::Projectile(int textureId, glm::vec4 uv, float width, float height, glm::vec2 position) : Entity(textureId, uv, width, height, position, false) {}
-Projectile::Projectile(int textureId, glm::vec4 uv, float width, float height, glm::vec2 position, int source, float damage) : Projectile(textureId, uv, width, height, position) {
+Projectile::Projectile(int textureId, glm::vec4 uv, float width, float height, glm::vec2 position, float angle) : Entity(textureId, uv, width, height, position, angle, false) {}
+Projectile::Projectile(int textureId, glm::vec4 uv, float width, float height, glm::vec2 position, float angle, int source, float damage) : Projectile(textureId, uv, width, height, position, angle) {
   _source = source; 
   _damage = damage;
 
@@ -40,7 +40,7 @@ void Projectile::draw() {
     Ess2D::SpriteBatch* spriteBatch = _game->getGameplayScreen()->getSpriteBatch();
     Ess2D::TextureAtlas* textureAtlas = _animationManager->getCurrent()->getTextureAtlas();
     std::string currentAnimationFrame = _animationManager->getCurrent()->getCurrentFrame(); 
-    spriteBatch->draw(glm::vec4(screenPosition.x - _width / 2, screenPosition.y - _height / 2, _width, _height), textureAtlas->getUV(currentAnimationFrame), textureAtlas->getTextureId(), _color, (float) _depth);
+    spriteBatch->draw(glm::vec4(screenPosition.x - _width / 2, screenPosition.y - _height / 2, _width, _height), textureAtlas->getUV(currentAnimationFrame), textureAtlas->getTextureId(), _color, (float) _depth, _body->GetAngle());
   }
 }
 

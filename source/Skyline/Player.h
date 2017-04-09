@@ -11,6 +11,7 @@ class Player : public Entity {
     ~Player();
 
     void setIsFiring(bool isFiring) { _isFiring = isFiring; }
+    void setDefaultVelocity(glm::vec2 velocity) { _defaultVelocity = velocity; }
     void draw();
     bool update(float deltaTime) override;
     int getType() override { return ET_PLAYER; }

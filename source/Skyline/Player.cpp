@@ -195,8 +195,8 @@ bool Player::update(float deltaTime) {
 
   correctProjectileSpawnersPosition(_animationManager->getCurrent()->getCurrentFrame());
 
-  int projectilesSpawnedLeft = _projectileSpawnerLeft.update(deltaTime, _isFiring, Utils::toVec2(_body->GetPosition()) + _projectileSpawnerLeftPosition + glm::vec2(0.0f, 1.0f), glm::vec2(0.0f, 50.0f));
-  int projectilesSpawnedRight = _projectileSpawnerRight.update(deltaTime, _isFiring, Utils::toVec2(_body->GetPosition()) + _projectileSpawnerRightPosition + glm::vec2(0.0f, 1.0f), glm::vec2(0.0f, 50.0f));
+  int projectilesSpawnedLeft = _projectileSpawnerLeft.update(deltaTime, _isFiring, Utils::toVec2(_body->GetPosition()) + _projectileSpawnerLeftPosition + glm::vec2(0.0f, 1.0f), glm::vec2(0.0f, 50.0f), _body->GetAngle());
+  int projectilesSpawnedRight = _projectileSpawnerRight.update(deltaTime, _isFiring, Utils::toVec2(_body->GetPosition()) + _projectileSpawnerRightPosition + glm::vec2(0.0f, 1.0f), glm::vec2(0.0f, 50.0f), _body->GetAngle());
 
   if(projectilesSpawnedLeft > 0) {
     _muzzleLeftAnimationManager->play("MUZZLE");
@@ -225,7 +225,7 @@ void Player::draw() {
 
     float width = textureAtlas->getSize(currentAnimationFrame).x * _horizontalScaleFactor;
 
-    spriteBatch->draw(glm::vec4(screenPosition.x - width / 2, screenPosition.y - _height / 2, width, _height), textureAtlas->getUV(currentAnimationFrame), textureAtlas->getTextureId(), _color, (float)_depth);
+    spriteBatch->draw(glm::vec4(screenPosition.x - width / 2, screenPosition.y - _height / 2, width, _height), textureAtlas->getUV(currentAnimationFrame), textureAtlas->getTextureId(), _color, (float)_depth, _body->GetAngle());
 
     Ess2D::TextureAtlas* thrusterTextureAtlas = _thrusterAnimationManager->getCurrent()->getTextureAtlas();
     std::string thrusterCurrentAnimationFrame = _thrusterAnimationManager->getCurrent()->getCurrentFrame();

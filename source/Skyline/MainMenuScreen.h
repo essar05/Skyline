@@ -35,5 +35,6 @@ class MainMenuScreen : public Ess2D::IGameScreen {
 
     Game* _game = nullptr;
     Ess2D::GUI _gui;
+
 };
 

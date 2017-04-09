@@ -20,11 +20,13 @@ void MainMenuScreen::build() {
   _gui.init("GUI");
   _gui.loadScheme("TaharezLook.scheme");
   _gui.loadScheme("AlfiskoSkin.scheme");
+  _gui.loadScheme("Generic.scheme");
+  _gui.loadScheme("GameMenu.scheme");
   _gui.setFont("DejaVuSans-10");
 
   _gui.setMouseCursor("TaharezLook/MouseArrow");
   _gui.showMouseCursor();
-
+  
   //create buttons
   CEGUI::PushButton* btn_startGame = static_cast<CEGUI::PushButton*> (
   _gui.createWidget("AlfiskoSkin/Button", glm::vec4(0.45f, 0.40f, 0.1f, 0.05f), glm::vec4(0.0f), "Btn_StartGame")
@@ -40,7 +42,7 @@ void MainMenuScreen::build() {
 
   CEGUI::PushButton* btn_exit = static_cast<CEGUI::PushButton*> (
     _gui.createWidget("AlfiskoSkin/Button", glm::vec4(0.45f, 0.5f, 0.1f, 0.05f), glm::vec4(0.0f), "Btn_Exit")
-    );
+  );
   btn_exit->setWantsMultiClickEvents(false);
   btn_exit->setText("Exit");
 
@@ -48,6 +50,8 @@ void MainMenuScreen::build() {
   btn_startGame->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&MainMenuScreen::onBtnStartGameClicked, this));
   btn_credits->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&MainMenuScreen::onBtnCreditsClicked, this));
   btn_exit->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&MainMenuScreen::onBtnExitClicked, this));
+
+  //_gui.loadLayout("GameMenu.layout");
 }
 
 void MainMenuScreen::destroy() {

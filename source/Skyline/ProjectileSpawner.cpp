@@ -17,7 +17,7 @@ ProjectileSpawner::~ProjectileSpawner() {
 
 }
 
-int ProjectileSpawner::update(float deltaTime, bool isFiring, const glm::vec2& position, const glm::vec2& velocity) {
+int ProjectileSpawner::update(float deltaTime, bool isFiring, const glm::vec2& position, const glm::vec2& velocity, float angle) {
   if(isFiring || _fireRateCounter < 1) {
     _fireRateCounter += _fireRate * deltaTime;
   }
@@ -25,7 +25,7 @@ int ProjectileSpawner::update(float deltaTime, bool isFiring, const glm::vec2& p
   int projectileCount = (int)floor(_fireRateCounter);
 
   if (isFiring && projectileCount > 0) {
-    spawn(projectileCount, position, velocity);
+    spawn(projectileCount, position, velocity, angle);
     _fireRateCounter -= projectileCount;
   }
 
@@ -40,12 +40,12 @@ int ProjectileSpawner::update(float deltaTime, bool isFiring, const glm::vec2& p
   return projectileCount;
 }
 
-void ProjectileSpawner::spawn(int projectileCount, const glm::vec2& position, const glm::vec2& velocity) {
+void ProjectileSpawner::spawn(int projectileCount, const glm::vec2& position, const glm::vec2& velocity, float angle) {
   Game* gameInstance = Game::GetInstance();
 
   for(int i = 0; i < projectileCount; i++) {
     Projectile* projectile = new Projectile(0, glm::vec4(0.0f, 0.0f, 1.0f, 1.0f),
-                                            _projectileWidth, _projectileHeight, glm::vec2(position.x, position.y), _source, _projectileDamage);
+                                            _projectileWidth, _projectileHeight, glm::vec2(position.x, position.y), angle, _source, _projectileDamage);
     projectile->createB2Data();
     projectile->setVelocity(velocity);
     projectile->spawn();

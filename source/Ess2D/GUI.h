@@ -18,6 +18,8 @@ namespace Ess2D {
       void loadScheme(const std::string& schemeFile);
       void setFont(const std::string& fontFile);
       CEGUI::Window* createWidget(const std::string& type, const glm::vec4& destRectPercentage, const glm::vec4& destRectPixel, const std::string& name = "" );
+      CEGUI::Window* loadLayout(const std::string& layout, const std::string& name = "");
+
 
       void setMouseCursor(const std::string& imageFile);
       void showMouseCursor();
@@ -29,6 +31,7 @@ namespace Ess2D {
 
       static CEGUI::OpenGL3Renderer* getRenderer() { return _renderer; }
       const CEGUI::GUIContext* getContext() { return _context; }
+      CEGUI::Window* getRootWindow() { return _root; }
 
     private:
       static CEGUI::OpenGL3Renderer* _renderer;

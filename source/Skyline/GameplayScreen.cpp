@@ -46,6 +46,8 @@ void GameplayScreen::build() {
 
   _level = new Level();
   _level->load("intro");
+
+  initUI();
 }
 
 void GameplayScreen::destroy() {
@@ -79,6 +81,8 @@ void GameplayScreen::draw() {
 
   //render the FBO color texture.
   _fboRenderer->render(_postProcessing->getResult());
+
+  _gui.draw();
 }
 
 void GameplayScreen::update(float deltaTime, int simulationSteps) {
@@ -87,7 +91,11 @@ void GameplayScreen::update(float deltaTime, int simulationSteps) {
     _level->resetSmoothStates();
 
     if(!_isPaused) {
-      _camera.setFuturePosition(_camera.getFuturePosition() + glm::vec2(0.0f, this->_scrollSpeed * _camera.getZoom()) * deltaTime);
+      if(!_isFreezed) {
+        _camera.setFuturePosition(_camera.getFuturePosition() + glm::vec2(0.0f, this->_scrollSpeed * _camera.getZoom()) * deltaTime);
+      } else {
+        _level->getPlayer()->setDefaultVelocity(glm::vec2(0.0f, 0.0f));
+      }
 
       _projectileManager->update(deltaTime);
       _level->update(deltaTime);
@@ -95,12 +103,20 @@ void GameplayScreen::update(float deltaTime, int simulationSteps) {
       _projectileManager->deleteQueuedProjectiles();
     }
   }
-  
-  _camera.smoothState(_game->getTimestepAccumulator()->getAccumulatorRatio(), _isPaused);
+
+  _camera.smoothState(_game->getTimestepAccumulator()->getAccumulatorRatio(), _isPaused || _isFreezed);
   _level->smoothStates();
   _level->getWorld()->ClearForces();
 
   _camera.update();
+
+
+  static int frameCounter = 0;
+  frameCounter++;
+  if(frameCounter == 20) {
+    _gui.getRootWindow()->getChild("label_FPSCounter")->setText("FPS: " + std::to_string(_game->getFPS()).substr(0, 6));
+    frameCounter = 0;
+  }
 }
 
 void GameplayScreen::processInput(float deltaTime) {
@@ -112,8 +128,7 @@ void GameplayScreen::processInput(float deltaTime) {
 
   while(SDL_PollEvent(&event) != 0) {
     _game->onSDLEvent(event);
-
-    //_gui.onSDLEvent(event);
+    _gui.onSDLEvent(event);
   }
 
   Ess2D::InputManager* inputManager = _game->getInputManager();
@@ -171,7 +186,68 @@ void GameplayScreen::processInput(float deltaTime) {
   } else {
     _level->getPlayer()->setIsFiring(false);
   }
+}
 
+bool GameplayScreen::onBtnSpawnEntityClicked(const CEGUI::EventArgs &e) {
+  float objectX = 500.f;
+  float objectY = _camera.getPosition().y + 500.0f; //translate on y axis by _height because the initial coordinates are relative to the section bounds
+                                                                                          //create the entity, add it to the manager and then add it to the section.
+  Ess2D::TextureAtlas* atlas = _textureCache.getAtlas("Textures/spritesheet.png", "Textures/sprites.json");
+  Entity* entity = new Entity(atlas->getTextureId(), atlas->getUV("enemy"), 100.0f, 115.0f, glm::vec2(objectX, objectY), 180.0f);
+  entity->createB2Data();
+  entity->spawn();
+
+  _level->getSection(0)->addObject(_entityManager->addEntity(entity));
+  return true;
+}
+
+bool GameplayScreen::onBtnExitGameClicked(const CEGUI::EventArgs &e) {
+  _currentState = Ess2D::ScreenState::EXIT_APPLICATION;
+  return true;
+}
+
+bool GameplayScreen::onBtnFreezeGameClicked(const CEGUI::EventArgs &e) {
+  _isFreezed = !_isFreezed;
+  return true;
+}
+
+void GameplayScreen::initUI() {
+  _gui.init("GUI");
+  _gui.loadScheme("TaharezLook.scheme");
+  _gui.loadScheme("AlfiskoSkin.scheme");
+  _gui.loadScheme("Generic.scheme");
+  _gui.loadScheme("GameMenu.scheme");
+  _gui.setFont("DejaVuSans-10");
+
+  _gui.setMouseCursor("TaharezLook/MouseArrow");
+  _gui.showMouseCursor();
+
+  CEGUI::PushButton* btn_spawnEntity = static_cast<CEGUI::PushButton*> (
+    _gui.createWidget("AlfiskoSkin/Button", glm::vec4(1.0f - 0.09f, 0.0f, 0.09f, 0.04f), glm::vec4(0.0f), "Btn_SpawnEntity")
+  );
+  btn_spawnEntity->setWantsMultiClickEvents(false);
+  btn_spawnEntity->setText("Spawn Entity");
+  btn_spawnEntity->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&GameplayScreen::onBtnSpawnEntityClicked, this));
+
+  CEGUI::PushButton* btn_exitGame = static_cast<CEGUI::PushButton*> (
+    _gui.createWidget("AlfiskoSkin/Button", glm::vec4(1.0f - 0.09f, 1.0f - 0.0f - 0.04f - 0.04f, 0.09f, 0.04f), glm::vec4(0.0f), "Btn_ExitGame")
+  );
+  btn_exitGame->setWantsMultiClickEvents(false);
+  btn_exitGame->setText("Exit");
+  btn_exitGame->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&GameplayScreen::onBtnExitGameClicked, this));
+
+  CEGUI::PushButton* btn_freezeGame = static_cast<CEGUI::PushButton*> (
+    _gui.createWidget("AlfiskoSkin/Button", glm::vec4(1.0f - 0.09f, 1.0f - 0.04f - 0.04f - 0.04f, 0.09f, 0.04f), glm::vec4(0.0f), "btn_freezeGame")
+  );
+  btn_freezeGame->setWantsMultiClickEvents(false);
+  btn_freezeGame->setText("Freeze");
+  btn_freezeGame->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&GameplayScreen::onBtnFreezeGameClicked, this));
+  
+  CEGUI::DefaultWindow* label_FPSCounter = static_cast<CEGUI::DefaultWindow*> (
+    _gui.createWidget("AlfiskoSkin/Label", glm::vec4(0.0f, 0.0f, 0.09f, 0.04f), glm::vec4(0.0f), "label_FPSCounter")
+  );
+  label_FPSCounter->setText("FPS: ");
+  label_FPSCounter->setProperty("HorzFormatting", "LeftAligned");
 }
 
 Ess2D::SpriteBatch* GameplayScreen::getSpriteBatch() { return &_spriteBatch; }

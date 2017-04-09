@@ -96,7 +96,6 @@ namespace Ess2D {
 
   void IGame::update(float deltaTime, int simulationSteps) {
     if(_currentScreen) {
-      std::cout << "Asd" << std::endl;
       switch(_currentScreen->getState()) {
         case ScreenState::RUNNING:
           _currentScreen->update(deltaTime, simulationSteps);

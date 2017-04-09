@@ -28,8 +28,8 @@ namespace Ess2D {
   }
 
   //pass by reference for optimization and const to make sure they're not changed;
-  void SpriteBatch::draw(const glm::vec4& destRect, const glm::vec4& uvRect, GLuint textureId, const ColorRGBA8& color, float zDepth) {
-    _glyphs.emplace_back(destRect, uvRect, textureId, color, zDepth);
+  void SpriteBatch::draw(const glm::vec4& destRect, const glm::vec4& uvRect, GLuint textureId, const ColorRGBA8& color, float zDepth, float angle) {
+    _glyphs.emplace_back(destRect, uvRect, textureId, color, zDepth, angle);
   }
 
   void SpriteBatch::render() {
