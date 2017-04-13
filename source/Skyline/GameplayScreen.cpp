@@ -1,5 +1,6 @@
 #include "GameplayScreen.h"
 #include <SDL_events.h>
+#include "SpaceshipA.h"
 
 GameplayScreen::GameplayScreen() {
   _game = Game::GetInstance();
@@ -92,9 +93,14 @@ void GameplayScreen::update(float deltaTime, int simulationSteps) {
 
     if(!_isPaused) {
       if(!_isFreezed) {
+        if(_level->getPlayer()->getDefaultVelocity().y == 0.0f) {
+          _level->getPlayer()->setDefaultVelocity(glm::vec2(0.0f, 10.0f));
+        }
         _camera.setFuturePosition(_camera.getFuturePosition() + glm::vec2(0.0f, this->_scrollSpeed * _camera.getZoom()) * deltaTime);
       } else {
-        _level->getPlayer()->setDefaultVelocity(glm::vec2(0.0f, 0.0f));
+        if(_level->getPlayer()->getDefaultVelocity().y > 0.0f) {
+          _level->getPlayer()->setDefaultVelocity(glm::vec2(0.0f, 0.0f));
+        }
       }
 
       _projectileManager->update(deltaTime);
@@ -190,10 +196,9 @@ void GameplayScreen::processInput(float deltaTime) {
 
 bool GameplayScreen::onBtnSpawnEntityClicked(const CEGUI::EventArgs &e) {
   float objectX = 500.f;
-  float objectY = _camera.getPosition().y + 500.0f; //translate on y axis by _height because the initial coordinates are relative to the section bounds
-                                                                                          //create the entity, add it to the manager and then add it to the section.
+  float objectY = _camera.getScreenScalar(_camera.getPosition().y) / _camera.getZoom() + 0.0f; 
   Ess2D::TextureAtlas* atlas = _textureCache.getAtlas("Textures/spritesheet.png", "Textures/sprites.json");
-  Entity* entity = new Entity(atlas->getTextureId(), atlas->getUV("enemy"), 100.0f, 115.0f, glm::vec2(objectX, objectY), 180.0f);
+  Entity* entity = new SpaceshipA(0, glm::vec4(), 100.0f, 115.0f, glm::vec2(objectX, objectY), 180.0f);
   entity->createB2Data();
   entity->spawn();
 

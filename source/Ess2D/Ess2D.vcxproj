@@ -48,7 +48,7 @@
     <IntDir>$(SolutionDir)..\build\obj\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)..\lib\SDL2\include\;$(SolutionDir)..\lib\SDL2_Image\include\;$(SolutionDir)..\lib\glew\include\;$(SolutionDir)..\lib\freeglut\include\;$(SolutionDir)..\lib\glm\;$(SolutionDir)..\lib\freetype\include\;$(SolutionDir)..\lib\FMOD\lowlevel\include\;$(SolutionDir)..\lib\FMOD\studio\include\;$(SolutionDir)..\lib\rapidjson\;$(SolutionDir)Ess2D\Errors\;$(IncludePath)</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)..\lib\SDL2\include\;$(SolutionDir)..\lib\SDL2_Image\include\;$(SolutionDir)..\lib\glew\include\;$(SolutionDir)..\lib\freeglut\include\;$(SolutionDir)..\lib\glm\;$(SolutionDir)..\lib\freetype\include\;$(SolutionDir)..\lib\FMOD\lowlevel\include\;$(SolutionDir)..\lib\FMOD\studio\include\;$(SolutionDir)..\lib\rapidjson\;$(SolutionDir)..\lib\CEGUI\include\;$(SolutionDir)Ess2D\Errors\;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)..\build\$(Configuration)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)..\build\obj\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
@@ -94,7 +94,7 @@
     </Link>
     <Lib>
       <AdditionalDependencies>freeglut.lib;glew32.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;opengl32.lib;freetype255d.lib;Box2D.lib;fmod_vc.lib;fmodstudio_vc.lib;CEGUIBase-0.lib;CEGUIOpenGLRenderer-0.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\lib\freetype\lib\;$(SolutionDir)..\lib\freeglut\lib\;$(SolutionDir)..\lib\glew\lib\;$(SolutionDir)..\lib\SDL2_Image\lib\;$(SolutionDir)..\lib\box2d\lib\Release\;$(SolutionDir)..\lib\SDL2\lib\;$(SolutionDir)..\lib\FMOD\lowlevel\lib\;$(SolutionDir)..\lib\FMOD\studio\lib\;$(SolutionDir)..\lib\CEGUI\lib\$(Configuration);$(LibraryPath);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\lib\freetype\lib\;$(SolutionDir)..\lib\freeglut\lib\;$(SolutionDir)..\lib\glew\lib\;$(SolutionDir)..\lib\SDL2_Image\lib\;$(SolutionDir)..\lib\box2d\lib\Release\;$(SolutionDir)..\lib\SDL2\lib\;$(SolutionDir)..\lib\FMOD\lowlevel\lib\;$(SolutionDir)..\lib\FMOD\studio\lib\;$(SolutionDir)..\lib\CEGUI\lib\$(Configuration)\;$(LibraryPath);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>

@@ -20,7 +20,6 @@ namespace Ess2D {
       CEGUI::Window* createWidget(const std::string& type, const glm::vec4& destRectPercentage, const glm::vec4& destRectPixel, const std::string& name = "" );
       CEGUI::Window* loadLayout(const std::string& layout, const std::string& name = "");
 
-
       void setMouseCursor(const std::string& imageFile);
       void showMouseCursor();
       void hideMouseCursor();
