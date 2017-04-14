@@ -37,8 +37,8 @@ class SpaceshipA : public Entity {
 
     float _horizontalScaleFactor = 1.0f;
 
-    float _thrusterHeight = 30.0f;
-    float _thrusterWidth = 30.0f;
+    float _thrusterHeight = 50.0f;
+    float _thrusterWidth = 40.2f;
 
 };
 

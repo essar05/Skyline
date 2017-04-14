@@ -1,13 +1,16 @@
 #include "SpaceshipA.h"
+#include "Utils.h"
 
 SpaceshipA::SpaceshipA() : SpaceshipA(0, glm::vec4(0.0f), 0.0f, 0.0f, glm::vec2(0.0f, 0.0f), 0.0f) { }
 
 SpaceshipA::SpaceshipA(int textureId, glm::vec4 uv, float width, float height, glm::vec2 position, float angle) : Entity(textureId, uv, width, height, position, angle) {
   initAnimations();
+  initThruster();
 }
 
 SpaceshipA::~SpaceshipA() {
   delete _animationManager;
+  delete _thrusterAnimationManager;
 }
 
 bool SpaceshipA::update(float deltaTime) {
@@ -30,6 +33,7 @@ bool SpaceshipA::update(float deltaTime) {
   }
 
   _animationManager->update(deltaTime);
+  _thrusterAnimationManager->update(deltaTime);
 
   return true;
 }
@@ -40,6 +44,8 @@ void SpaceshipA::draw() {
   b2Vec2 bodyPosition = this->_body->GetPosition();
   glm::vec2 screenPosition = _position;
 
+  //SPACESHIP
+
   Ess2D::SpriteBatch* spriteBatch = _game->getGameplayScreen()->getSpriteBatch();
   Ess2D::TextureAtlas* textureAtlas = _animationManager->getCurrent()->getTextureAtlas();
   std::string currentAnimationFrame = _animationManager->getCurrent()->getCurrentFrame();
@@ -47,6 +53,15 @@ void SpaceshipA::draw() {
   float width = textureAtlas->getSize(currentAnimationFrame).x * _horizontalScaleFactor;
 
   spriteBatch->draw(glm::vec4(screenPosition.x - width / 2, screenPosition.y - _height / 2, width, _height), textureAtlas->getUV(currentAnimationFrame), textureAtlas->getTextureId(), _color, (float)_depth, _body->GetAngle());
+
+  //THRUSTER
+  glm::vec2 thrusterPosition = glm::vec2(screenPosition.x, screenPosition.y - _height / 2 - _thrusterHeight / 2);
+  thrusterPosition = Utils::rotatePoint(thrusterPosition, screenPosition, _body->GetAngle());
+
+  Ess2D::TextureAtlas* thrusterTextureAtlas = _thrusterAnimationManager->getCurrent()->getTextureAtlas();
+  std::string thrusterCurrentAnimationFrame = _thrusterAnimationManager->getCurrent()->getCurrentFrame();
+
+  spriteBatch->draw(glm::vec4(thrusterPosition.x - _thrusterWidth / 2, thrusterPosition.y - _thrusterHeight / 2, _thrusterWidth, _thrusterHeight), thrusterTextureAtlas->getUV(thrusterCurrentAnimationFrame), thrusterTextureAtlas->getTextureId(), _color, (float)_depth + 1, _body->GetAngle());
 }
 
 void SpaceshipA::initAnimations() {
@@ -79,7 +94,25 @@ void SpaceshipA::initAnimations() {
 }
 
 void SpaceshipA::initThruster() {
+  Ess2D::TextureAtlas * thrusterAtlas = _game->getGameplayScreen()->getTextureCache()->getAtlas("Textures/thruster_red.png", "Textures/thruster_red.json");
 
+  _thrusterAnimationManager = new Ess2D::AnimationManager();
+
+  Ess2D::Animation* thrusterIdleAnim = _thrusterAnimationManager->add("IDLE");
+  thrusterIdleAnim->setPlaybackRate(2.5f / 60.0f);
+  thrusterIdleAnim->setTextureAtlas(thrusterAtlas);
+  thrusterIdleAnim->setRepeat(true);
+  std::vector<std::string> thrusterAnimationFrames;
+  for(int i = 0; i <= 10; i++) {
+    thrusterAnimationFrames.push_back("thurstflame_red_" + std::to_string(i));
+  }
+
+  thrusterIdleAnim->setFrames(thrusterAnimationFrames);
+
+  _thrusterAnimationManager->play("IDLE");
+
+  _thrusterWidth = _game->getGameplayScreen()->getMainCamera()->getWorldScalar(_thrusterWidth);
+  _thrusterHeight = _game->getGameplayScreen()->getMainCamera()->getWorldScalar(_thrusterHeight);
 }
 
 void SpaceshipA::initProjectileSpawner() {

@@ -269,7 +269,8 @@ void Player::correctProjectileSpawnersPosition(const std::string& currentPlayerF
 }
 
 void Player::contact(Entity* e) {
-  if(e->getType() == ET_ENTITY) {
+  //not exactly elegant, but oh well.
+  if(e->getType() == ET_ENTITY || e->getType() == ET_SPACESHIP_A || e->getType() == ET_SPACESHIP_B || e->getType() == ET_SPACESHIP_C || e->getType() == ET_SPACESHIP_D) {
     applyDamage(e->getCollisionDamage());
     _game->getGameplayScreen()->getEntityManager()->deleteEntity(e->getId(), true);
   }

@@ -22,7 +22,7 @@ LevelSection::~LevelSection() {
   }
 }
 
-void LevelSection::update() {
+void LevelSection::update(float deltaTime) {
   EntityManager* entityManager = _game->getGameplayScreen()->getEntityManager();
   Level* level = _game->getGameplayScreen()->getLevel();
   Entity* entity;
@@ -50,6 +50,8 @@ void LevelSection::update() {
     if(!entity->isSpawned()) {
       entity->spawn();
     }
+
+    entity->update(deltaTime);
 
     k++;
   }

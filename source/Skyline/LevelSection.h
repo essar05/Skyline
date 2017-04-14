@@ -18,7 +18,7 @@ class LevelSection {
 
     void draw(float x, float y);
     void addObject(unsigned int objectId);
-    void update();
+    void update(float deltaTime);
     
     static bool compareObjectYPosition(unsigned int a, unsigned int b);
 
