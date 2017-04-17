@@ -21,7 +21,7 @@ class SpaceshipA : public Entity {
   private:
     void initAnimations();
     void initThruster();
-    void initProjectileSpawner();
+    void initProjectileSpawners();
 
     float _fireRate = 8.0f;
     bool _isFiring = false;
@@ -40,5 +40,6 @@ class SpaceshipA : public Entity {
     float _thrusterHeight = 50.0f;
     float _thrusterWidth = 40.2f;
 
+    glm::vec2 _muzzleSize = glm::vec2(0.6f, 0.6f);
 };
 

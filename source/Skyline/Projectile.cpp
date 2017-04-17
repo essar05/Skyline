@@ -40,7 +40,7 @@ void Projectile::draw() {
     Ess2D::SpriteBatch* spriteBatch = _game->getGameplayScreen()->getSpriteBatch();
     Ess2D::TextureAtlas* textureAtlas = _animationManager->getCurrent()->getTextureAtlas();
     std::string currentAnimationFrame = _animationManager->getCurrent()->getCurrentFrame(); 
-    spriteBatch->draw(glm::vec4(screenPosition.x - _width / 2, screenPosition.y - _height / 2, _width, _height), textureAtlas->getUV(currentAnimationFrame), textureAtlas->getTextureId(), _color, (float) _depth, _body->GetAngle());
+    spriteBatch->draw(glm::vec4(screenPosition.x - _width / 2, screenPosition.y - _height / 2, _width, _height), textureAtlas->getUV(currentAnimationFrame), textureAtlas->getTextureId(), _color, (float) _depth, _angle);
   }
 }
 
