@@ -45,7 +45,11 @@ void Projectile::draw() {
 }
 
 void Projectile::contact(Entity* e) {
-  if(e->getType() == ET_ENTITY && _source == ET_PLAYER) { //todo change to ET_DAMAGE
+  if(
+    (e->getType() == ET_ENTITY || e->getType() == ET_SPACESHIP_A || e->getType() == ET_SPACESHIP_B ||
+      e->getType() == ET_SPACESHIP_C || e->getType() == ET_SPACESHIP_D)
+    && _source == ET_PLAYER
+  ) { //todo change to ET_DAMAGE
     e->applyDamage(this->getDamage());
     _game->getGameplayScreen()->getProjectileManager()->deleteProjectile(this->getId(), true);
   }

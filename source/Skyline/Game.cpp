@@ -22,7 +22,7 @@ void Game::addScreens() {
 
   _screenManager->addScreen(_mainMenuScreen);
   _screenManager->addScreen(_gameplayScreen);
-  _screenManager->setScreen(_mainMenuScreen->getIndex());
+  _screenManager->setScreen(_gameplayScreen->getIndex());
 }
 
 void Game::onInit() {

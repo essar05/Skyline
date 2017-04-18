@@ -129,6 +129,9 @@ cmd /c xcopy ".\Levels" "$(TargetDir)Levels\" /y /S</Command>
     <ClCompile Include="ProjectileSpawner.cpp" />
     <ClCompile Include="SceneRenderer.cpp" />
     <ClCompile Include="SpaceshipA.cpp" />
+    <ClCompile Include="SpaceshipB.cpp" />
+    <ClCompile Include="SpaceshipC.cpp" />
+    <ClCompile Include="SpaceshipD.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="PostProcessing\VerticalBlur.cpp" />
   </ItemGroup>
@@ -162,6 +165,9 @@ cmd /c xcopy ".\Levels" "$(TargetDir)Levels\" /y /S</Command>
     <ClInclude Include="SceneRenderer.h" />
     <ClInclude Include="ScreenIndices.h" />
     <ClInclude Include="SpaceshipA.h" />
+    <ClInclude Include="SpaceshipB.h" />
+    <ClInclude Include="SpaceshipC.h" />
+    <ClInclude Include="SpaceshipD.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="PostProcessing\VerticalBlur.h" />
   </ItemGroup>

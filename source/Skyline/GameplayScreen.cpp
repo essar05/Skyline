@@ -1,6 +1,6 @@
 #include "GameplayScreen.h"
 #include <SDL_events.h>
-#include "SpaceshipA.h"
+#include "SpaceshipD.h"
 
 GameplayScreen::GameplayScreen() {
   _game = Game::GetInstance();
@@ -196,9 +196,8 @@ void GameplayScreen::processInput(float deltaTime) {
 
 bool GameplayScreen::onBtnSpawnEntityClicked(const CEGUI::EventArgs &e) {
   float objectX = 500.f;
-  float objectY = _camera.getScreenScalar(_camera.getPosition().y) / _camera.getZoom() + 0.0f; 
-  Ess2D::TextureAtlas* atlas = _textureCache.getAtlas("Textures/spritesheet.png", "Textures/sprites.json");
-  Entity* entity = new SpaceshipA(0, glm::vec4(), 100.0f, 115.0f, glm::vec2(objectX, objectY), 49.0f);
+  float objectY = _camera.getScreenScalar(_camera.getPosition().y) / _camera.getZoom() + 0.0f;
+  Entity* entity = new SpaceshipD(0, glm::vec4(), 80.0f, 100.0f, glm::vec2(objectX, objectY), 0.0f);
   entity->createB2Data();
   entity->spawn();
 
@@ -206,8 +205,7 @@ bool GameplayScreen::onBtnSpawnEntityClicked(const CEGUI::EventArgs &e) {
 
   objectX = 200.f;
   objectY = _camera.getScreenScalar(_camera.getPosition().y) / _camera.getZoom() + 0.0f;
-  atlas = _textureCache.getAtlas("Textures/spritesheet.png", "Textures/sprites.json");
-  entity = new SpaceshipA(0, glm::vec4(), 100.0f, 115.0f, glm::vec2(objectX, objectY), 180.0f);
+  entity = new SpaceshipD(0, glm::vec4(), 80.0f, 100.0f, glm::vec2(objectX, objectY), 180.0f);
   entity->createB2Data();
   entity->spawn();
 

@@ -239,7 +239,6 @@ void Level::load(std::string levelName) {
         float objectY = (float) document["sections"][i]["objects"][j]["y"].GetDouble() + camera->getScreenScalar(_height); //translate on y axis by _height because the initial coordinates are relative to the section bounds
         
         //create the entity, add it to the manager and then add it to the section.
-        Ess2D::TextureAtlas* atlas = textureCache->getAtlas("Textures/spritesheet.png", "Textures/sprites.json");
         Entity* e = new Entity(atlas->getTextureId(), atlas->getUV("enemy"), 100.0f, 115.0f, glm::vec2(objectX, objectY));
         e->createB2Data();
         section->addObject(entityManager->addEntity(e));

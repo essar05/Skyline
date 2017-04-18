@@ -1,56 +1,57 @@
-#include "SpaceshipA.h"
+#include "SpaceshipB.h"
 #include "Utils.h"
 
-SpaceshipA::SpaceshipA() : SpaceshipA(0, glm::vec4(0.0f), 0.0f, 0.0f, glm::vec2(0.0f, 0.0f), 0.0f) { }
+SpaceshipB::SpaceshipB(): SpaceshipB(0, glm::vec4(0.0f), 0.0f, 0.0f, glm::vec2(0.0f, 0.0f), 0.0f) { }
 
-SpaceshipA::SpaceshipA(int textureId, glm::vec4 uv, float width, float height, glm::vec2 position, float angle) : Entity(textureId, uv, width, height, position, angle) {
+SpaceshipB::SpaceshipB(int textureId, glm::vec4 uv, float width, float height, glm::vec2 position, float angle) : Entity(textureId, uv, width, height, position, angle) {
   initAnimations();
   initThruster();
   initProjectileSpawners();
 }
 
-SpaceshipA::~SpaceshipA() {
+SpaceshipB::~SpaceshipB() {
   delete _animationManager;
   delete _thrusterAnimationManager;
   delete _muzzleLeftAnimationManager;
   delete _muzzleRightAnimationManager;
 }
 
-bool SpaceshipA::update(float deltaTime) {
+bool SpaceshipB::update(float deltaTime) {
   Entity::update(deltaTime);
 
   //Determine animations
-  if (_direction.x < 0) {
+  if(_direction.x < 0) {
     _animationManager->play("BANK_LEFT");
-  } else if (_direction.x > 0) {
+  } else if(_direction.x > 0) {
     _animationManager->play("BANK_RIGHT");
   } else {
-    if (_animationManager->getCurrentAnimationName() != "IDLE") {
+    if(_animationManager->getCurrentAnimationName() != "IDLE") {
       Ess2D::Animation* currentAnimation = _animationManager->getCurrent();
-      if (!currentAnimation->isReversed()) {
+      if(!currentAnimation->isReversed()) {
         currentAnimation->setReverse(true);
-      } else if (currentAnimation->getCurrentFrameNumber() == 0) {
+      } else if(currentAnimation->getCurrentFrameNumber() == 0) {
         _animationManager->play("IDLE");
       }
     }
   }
 
   //Update Projectile Spawners
-  _projectileSpawnerLeftPosition = glm::vec2(-0.75f, 0.75f);
-  _projectileSpawnerRightPosition = glm::vec2(0.84f, 0.75f);
-
+  _projectileSpawnerLeftPosition = glm::vec2(-0.43f, 0.48f);
+  _projectileSpawnerRightPosition = glm::vec2(0.55f, 0.48f);
+  
   _projectileSpawnerLeftPosition = Utils::rotatePoint(_projectileSpawnerLeftPosition, glm::vec2(0.0f, 0.0f), _body->GetAngle());
   _projectileSpawnerRightPosition = Utils::rotatePoint(_projectileSpawnerRightPosition, glm::vec2(0.0f, 0.0f), _body->GetAngle());
 
   glm::vec2 projectileVelocity = glm::vec2(0.0f, 40.0f);
   projectileVelocity = Utils::rotatePoint(projectileVelocity, glm::vec2(0.0f, 0.0f), _body->GetAngle());
 
-  glm::vec2 positionCorrection = Utils::rotatePoint(glm::vec2(0.0f, 0.5f), glm::vec2(0.0f, 0.0f), _body->GetAngle());
+  glm::vec2 positionCorrectionLeft = Utils::rotatePoint(glm::vec2(-0.05f, 0.5f), glm::vec2(0.0f, 0.0f), _body->GetAngle());
+  glm::vec2 positionCorrectionRight = Utils::rotatePoint(glm::vec2(-0.05f, 0.5f), glm::vec2(0.0f, 0.0f), _body->GetAngle());
 
   //correctProjectileSpawnersPosition(_animationManager->getCurrent()->getCurrentFrame());
 
-  int projectilesSpawnedLeft = _projectileSpawnerLeft.update(deltaTime, _isFiring, Utils::toVec2(_body->GetPosition()) + _projectileSpawnerLeftPosition + positionCorrection, projectileVelocity, _body->GetAngle());
-  int projectilesSpawnedRight = _projectileSpawnerRight.update(deltaTime, _isFiring, Utils::toVec2(_body->GetPosition()) + _projectileSpawnerRightPosition + positionCorrection, projectileVelocity, _body->GetAngle());
+  int projectilesSpawnedLeft = _projectileSpawnerLeft.update(deltaTime, _isFiring, Utils::toVec2(_body->GetPosition()) + _projectileSpawnerLeftPosition + positionCorrectionLeft, projectileVelocity, _body->GetAngle());
+  int projectilesSpawnedRight = _projectileSpawnerRight.update(deltaTime, _isFiring, Utils::toVec2(_body->GetPosition()) + _projectileSpawnerRightPosition + positionCorrectionRight, projectileVelocity, _body->GetAngle());
 
   if(projectilesSpawnedLeft > 0) {
     _muzzleLeftAnimationManager->play("MUZZLE");
@@ -68,8 +69,8 @@ bool SpaceshipA::update(float deltaTime) {
   return true;
 }
 
-void SpaceshipA::draw() {
-  if (!_isSpawned) return;
+void SpaceshipB::draw() {
+  if(!_isSpawned) return;
 
   b2Vec2 bodyPosition = this->_body->GetPosition();
   glm::vec2 screenPosition = _position;
@@ -108,27 +109,27 @@ void SpaceshipA::draw() {
   }
 }
 
-void SpaceshipA::initAnimations() {
-  Ess2D::TextureAtlas * spaceshipAAtlas = _game->getGameplayScreen()->getTextureCache()->getAtlas("Textures/spaceshipA.png", "Textures/spaceshipA.json");
+void SpaceshipB::initAnimations() {
+  Ess2D::TextureAtlas * spaceshipAtlas = _game->getGameplayScreen()->getTextureCache()->getAtlas("Textures/spaceshipB.png", "Textures/spaceshipB.json");
 
   _animationManager = new Ess2D::AnimationManager();
 
   Ess2D::Animation* idleAnimation = _animationManager->add("IDLE");
   idleAnimation->setPlaybackRate(10.0f / 60.0f);
-  idleAnimation->setTextureAtlas(spaceshipAAtlas);
-  idleAnimation->setFrames(std::vector<std::string> {"spaceship_1_right_1"});
+  idleAnimation->setTextureAtlas(spaceshipAtlas);
+  idleAnimation->setFrames(std::vector<std::string> {"spaceship_2_right_1"});
 
   Ess2D::Animation* bankLeftAnimation = _animationManager->add("BANK_LEFT");
   bankLeftAnimation->setPlaybackRate(2.5f / 60.0f);
-  bankLeftAnimation->setTextureAtlas(spaceshipAAtlas);
+  bankLeftAnimation->setTextureAtlas(spaceshipAtlas);
   bankLeftAnimation->setRepeat(false);
-  bankLeftAnimation->setFrames(std::vector<std::string> {"spaceship_1_left_1", "spaceship_1_left_2", "spaceship_1_left_3", "spaceship_1_left_4", "spaceship_1_left_5", "spaceship_1_left_6", "spaceship_1_left_7", "spaceship_1_left_8", "spaceship_1_left_9", "spaceship_1_left_10"});
+  bankLeftAnimation->setFrames(std::vector<std::string> {"spaceship_2_left_1", "spaceship_2_left_2", "spaceship_2_left_3", "spaceship_2_left_4", "spaceship_2_left_5", "spaceship_2_left_6", "spaceship_2_left_7", "spaceship_2_left_8", "spaceship_2_left_9", "spaceship_2_left_10"});
 
   Ess2D::Animation* bankRightAnimation = _animationManager->add("BANK_RIGHT");
   bankRightAnimation->setPlaybackRate(2.5f / 60.f);
-  bankRightAnimation->setTextureAtlas(spaceshipAAtlas);
+  bankRightAnimation->setTextureAtlas(spaceshipAtlas);
   bankRightAnimation->setRepeat(false);
-  bankRightAnimation->setFrames(std::vector<std::string> {"spaceship_1_right_1", "spaceship_1_right_2", "spaceship_1_right_3", "spaceship_1_right_4", "spaceship_1_right_5", "spaceship_1_right_6", "spaceship_1_right_7", "spaceship_1_right_8", "spaceship_1_right_9", "spaceship_1_right_10"});
+  bankRightAnimation->setFrames(std::vector<std::string> {"spaceship_2_right_1", "spaceship_2_right_2", "spaceship_2_right_3", "spaceship_2_right_4", "spaceship_2_right_5", "spaceship_2_right_6", "spaceship_2_right_7", "spaceship_2_right_8", "spaceship_2_right_9", "spaceship_2_right_10"});
 
   _animationManager->play("IDLE");
 
@@ -137,7 +138,7 @@ void SpaceshipA::initAnimations() {
   _horizontalScaleFactor = _width / frameSize.x;
 }
 
-void SpaceshipA::initThruster() {
+void SpaceshipB::initThruster() {
   Ess2D::TextureAtlas * thrusterAtlas = _game->getGameplayScreen()->getTextureCache()->getAtlas("Textures/thruster_2.png", "Textures/thruster_2.json");
 
   _thrusterAnimationManager = new Ess2D::AnimationManager();
@@ -159,7 +160,7 @@ void SpaceshipA::initThruster() {
   _thrusterHeight = _game->getGameplayScreen()->getMainCamera()->getWorldScalar(_thrusterHeight);
 }
 
-void SpaceshipA::initProjectileSpawners() {
+void SpaceshipB::initProjectileSpawners() {
   _projectileSpawnerLeft = ProjectileSpawner(_fireRate, glm::vec2(0.4f, 0.7f), 40.0f);
   _projectileSpawnerLeft.setSource(this->getType());
   _projectileSpawnerRight = ProjectileSpawner(_fireRate, glm::vec2(0.4f, 0.7f), 40.0f);
