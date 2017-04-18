@@ -14,9 +14,16 @@ Projectile::Projectile(int textureId, glm::vec4 uv, float width, float height, g
   _animationManager = new Ess2D::AnimationManager();
 
   Ess2D::Animation* idleAnimation = _animationManager->add("IDLE");
-  idleAnimation->setPlaybackRate(10.0f / 60.0f);
+  idleAnimation->setPlaybackRate(1.0f / 60.0f);
   idleAnimation->setTextureAtlas(_playerAtlas);
-  idleAnimation->setFrames(std::vector<std::string> {"bullet_red_0", "bullet_red_1", "bullet_red_2", "bullet_red_3", "bullet_red_4", "bullet_red_5", "bullet_red_6", "bullet_red_7"});
+  idleAnimation->setRepeat(true);
+  std::vector<std::string> animationFrames;
+  for(int i = 0; i <= 12; i++) {
+    animationFrames.push_back("missle_1_" + std::to_string(i));
+  }
+  idleAnimation->setFrames(
+    std::vector<std::string> {"bullet_red_0", "bullet_red_1", "bullet_red_2", "bullet_red_3", "bullet_red_4", "bullet_red_5", "bullet_red_6", "bullet_red_7"}
+  );
   _animationManager->play("IDLE");
 }
 
@@ -26,6 +33,9 @@ Projectile::~Projectile() {
 
 bool Projectile::update(float deltaTime) {
   Entity::update(deltaTime);
+
+  _animationManager->update(deltaTime);
+
   if(!this->inViewport()) {
     return false;
   }

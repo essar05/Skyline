@@ -70,22 +70,19 @@ void Level::draw() {
   glm::vec2 viewportSize = camera->getWorldViewportSize();
   
   float bottomCameraEdge = camera->getPosition().y / camera->getZoom() - viewportSize[1] / 2;
-  float topCameraEdge = camera->getPosition().y / camera->getZoom() + viewportSize[1] / 2;
-  bottomCameraEdge -= (camera->getPosition().y / camera->getZoom()) / 50.f;
+  float bgPos = bottomCameraEdge - (camera->getPosition().y / camera->getZoom()) / 10.f;
 
-  int bgBottomPassedCount = (int) floor(bottomCameraEdge / _backgroundHeight); // number of times the background image has repeated entirely below the bottom camera edge
-  int bgTopPassedCount = (int) floor(topCameraEdge / _backgroundHeight); // number of times the background image has repeated entirely below the top camera edge
-  
-  //FIX REPEATABLE BG
+  int bgBottomPassedCount = (int) floor((bottomCameraEdge - bgPos) / _backgroundHeight);
+  int bgTopPassedCount = (int) floor((bottomCameraEdge - bgPos + viewportSize[1]) / _backgroundHeight);
 
-  glm::vec4 position(0, bottomCameraEdge, _backgroundWidth, _backgroundHeight);
+  glm::vec4 position(0, bgPos + _backgroundHeight * bgBottomPassedCount, _backgroundWidth, _backgroundHeight);
   glm::vec4 uv(0.0f, 0.0f, 1.0f, 1.0f);
   Ess2D::ColorRGBA8 color(255, 255, 255, 255);
   spriteBatch->draw(position, uv, _backgroundId, color, 0);
 
   if (bgBottomPassedCount < bgTopPassedCount) {
-    position = glm::vec4(0, _backgroundHeight * bgTopPassedCount, _backgroundWidth, _backgroundHeight);
-    //spriteBatch->draw(position, uv, _backgroundId, color, 0);
+    position = glm::vec4(0, bgPos + _backgroundHeight * bgTopPassedCount, _backgroundWidth, _backgroundHeight);
+    spriteBatch->draw(position, uv, _backgroundId, color, 0);
   }
   
   for (unsigned int i = 0; i < _decorationLayers.size(); i++) {

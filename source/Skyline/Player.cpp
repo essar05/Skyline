@@ -190,13 +190,13 @@ bool Player::update(float deltaTime) {
   }
 
   //Update Projectile Spawners
-  _projectileSpawnerLeftPosition = glm::vec2(-_width / 2 + 0.5f, _height / 2 + _projectileSpawnerLeft.getProjectileHeight() - 2.0f);
+  _projectileSpawnerLeftPosition = glm::vec2(-_width / 2 + 0.5f, 0.1f);
   _projectileSpawnerRightPosition = _projectileSpawnerLeftPosition + glm::vec2(_width - 1.0f, 0.0f);
 
   correctProjectileSpawnersPosition(_animationManager->getCurrent()->getCurrentFrame());
 
-  int projectilesSpawnedLeft = _projectileSpawnerLeft.update(deltaTime, _isFiring, Utils::toVec2(_body->GetPosition()) + _projectileSpawnerLeftPosition + glm::vec2(0.0f, 1.0f), glm::vec2(0.0f, 50.0f), _body->GetAngle());
-  int projectilesSpawnedRight = _projectileSpawnerRight.update(deltaTime, _isFiring, Utils::toVec2(_body->GetPosition()) + _projectileSpawnerRightPosition + glm::vec2(0.0f, 1.0f), glm::vec2(0.0f, 50.0f), _body->GetAngle());
+  int projectilesSpawnedLeft = _projectileSpawnerLeft.update(deltaTime, _isFiring, Utils::toVec2(_body->GetPosition()) + _projectileSpawnerLeftPosition + glm::vec2(0.0f, 1.0f), glm::vec2(0.0f, 40.0f), _body->GetAngle());
+  int projectilesSpawnedRight = _projectileSpawnerRight.update(deltaTime, _isFiring, Utils::toVec2(_body->GetPosition()) + _projectileSpawnerRightPosition + glm::vec2(0.0f, 1.0f), glm::vec2(0.0f, 40.0f), _body->GetAngle());
 
   if(projectilesSpawnedLeft > 0) {
     _muzzleLeftAnimationManager->play("MUZZLE");

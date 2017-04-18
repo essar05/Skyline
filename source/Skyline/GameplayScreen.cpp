@@ -123,13 +123,15 @@ void GameplayScreen::update(float deltaTime, int simulationSteps) {
     _gui.getRootWindow()->getChild("label_FPSCounter")->setText("FPS: " + std::to_string(_game->getFPS()).substr(0, 6));
     frameCounter = 0;
   }
+
+  _gui.getRootWindow()->getChild("label_CameraPos")->setText("CP: " + std::to_string(_camera.getPosition().y).substr(0, 10));
 }
 
 void GameplayScreen::processInput(float deltaTime) {
   SDL_Event event;
 
   //MOVE THESE FROM HERE
-  const float CAMERA_SPEED = 0.5f;
+  const float CAMERA_SPEED = 30.0f;
   const float SCALE_SPEED = 5.0f;
 
   while(SDL_PollEvent(&event) != 0) {
@@ -144,10 +146,10 @@ void GameplayScreen::processInput(float deltaTime) {
   }
 
   if(inputManager->isKeyDown(SDLK_w)) {
-    _camera.setPosition(_camera.getPosition() + glm::vec2(0.0f, CAMERA_SPEED * deltaTime));
+    _camera.setFuturePosition(_camera.getFuturePosition() + glm::vec2(0.0f, CAMERA_SPEED * deltaTime));
   }
   if(inputManager->isKeyDown(SDLK_s)) {
-    _camera.setPosition(_camera.getPosition() + glm::vec2(0.0f, -CAMERA_SPEED * deltaTime));
+    _camera.setFuturePosition(_camera.getFuturePosition() + glm::vec2(0.0f, -CAMERA_SPEED * deltaTime));
   }
   if(inputManager->isKeyDown(SDLK_d)) {
     _camera.setPosition(_camera.getPosition() + glm::vec2(CAMERA_SPEED * deltaTime, 0.0f));
@@ -260,6 +262,12 @@ void GameplayScreen::initUI() {
   );
   label_FPSCounter->setText("FPS: ");
   label_FPSCounter->setProperty("HorzFormatting", "LeftAligned");
+
+  CEGUI::DefaultWindow* label_CameraPos = static_cast<CEGUI::DefaultWindow*> (
+    _gui.createWidget("AlfiskoSkin/Label", glm::vec4(0.0f, 0.04f, 0.09f, 0.04f), glm::vec4(0.0f), "label_CameraPos")
+    );
+  label_CameraPos->setText("");
+  label_CameraPos->setProperty("HorzFormatting", "LeftAligned");
 }
 
 Ess2D::SpriteBatch* GameplayScreen::getSpriteBatch() { return &_spriteBatch; }
