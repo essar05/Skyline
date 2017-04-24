@@ -13,6 +13,7 @@ class SpaceshipA : public Entity {
   protected:
     void draw() override;
     bool update(float deltaTime) override;
+    virtual void createFixtures() override;
 
     void setIsFiring(bool isFiring) { _isFiring = isFiring; }
 

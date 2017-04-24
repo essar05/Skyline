@@ -1,6 +1,6 @@
 #include "GameplayScreen.h"
 #include <SDL_events.h>
-#include "SpaceshipD.h"
+#include "SpaceshipA.h"
 
 GameplayScreen::GameplayScreen() {
   _game = Game::GetInstance();
@@ -199,19 +199,19 @@ void GameplayScreen::processInput(float deltaTime) {
 bool GameplayScreen::onBtnSpawnEntityClicked(const CEGUI::EventArgs &e) {
   float objectX = 500.f;
   float objectY = _camera.getScreenScalar(_camera.getPosition().y) / _camera.getZoom() + 0.0f;
-  Entity* entity = new SpaceshipD(0, glm::vec4(), 80.0f, 100.0f, glm::vec2(objectX, objectY), 0.0f);
+  Entity* entity = new SpaceshipA(0, glm::vec4(), 80.0f, 100.0f, glm::vec2(objectX, objectY), 0.0f);
   entity->createB2Data();
   entity->spawn();
 
   _level->getSection(0)->addObject(_entityManager->addEntity(entity));
-
+  /*
   objectX = 200.f;
   objectY = _camera.getScreenScalar(_camera.getPosition().y) / _camera.getZoom() + 0.0f;
-  entity = new SpaceshipD(0, glm::vec4(), 80.0f, 100.0f, glm::vec2(objectX, objectY), 180.0f);
+  entity = new SpaceshipC(0, glm::vec4(), 80.0f, 100.0f, glm::vec2(objectX, objectY), 180.0f);
   entity->createB2Data();
   entity->spawn();
 
-  _level->getSection(0)->addObject(_entityManager->addEntity(entity));
+  _level->getSection(0)->addObject(_entityManager->addEntity(entity));*/
   return true;
 }
 

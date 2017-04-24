@@ -21,6 +21,9 @@ class Player : public Entity {
     int getType() override { return ET_PLAYER; }
     glm::vec2 getDefaultVelocity() { return _defaultVelocity; }
 
+  protected:
+    virtual void createFixtures() override;
+
   private:
     void correctProjectileSpawnersPosition(const std::string& currentPlayerFrame);
 

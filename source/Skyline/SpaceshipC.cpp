@@ -109,6 +109,51 @@ void SpaceshipC::draw() {
   }
 }
 
+void SpaceshipC::createFixtures() {
+  b2Vec2 vertices[3];
+  vertices[0].Set(-_width / 4.5f, 0.0f);
+  vertices[1].Set(_width / 4.5f, 0.0f);
+  vertices[2].Set(0.0f, _height / 2);
+  int32 count = 3;
+
+  b2PolygonShape boxShape;
+  boxShape.Set(vertices, count);
+
+  //boxShape.SetAsBox(_width / 2, _height / 2);
+
+  b2FixtureDef boxFixtureDef;
+  boxFixtureDef.shape = &boxShape;
+  boxFixtureDef.density = 1;
+  boxFixtureDef.isSensor = 1;
+
+  _body->CreateFixture(&boxFixtureDef);
+
+  b2Vec2 vertices2[4];
+  vertices2[0].Set(-_width / 4.5f, 0.0f);
+  vertices2[1].Set(_width / 4.5f, 0.0f);
+  vertices2[2].Set(_width / 2.2f, -_height / 3.9f);
+  vertices2[3].Set(-_width / 2.2f, -_height / 3.9f);
+
+  b2PolygonShape fixtureShape2;
+  fixtureShape2.Set(vertices2, 4);
+
+  b2FixtureDef boxFixtureDef2;
+  boxFixtureDef2.shape = &fixtureShape2;
+  boxFixtureDef2.density = 1;
+  boxFixtureDef2.isSensor = 1;
+  _body->CreateFixture(&boxFixtureDef2);
+
+  b2PolygonShape boxShape3;
+  boxShape3.SetAsBox(_width / 4, _height / 9, b2Vec2(0.0f, - _height / 3), 0.0f);
+
+  b2FixtureDef boxFixtureDef3;
+  boxFixtureDef3.shape = &boxShape3;
+  boxFixtureDef3.density = 1;
+  boxFixtureDef3.isSensor = 1;
+
+  _body->CreateFixture(&boxFixtureDef3);
+}
+
 void SpaceshipC::initAnimations() {
   Ess2D::TextureAtlas * spaceshipAtlas = _game->getGameplayScreen()->getTextureCache()->getAtlas("Textures/SpaceshipC.png", "Textures/SpaceshipC.json");
 

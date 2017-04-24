@@ -155,6 +155,7 @@ void Entity::createFixtures() {
   b2FixtureDef boxFixtureDef;
   boxFixtureDef.shape = &boxShape;
   boxFixtureDef.density = 1;
+  boxFixtureDef.isSensor = 1;
 
   _body->CreateFixture(&boxFixtureDef);
 
@@ -164,6 +165,7 @@ void Entity::createFixtures() {
   b2FixtureDef boxFixtureDef2;
   boxFixtureDef2.shape = &boxShape2;
   boxFixtureDef2.density = 1;
+  boxFixtureDef2.isSensor = 1;
   _body->CreateFixture(&boxFixtureDef2);
 }
 

@@ -2,6 +2,7 @@
 #include <Camera2D.h>
 #include <iostream>
 #include "Utils.h"
+#include "SpaceshipA.h"
 
 Level::Level() : Level(0, 0) {}
 
@@ -179,7 +180,7 @@ void Level::load(std::string levelName) {
 
   _world = new b2World(b2Vec2(0, 0));
   _world->SetAutoClearForces(false);
-  //_world->SetDebugDraw(&_glDebugDrawInstance);
+  _world->SetDebugDraw(&_glDebugDrawInstance);
   _world->SetContactListener(&_contactListener);
   _glDebugDrawInstance.SetFlags(b2Draw::e_shapeBit | b2Draw::e_centerOfMassBit);
 
@@ -236,7 +237,7 @@ void Level::load(std::string levelName) {
         float objectY = (float) document["sections"][i]["objects"][j]["y"].GetDouble() + camera->getScreenScalar(_height); //translate on y axis by _height because the initial coordinates are relative to the section bounds
         
         //create the entity, add it to the manager and then add it to the section.
-        Entity* e = new Entity(atlas->getTextureId(), atlas->getUV("enemy"), 100.0f, 115.0f, glm::vec2(objectX, objectY));
+        Entity* e = new SpaceshipA(atlas->getTextureId(), atlas->getUV("enemy"), 100.0f, 115.0f, glm::vec2(objectX, objectY), 180.0f);
         e->createB2Data();
         section->addObject(entityManager->addEntity(e));
       }

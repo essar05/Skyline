@@ -248,6 +248,35 @@ void Player::draw() {
   }
 }
 
+void Player::createFixtures() {
+  b2Vec2 vertices[3];
+  vertices[0].Set(-_width / 4.5f, 0.0f);
+  vertices[1].Set(_width / 4.5f, 0.0f);
+  vertices[2].Set(0.0f, _height / 2);
+  int32 count = 3;
+
+  b2PolygonShape boxShape;
+  boxShape.Set(vertices, count);
+
+  //boxShape.SetAsBox(_width / 2, _height / 2);
+
+  b2FixtureDef boxFixtureDef;
+  boxFixtureDef.shape = &boxShape;
+  boxFixtureDef.density = 1;
+  boxFixtureDef.isSensor = 1;
+
+  _body->CreateFixture(&boxFixtureDef);
+
+  b2PolygonShape boxShape2;
+  boxShape2.SetAsBox(_width / 2.5f, _height / 4, b2Vec2(0.0f, -_height / 4.6f), 0);
+
+  b2FixtureDef boxFixtureDef2;
+  boxFixtureDef2.shape = &boxShape2;
+  boxFixtureDef2.density = 1;
+  boxFixtureDef2.isSensor = 1;
+  _body->CreateFixture(&boxFixtureDef2);
+}
+
 void Player::correctProjectileSpawnersPosition(const std::string& currentPlayerFrame) {
   if(currentPlayerFrame == "Spaceship_left01") {
     _projectileSpawnerLeftPosition += glm::vec2(0.1f, 0.0f);

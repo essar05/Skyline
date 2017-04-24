@@ -109,6 +109,41 @@ void SpaceshipD::draw() {
   }
 }
 
+void SpaceshipD::createFixtures() {
+  b2Vec2 vertices[3];
+  vertices[0].Set(-_width / 4.5f, 0.0f);
+  vertices[1].Set(_width / 4.5f, 0.0f);
+  vertices[2].Set(0.0f, _height / 2);
+  int32 count = 3;
+
+  b2PolygonShape boxShape;
+  boxShape.Set(vertices, count);
+
+  //boxShape.SetAsBox(_width / 2, _height / 2);
+
+  b2FixtureDef boxFixtureDef;
+  boxFixtureDef.shape = &boxShape;
+  boxFixtureDef.density = 1;
+  boxFixtureDef.isSensor = 1;
+
+  _body->CreateFixture(&boxFixtureDef);
+
+  b2Vec2 vertices2[4];
+  vertices2[0].Set(-_width / 5.0f, 0.0f);
+  vertices2[1].Set(_width / 5.0f, 0.0f);
+  vertices2[2].Set(_width / 2.2f, -_height / 3);
+  vertices2[3].Set(-_width / 2.2f, -_height / 3);
+
+  b2PolygonShape fixtureShape2;
+  fixtureShape2.Set(vertices2, 4);
+
+  b2FixtureDef boxFixtureDef2;
+  boxFixtureDef2.shape = &fixtureShape2;
+  boxFixtureDef2.density = 1;
+  boxFixtureDef2.isSensor = 1;
+  _body->CreateFixture(&boxFixtureDef2);
+}
+
 void SpaceshipD::initAnimations() {
   Ess2D::TextureAtlas * spaceshipAtlas = _game->getGameplayScreen()->getTextureCache()->getAtlas("Textures/spaceshipD.png", "Textures/spaceshipD.json");
 
