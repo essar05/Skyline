@@ -180,7 +180,7 @@ void Level::load(std::string levelName) {
 
   _world = new b2World(b2Vec2(0, 0));
   _world->SetAutoClearForces(false);
-  _world->SetDebugDraw(&_glDebugDrawInstance);
+  //_world->SetDebugDraw(&_glDebugDrawInstance);
   _world->SetContactListener(&_contactListener);
   _glDebugDrawInstance.SetFlags(b2Draw::e_shapeBit | b2Draw::e_centerOfMassBit);
 

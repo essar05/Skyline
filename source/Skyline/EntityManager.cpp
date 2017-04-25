@@ -36,6 +36,7 @@ void EntityManager::deleteEntity(unsigned int id, bool queued) {
 
   auto it = _entities.find(id);
   if(it != _entities.end()) {
+    it->second->die();
     delete it->second;
     _entities.erase(it);
   }
@@ -45,6 +46,7 @@ void EntityManager::deleteQueuedEntities() {
   for(unsigned int i = 0; i < _deleteQueue.size(); i++) {
     auto entityIt = _entities.find(_deleteQueue[i]);
     if(entityIt != _entities.end()) {
+      entityIt->second->die();
       delete entityIt->second;
       _entities.erase(entityIt);
     }

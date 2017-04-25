@@ -107,6 +107,7 @@ void GameplayScreen::update(float deltaTime, int simulationSteps) {
       _level->update(deltaTime);
       _entityManager->deleteQueuedEntities();
       _projectileManager->deleteQueuedProjectiles();
+      _particleManager.update(deltaTime);
     }
   }
 
@@ -277,3 +278,4 @@ EntityManager* GameplayScreen::getEntityManager() { return _entityManager; }
 Level* GameplayScreen::getLevel() { return _level; }
 ProjectileManager* GameplayScreen::getProjectileManager() { return _projectileManager; }
 SceneRenderer* GameplayScreen::getSceneRenderer() { return _sceneRenderer; }
+ParticleManager* GameplayScreen::getParticleManager() { return &_particleManager; }

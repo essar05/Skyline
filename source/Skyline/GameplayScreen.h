@@ -13,6 +13,7 @@
 #include "FBORenderer.h"
 #include "PostProcessing.h"
 #include "ScreenIndices.h"
+#include "ParticleManager.h"
 
 class Level;
 class ProjectileManager;
@@ -41,6 +42,7 @@ class GameplayScreen : public Ess2D::IGameScreen {
     Level* getLevel();
     ProjectileManager* getProjectileManager();
     SceneRenderer* getSceneRenderer();
+    ParticleManager* getParticleManager();
 
     bool onBtnSpawnEntityClicked(const CEGUI::EventArgs &e);
     bool onBtnExitGameClicked(const CEGUI::EventArgs &e);
@@ -71,6 +73,7 @@ class GameplayScreen : public Ess2D::IGameScreen {
     Level* _level;
     EntityManager* _entityManager;
     ProjectileManager* _projectileManager;
+    ParticleManager _particleManager;
 
 };
 

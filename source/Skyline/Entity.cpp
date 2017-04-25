@@ -169,6 +169,9 @@ void Entity::createFixtures() {
   _body->CreateFixture(&boxFixtureDef2);
 }
 
+void Entity::die() {
+}
+
 void Entity::spawn() {
   _isSpawned = true;
 }

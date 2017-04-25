@@ -108,6 +108,11 @@ void SpaceshipA::draw() {
   }
 }
 
+void SpaceshipA::die() {
+  b2Vec2 position = _body->GetPosition();
+  _game->getGameplayScreen()->getParticleManager()->spawn("explosion1", position.x, position.y, _width, _height, _depth - 1, 1.0f / 60.0f);
+}
+
 void SpaceshipA::createFixtures() {
   b2Vec2 vertices[3];
   vertices[0].Set(0.0f, _height / 2.0f);

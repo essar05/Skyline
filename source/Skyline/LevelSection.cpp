@@ -36,6 +36,7 @@ void LevelSection::update(float deltaTime) {
 
     //if this object had been spawned but went out of viewpot OR if it's health is 0 then we just discard it.
     if((entity->isSpawned() && !entity->inViewport()) || entity->getHealth() <= 0) {
+      entity->die();
       entityManager->deleteEntity(_objects[k]);
       _objects.erase(_objects.begin() + k);
       continue;

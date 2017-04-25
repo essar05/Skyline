@@ -39,6 +39,7 @@ void SceneRenderer::render() {
 
   game->getGameplayScreen()->getLevel()->draw();
   game->getGameplayScreen()->getProjectileManager()->draw();
+  game->getGameplayScreen()->getParticleManager()->draw();
 
   game->getGameplayScreen()->getSpriteBatch()->end();
   game->getGameplayScreen()->getSpriteBatch()->render();
