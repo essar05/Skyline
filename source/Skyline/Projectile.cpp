@@ -32,6 +32,8 @@ Projectile::~Projectile() {
 }
 
 bool Projectile::update(float deltaTime) {
+  if(_body == nullptr) return false;
+
   Entity::update(deltaTime);
 
   _animationManager->update(deltaTime);
@@ -43,7 +45,7 @@ bool Projectile::update(float deltaTime) {
 }
 
 void Projectile::draw() {
-  if (_isSpawned) {
+  if (_isSpawned && _body != nullptr) {
     b2Vec2 bodyPosition = this->_body->GetPosition();
     glm::vec2 screenPosition = _position;
 

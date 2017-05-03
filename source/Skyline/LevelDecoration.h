@@ -5,7 +5,7 @@
 class LevelDecoration {
 
   public:
-    LevelDecoration(GLuint textureId, float x, float y, float width, float height, float scale);
+    LevelDecoration(GLuint textureId, float x, float y, float width, float height, float scale, float displacement);
     ~LevelDecoration();
 
     void setScale(float scale);
@@ -14,6 +14,7 @@ class LevelDecoration {
     float getY();
     float getWidth();
     float getHeight();
+    float getDisplacement();
     GLuint getTextureId();
 
   private:
@@ -24,6 +25,7 @@ class LevelDecoration {
     float _y;
     float _width;
     float _height;
+    float _displacement;
 
 };
 

@@ -172,6 +172,10 @@ void Entity::createFixtures() {
 void Entity::die() {
 }
 
+void Entity::cleanupBody() {
+  _body = nullptr;
+}
+
 void Entity::spawn() {
   _isSpawned = true;
 }

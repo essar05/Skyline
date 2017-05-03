@@ -33,3 +33,11 @@ void ParticleManager::draw() {
     _particles[i]->draw();
   }
 }
+
+void ParticleManager::cleanup() {
+  for(int i = 0; i < _particles.size(); i++) {
+    delete _particles[i];
+    _particles.erase(_particles.begin() + i);
+  }
+  _particles.clear();
+}

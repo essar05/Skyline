@@ -36,7 +36,7 @@ class Entity {
     float getHeight();
     float getCollisionDamage() { return _collisionDamage; }
     float getHealth() { return _health; }
-    float getDepth() { return _depth; }
+    float getDepth() { return (float) _depth; }
     b2Body* getBody() { return _body;  }
 
     void applyDamage(float damage);
@@ -50,6 +50,7 @@ class Entity {
     void smoothStates(float timestepAccumulatorRatio);
     void spawn();
     virtual void die();
+    void cleanupBody();
     
   protected:
     Game* _game;

@@ -3,6 +3,9 @@
 #include <iostream>
 #include "Utils.h"
 #include "SpaceshipA.h"
+#include "SpaceshipB.h"
+#include "SpaceshipC.h"
+#include "SpaceshipD.h"
 
 Level::Level() : Level(0, 0) {}
 
@@ -12,13 +15,35 @@ Level::Level(float width, float height) : _height(height), _width(width) {
 
 Level::~Level() {
   delete _player;
-  delete _world;
+
+  for(b2Body * b = _world->GetBodyList(); b != NULL; b = b->GetNext()) {
+    Entity* entity = static_cast<Entity*>(b->GetUserData());
+    if(entity) {
+      entity->cleanupBody();
+    }
+  }
 
   auto it = _sections.begin();
   while(it != _sections.end()) {
     delete it->second;
 
     it++;
+  }
+
+  delete _world;
+
+  for(unsigned int i = 0; i < _decorationLayers.size(); i++) {
+    auto decorationsIt = _decorations.find(_decorationLayers[i]);
+    if(decorationsIt == _decorations.end()) {
+      continue;
+    }
+
+    int layer = _decorationLayers[i];
+    for(unsigned int j = 0; j < decorationsIt->second.size();) {
+      delete decorationsIt->second[j];
+
+      j++;
+    }
   }
   //DELETE DECORATIONS !!!!!
 }
@@ -99,11 +124,7 @@ void Level::draw() {
       float cameraY = camera->getPosition().y / camera->getZoom();
       float decorationY = decoration->getY();
       float deltaY = cameraY - decorationY;
-      float parallaxDisplacement = 0.9f;
-      if (layer == 2) {
-        parallaxDisplacement = 0.6f;
-      }
-      decorationY += deltaY * parallaxDisplacement;
+      decorationY += deltaY * decoration->getDisplacement();
 
       if (camera->getPosition().y / camera->getZoom() - viewportSize[1] / 2 > decorationY + decoration->getHeight() / 2) {
         decorationsIt->second.erase(decorationsIt->second.begin() + j);
@@ -145,6 +166,7 @@ void Level::draw() {
 void Level::smoothStates() {
   const float timestepAccumulatorRatio = _game->getTimestepAccumulator()->getAccumulatorRatio();
 
+  int k = 0;
   for(b2Body * b = _world->GetBodyList(); b != NULL; b = b->GetNext()) {
     if(b->GetType() == b2_staticBody) {
       continue;
@@ -154,6 +176,8 @@ void Level::smoothStates() {
     if(entity) {
       entity->smoothStates(timestepAccumulatorRatio);
     }
+
+    k++;
   }
 }
 
@@ -187,7 +211,7 @@ void Level::load(std::string levelName) {
   Ess2D::TextureAtlas* atlas = textureCache->getAtlas("Textures/player.png", "Textures/player.json");
   //glm::vec4 uv = atlas->getUV("player");
   
-  _player = new Player(atlas->getTextureId(), atlas->getUV("Spaceship_default"), 100.0f, 76.0f, glm::vec2(camera->getViewportSize().x / 2, 100.0f));
+  _player = new Player(atlas->getTextureId(), atlas->getUV("Spaceship_default"), 100.0f, 76.0f, glm::vec2(camera->getViewportSize().x / 2, camera->getScreenScalar(camera->getPosition().y) - camera->getViewportSize().y  / 2 + 100.0f));
   _player->createB2Data();
   _player->spawn();
 
@@ -213,10 +237,12 @@ void Level::load(std::string levelName) {
     throw Ess2D::ERuntimeException("Level file invalid: missing sections");
   }
 
+  float sectionWidth = 1280.0f;
+
   for(rapidjson::SizeType i = 0; i < document["sections"].Size(); i++) {
     //check exists;
 
-    float sectionWidth = (float) document["sections"][i]["width"].GetDouble();
+    sectionWidth = (float) document["sections"][i]["width"].GetDouble();
     float sectionHeight = 0.0f;
     if (document["sections"][i].HasMember("height")) {
       sectionHeight = (float) document["sections"][i]["height"].GetDouble();
@@ -233,11 +259,45 @@ void Level::load(std::string levelName) {
 
     if(document["sections"][i].HasMember("objects") && document["sections"][i]["objects"].IsArray()) {
       for(rapidjson::SizeType j = 0; j < document["sections"][i]["objects"].Size(); j++) {
-        float objectX = (float) document["sections"][i]["objects"][j]["x"].GetDouble();
+
+        float objectX = 0;
+        if(document["sections"][i]["objects"][j].HasMember("xP") && document["sections"][i]["objects"][j]["xP"].IsDouble()) {
+          objectX = (float) document["sections"][i]["objects"][j]["xP"].GetDouble() * sectionWidth;
+        } else {
+          objectX = (float) document["sections"][i]["objects"][j]["x"].GetDouble();
+        }
         float objectY = (float) document["sections"][i]["objects"][j]["y"].GetDouble() + camera->getScreenScalar(_height); //translate on y axis by _height because the initial coordinates are relative to the section bounds
         
+        float velocityY = 0;
+        if(document["sections"][i]["objects"][j].HasMember("velocityY") && document["sections"][i]["objects"][j]["velocityY"].IsDouble()) {
+          velocityY = (float)document["sections"][i]["objects"][j]["velocityY"].GetDouble();
+        }
+
+        float velocityX = 0;
+        if(document["sections"][i]["objects"][j].HasMember("velocityX") && document["sections"][i]["objects"][j]["velocityX"].IsDouble()) {
+          velocityX = (float)document["sections"][i]["objects"][j]["velocityX"].GetDouble();
+        }
+
         //create the entity, add it to the manager and then add it to the section.
-        Entity* e = new SpaceshipA(atlas->getTextureId(), atlas->getUV("enemy"), 100.0f, 115.0f, glm::vec2(objectX, objectY), 180.0f);
+        Entity* e = NULL;
+        
+        if(document["sections"][i]["objects"][j].HasMember("type") && document["sections"][i]["objects"][j]["type"].IsString()) {
+          std::string type = document["sections"][i]["objects"][j]["type"].GetString();
+
+          if(type == "spaceshipA") {
+            e = new SpaceshipA(atlas->getTextureId(), atlas->getUV("enemy"), 100.0f, 115.0f, glm::vec2(objectX, objectY), 180.0f);
+          } else if(type == "spaceshipB") {
+            e = new SpaceshipB(atlas->getTextureId(), atlas->getUV("enemy"), 100.0f, 115.0f, glm::vec2(objectX, objectY), 180.0f);
+          } else if(type == "spaceshipC") {
+            e = new SpaceshipC(atlas->getTextureId(), atlas->getUV("enemy"), 100.0f, 115.0f, glm::vec2(objectX, objectY), 180.0f);
+          } else if(type == "spaceshipD") {
+            e = new SpaceshipD(atlas->getTextureId(), atlas->getUV("enemy"), 100.0f, 115.0f, glm::vec2(objectX, objectY), 180.0f);
+          }
+        } else {
+          e = new Entity(atlas->getTextureId(), atlas->getUV("enemy"), 100.0f, 115.0f, glm::vec2(objectX, objectY), 180.0f);
+        }
+
+        e->setVelocity(glm::vec2(velocityX, velocityY));
         e->createB2Data();
         section->addObject(entityManager->addEntity(e));
       }
@@ -250,10 +310,17 @@ void Level::load(std::string levelName) {
   if (document.HasMember("decorations") && document["decorations"].IsArray()) {
     for (rapidjson::SizeType i = 0; i < document["decorations"].Size(); i++) {
 
-      float x = (float) document["decorations"][i]["x"].GetDouble();
+      float x = 0;
+      if(document["decorations"][i].HasMember("xP") && document["decorations"][i]["xP"].IsDouble()) {
+        x = (float)document["decorations"][i]["xP"].GetDouble() * sectionWidth;
+      } else {
+        x = (float)document["decorations"][i]["x"].GetDouble();
+      }
+
       float y = (float) document["decorations"][i]["y"].GetDouble();
       std::string textureName = document["decorations"][i]["textureName"].GetString();
       int layer = document["decorations"][i]["layer"].GetInt();
+      float displacement = (float)document["decorations"][i]["displacement"].GetDouble();
       float scale = 1.0f;
       if (document["decorations"][i].HasMember("scale")) {
         scale = (float) document["decorations"][i]["scale"].GetDouble();
@@ -261,7 +328,7 @@ void Level::load(std::string levelName) {
       
       Ess2D::Texture2D texture = textureCache->getTexture("Textures/" + textureName);
 
-      LevelDecoration* decoration = new LevelDecoration(texture._id, x, y, (float) texture._width, (float) texture._height, scale);
+      LevelDecoration* decoration = new LevelDecoration(texture._id, x, y, (float) texture._width, (float) texture._height, scale, displacement);
       
       this->addDecoration(decoration, layer);
     }

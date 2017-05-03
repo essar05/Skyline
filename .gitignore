@@ -23,3 +23,5 @@
 /build/Release/Skyline/Textures
 /build/Release/Skyline/GUI
 /build/Debug/Skyline/*.log
+/build/DebugNCP
+/build/Release/Skyline/CEGUI.log

@@ -6,6 +6,8 @@ EntityManager::EntityManager() {
 
 
 EntityManager::~EntityManager() {
+  deleteQueuedEntities();
+
   auto it = _entities.begin();
   while(it != _entities.end()) {
     delete it->second;
@@ -36,7 +38,7 @@ void EntityManager::deleteEntity(unsigned int id, bool queued) {
 
   auto it = _entities.find(id);
   if(it != _entities.end()) {
-    it->second->die();
+    
     delete it->second;
     _entities.erase(it);
   }

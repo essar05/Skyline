@@ -10,6 +10,7 @@ class ParticleManager {
     void spawn(std::string type, float x, float y, float width, float height, float depth, float playbackRate);
     void update(float deltaTime);
     void draw();
+    void cleanup();
 
   private:
     std::vector<Particle*> _particles;

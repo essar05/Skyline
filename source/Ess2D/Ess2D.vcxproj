@@ -1,6 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="DebugNCP|Win32">
+      <Configuration>DebugNCP</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
@@ -24,6 +28,12 @@
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugNCP|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
@@ -37,11 +47,20 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugNCP|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(SolutionDir)..\lib\SDL2\include\;$(SolutionDir)..\lib\SDL2_Image\include\;$(SolutionDir)..\lib\glew\include\;$(SolutionDir)..\lib\freeglut\include\;$(SolutionDir)..\lib\glm\;$(SolutionDir)..\lib\freetype\include\;$(SolutionDir)..\lib\rapidjson\;$(SolutionDir)..\lib\FMOD\lowlevel\include\;$(SolutionDir)..\lib\FMOD\studio\include\;$(SolutionDir)..\lib\FMOD\fsbank\include\;$(SolutionDir)Ess2D\Errors\;$(SolutionDir)..\lib\CEGUI\include\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)..\build\$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>$(SolutionDir)..\build\obj\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugNCP|Win32'">
     <IncludePath>$(SolutionDir)..\lib\SDL2\include\;$(SolutionDir)..\lib\SDL2_Image\include\;$(SolutionDir)..\lib\glew\include\;$(SolutionDir)..\lib\freeglut\include\;$(SolutionDir)..\lib\glm\;$(SolutionDir)..\lib\freetype\include\;$(SolutionDir)..\lib\rapidjson\;$(SolutionDir)..\lib\FMOD\lowlevel\include\;$(SolutionDir)..\lib\FMOD\studio\include\;$(SolutionDir)..\lib\FMOD\fsbank\include\;$(SolutionDir)Ess2D\Errors\;$(SolutionDir)..\lib\CEGUI\include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)..\build\$(Configuration)\$(ProjectName)\</OutDir>
@@ -68,6 +87,28 @@
     <Lib>
       <AdditionalDependencies>freeglut.lib;glew32.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;opengl32.lib;freetype255d.lib;Box2D.lib;fmodL_vc.lib;fmodstudioL_vc.lib;CEGUIBase-0_d.lib;CEGUIOpenGLRenderer-0_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)..\lib\freetype\lib\;$(SolutionDir)..\lib\freeglut\lib\;$(SolutionDir)..\lib\glew\lib\;$(SolutionDir)..\lib\SDL2_Image\lib\;$(SolutionDir)..\lib\box2d\lib\;$(SolutionDir)..\lib\SDL2\lib\;$(SolutionDir)..\lib\FMOD\lowlevel\lib\;$(SolutionDir)..\lib\FMOD\studio\lib\;$(SolutionDir)..\lib\CEGUI\lib\$(Configuration);$(LibraryPath);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugNCP|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>freeglut.lib;glew32.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;opengl32.lib;freetype255d.lib;Box2D.lib;fmodL_vc.lib;fmodstudioL_vc.lib;CEGUIBase-0_d.lib;CEGUIOpenGLRenderer-0_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\lib\freetype\lib\;$(SolutionDir)..\lib\freeglut\lib\;$(SolutionDir)..\lib\glew\lib\;$(SolutionDir)..\lib\SDL2_Image\lib\;$(SolutionDir)..\lib\box2d\lib\;$(SolutionDir)..\lib\SDL2\lib\;$(SolutionDir)..\lib\FMOD\lowlevel\lib\;$(SolutionDir)..\lib\FMOD\studio\lib\;$(SolutionDir)..\lib\CEGUI\lib\Debug\;$(LibraryPath);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
       <Command>

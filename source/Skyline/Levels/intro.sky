@@ -2,38 +2,200 @@
   "defaultBackground": "Background/Background_Tilable.png",
   "sections": [
     {
-      "width": 1024,
+      "width": 1280,
       "objects": [
         {
-          "type": 3,
-          "x": 732,
-          "y": 760
+          "type": "spaceshipA",
+          "xP": 0.4,
+          "y": 860,
+		  "velocityY": 0.0
         },
         {
-          "type": 3,
-          "x": 420,
-          "y": 2000
+          "type": "spaceshipA",
+          "xP": 0.6,
+          "y": 860
+        },
+		{
+          "type": "spaceshipA",
+          "xP": 0.5,
+          "y": 1000
+        },
+        {
+          "type": "spaceshipB",
+          "xP": 0.2,
+          "y": 1400,
+		  "velocityY": 0.0,
+		  "velocityX": 0.0
+        },
+        {
+          "type": "spaceshipB",
+          "xP": 0.8,
+          "y": 1400,
+		  "velocityY": 0.0,
+		  "velocityX": 0.0
+        },
+		{
+          "type": "spaceshipA",
+          "xP": 0.12,
+          "y": 1450,
+		  "velocityY": 0.0,
+		  "velocityX": 0.0
+        },
+		{
+          "type": "spaceshipA",
+          "xP": 0.28,
+          "y": 1450,
+		  "velocityY": 0.0,
+		  "velocityX": 0.0
+        },
+		{
+          "type": "spaceshipA",
+          "xP": 0.72,
+          "y": 1450,
+		  "velocityY": 0.0,
+		  "velocityX": 0.0
+        },
+		{
+          "type": "spaceshipA",
+          "xP": 0.88,
+          "y": 1450,
+		  "velocityY": 0.0,
+		  "velocityX": 0.0
+        },
+		{
+          "type": "spaceshipA",
+          "xP": 0.5,
+          "y": 2250,
+		  "velocityY": 0.0,
+		  "velocityX": 0.0
+        },
+		{
+          "type": "spaceshipA",
+          "xP": 0.25,
+          "y": 2250,
+		  "velocityY": 0.0,
+		  "velocityX": 0.0
+        },
+		{
+          "type": "spaceshipA",
+          "xP": 0.75,
+          "y": 2250,
+		  "velocityY": 0.0,
+		  "velocityX": 0.0
+        },
+		{
+          "type": "spaceshipA",
+          "xP": 0.37,
+          "y": 2450,
+		  "velocityY": 0.0,
+		  "velocityX": 0.0
+        },
+		{
+          "type": "spaceshipA",
+          "xP": 0.63,
+          "y": 2450,
+		  "velocityY": 0.0,
+		  "velocityX": 0.0
+        },
+		{
+          "type": "spaceshipA",
+          "xP": 0.5,
+          "y": 2650,
+		  "velocityY": 0.0,
+		  "velocityX": 0.0
+        },
+		{
+          "type": "spaceshipB",
+          "xP": 0.8,
+          "y": 3400,
+		  "velocityY": 0.0,
+		  "velocityX": 0.0
+        },
+		{
+          "type": "spaceshipB",
+          "xP": 0.9,
+          "y": 3400,
+		  "velocityY": 0.0,
+		  "velocityX": 0.0
+        },
+		{
+          "type": "spaceshipA",
+          "xP": 0.35,
+          "y": 3800,
+		  "velocityY": 0.0,
+		  "velocityX": 0.0
+        },
+		{
+          "type": "spaceshipA",
+          "xP": 0.55,
+          "y": 4000,
+		  "velocityY": 0.0,
+		  "velocityX": 0.0
+        },
+		{
+          "type": "spaceshipA",
+          "xP": 0.42,
+          "y": 4200,
+		  "velocityY": 0.0,
+		  "velocityX": 0.0
+        },
+		{
+          "type": "spaceshipA",
+          "xP": 0.72,
+          "y": 4700,
+		  "velocityY": 0.0,
+		  "velocityX": 0.0
+        },
+		{
+          "type": "spaceshipA",
+          "xP": 0.26,
+          "y": 4700,
+		  "velocityY": 0.0,
+		  "velocityX": 0.0
         }
       ]
     }
   ],
-  "parallax": {
-
-  },
   "decorations": [
     {
       "textureName": "Background/Sun.png",
       "scale": 0.15,
-      "layer": 1,
+      "layer": 2,
+	  "displacement": 0.9,
       "x": 600,
       "y": 2500
     },
-	  {
+	{
       "textureName": "Background/Blue_Planet.png",
       "scale": 0.5,
-      "layer": 2,
+      "layer": 3,
+	  "displacement": 0.6,
       "x": 400,
       "y": 2100
+    },
+	{
+      "textureName": "Background/Moon_1.png",
+      "scale": 0.4,
+      "layer": 3,
+	  "displacement": 0.5,
+      "x": 900,
+      "y": 4000
+    },
+	{
+      "textureName": "Background/Nebula_3.png",
+      "scale": 2.4,
+      "layer": 1,
+	  "displacement": 0.9,
+      "x": 700,
+      "y": 7000
+    },
+	{
+      "textureName": "Background/Nebula_3.png",
+      "scale": 2.4,
+      "layer": 1,
+	  "displacement": 0.9,
+      "x": 700,
+      "y": 7000
     }
   ]
 }

@@ -32,7 +32,7 @@ void GameplayScreen::build() {
 
   _camera.init((int)_game->getWidth(), (int)_game->getHeight());
   _camera.setScale(32.0f);
-  _camera.setZoom(_game->getWidth() / 1024.0f);
+  _camera.setZoom(_game->getWidth() / _targetWidth);
   glm::vec2 initialCameraPosition = _camera.getWorldCoordinates(glm::vec2(_game->getWidth() / 2, _game->getHeight() / 2));
   _camera.setPosition(initialCameraPosition);
   _camera.setFuturePosition(initialCameraPosition);
@@ -48,6 +48,15 @@ void GameplayScreen::build() {
   _level = new Level();
   _level->load("intro");
 
+  _level->getPlayer()->setDefaultVelocity(glm::vec2(0.0f, _scrollSpeed));
+
+  //preload explosion 
+  _textureCache.getAtlas("Textures/Explosions/explosion1.png", "Textures/Explosions/explosion1.json");
+  _textureCache.getAtlas("Textures/Explosions/explosion2.png", "Textures/Explosions/explosion2.json");
+  _textureCache.getAtlas("Textures/Explosions/explosion3.png", "Textures/Explosions/explosion3.json");
+  _textureCache.getAtlas("Textures/Explosions/explosion4.png", "Textures/Explosions/explosion4.json");
+  _textureCache.getAtlas("Textures/Explosions/explosion5.png", "Textures/Explosions/explosion5.json");
+
   initUI();
 }
 
@@ -56,10 +65,10 @@ void GameplayScreen::destroy() {
   delete _fboRenderer;
   delete _postProcessing;
   delete _sceneFBO;
-  delete _entityManager;
-  _entityManager = nullptr;
   delete _projectileManager;
   _projectileManager = nullptr;
+  //delete _entityManager;
+  //_entityManager = nullptr;
   delete _level;
   _level = nullptr;
 }
@@ -87,36 +96,56 @@ void GameplayScreen::draw() {
 }
 
 void GameplayScreen::update(float deltaTime, int simulationSteps) {
-  for(int i = 0; i < simulationSteps; i++) {
-    processInput(deltaTime);
-    _level->resetSmoothStates();
+  if(_reloadLevel) {
+    _particleManager.cleanup();
+    delete _level;
+    _level = new Level();
+    _level->load(_levelName);
+    _level->getPlayer()->setDefaultVelocity(glm::vec2(0.0f, _scrollSpeed));
 
-    if(!_isPaused) {
-      if(!_isFreezed) {
-        if(_level->getPlayer()->getDefaultVelocity().y == 0.0f) {
-          _level->getPlayer()->setDefaultVelocity(glm::vec2(0.0f, 10.0f));
+    
+
+    /*_camera.init((int)_game->getWidth(), (int)_game->getHeight());
+    _camera.setScale(32.0f);
+    _camera.setZoom(_game->getWidth() / _targetWidth);
+    glm::vec2 initialCameraPosition = _camera.getWorldCoordinates(glm::vec2(_game->getWidth() / 2, _game->getHeight() / 2));
+    _camera.setPosition(initialCameraPosition);
+    _camera.setFuturePosition(initialCameraPosition);*/
+
+    _reloadLevel = false;
+  } else {
+
+    for(int i = 0; i < simulationSteps; i++) {
+      processInput(deltaTime);
+      _level->resetSmoothStates();
+
+      if(!_isPaused) {
+        if(!_isFreezed) {
+          if(_level->getPlayer()->getDefaultVelocity().y == 0.0f) {
+            _level->getPlayer()->setDefaultVelocity(glm::vec2(0.0f, _scrollSpeed));
+          }
+          _camera.setFuturePosition(_camera.getFuturePosition() + glm::vec2(0.0f, this->_scrollSpeed * _camera.getZoom()) * deltaTime);
+        } else {
+          if(_level->getPlayer()->getDefaultVelocity().y > 0.0f) {
+            _level->getPlayer()->setDefaultVelocity(glm::vec2(0.0f, 0.0f));
+          }
         }
-        _camera.setFuturePosition(_camera.getFuturePosition() + glm::vec2(0.0f, this->_scrollSpeed * _camera.getZoom()) * deltaTime);
-      } else {
-        if(_level->getPlayer()->getDefaultVelocity().y > 0.0f) {
-          _level->getPlayer()->setDefaultVelocity(glm::vec2(0.0f, 0.0f));
-        }
+
+        _projectileManager->update(deltaTime);
+        _level->update(deltaTime);
+        _entityManager->deleteQueuedEntities();
+        _projectileManager->deleteQueuedProjectiles();
+        _particleManager.update(deltaTime);
       }
-
-      _projectileManager->update(deltaTime);
-      _level->update(deltaTime);
-      _entityManager->deleteQueuedEntities();
-      _projectileManager->deleteQueuedProjectiles();
-      _particleManager.update(deltaTime);
     }
+
+    _camera.smoothState(_game->getTimestepAccumulator()->getAccumulatorRatio(), _isPaused || _isFreezed);
+    _level->smoothStates();
+    _level->getWorld()->ClearForces();
+
   }
 
-  _camera.smoothState(_game->getTimestepAccumulator()->getAccumulatorRatio(), _isPaused || _isFreezed);
-  _level->smoothStates();
-  _level->getWorld()->ClearForces();
-
   _camera.update();
-
 
   static int frameCounter = 0;
   frameCounter++;
@@ -125,7 +154,7 @@ void GameplayScreen::update(float deltaTime, int simulationSteps) {
     frameCounter = 0;
   }
 
-  _gui.getRootWindow()->getChild("label_CameraPos")->setText("CP: " + std::to_string(_camera.getPosition().y).substr(0, 10));
+  _gui.getRootWindow()->getChild("label_CameraPos")->setText("CP: " + std::to_string(_camera.getScreenScalar(_camera.getPosition().y)).substr(0, 10));
 }
 
 void GameplayScreen::processInput(float deltaTime) {
@@ -226,6 +255,12 @@ bool GameplayScreen::onBtnFreezeGameClicked(const CEGUI::EventArgs &e) {
   return true;
 }
 
+bool GameplayScreen::onBtnReloadLevelClicked(const CEGUI::EventArgs &e) {
+  _reloadLevel = true;
+
+  return true;
+}
+
 void GameplayScreen::initUI() {
   _gui.init("GUI");
   _gui.loadScheme("TaharezLook.scheme");
@@ -257,6 +292,13 @@ void GameplayScreen::initUI() {
   btn_freezeGame->setWantsMultiClickEvents(false);
   btn_freezeGame->setText("Freeze");
   btn_freezeGame->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&GameplayScreen::onBtnFreezeGameClicked, this));
+
+  CEGUI::PushButton* btn_reloadLevel = static_cast<CEGUI::PushButton*> (
+    _gui.createWidget("AlfiskoSkin/Button", glm::vec4(1.0f - 0.09f, 1.0f - 0.04f - 0.04f - 0.04f - 0.04f, 0.09f, 0.04f), glm::vec4(0.0f), "btn_reloadLevel")
+    );
+  btn_reloadLevel->setWantsMultiClickEvents(false);
+  btn_reloadLevel->setText("Reload Level");
+  btn_reloadLevel->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&GameplayScreen::onBtnReloadLevelClicked, this));
   
   CEGUI::DefaultWindow* label_FPSCounter = static_cast<CEGUI::DefaultWindow*> (
     _gui.createWidget("AlfiskoSkin/Label", glm::vec4(0.0f, 0.0f, 0.09f, 0.04f), glm::vec4(0.0f), "label_FPSCounter")

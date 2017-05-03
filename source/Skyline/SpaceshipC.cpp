@@ -110,8 +110,10 @@ void SpaceshipC::draw() {
 }
 
 void SpaceshipC::die() {
-  b2Vec2 position = _body->GetPosition();
-  _game->getGameplayScreen()->getParticleManager()->spawn("explosion1", position.x, position.y, _width, _height, _depth - 1, 1.0f / 60.0f);
+  if(_body != nullptr) { //THE least elegant way. 
+    b2Vec2 position = _body->GetPosition();
+    _game->getGameplayScreen()->getParticleManager()->spawn("explosion1", position.x, position.y, _width, _height, _depth - 1, 1.0f / 60.0f);
+  }
 }
 
 void SpaceshipC::createFixtures() {

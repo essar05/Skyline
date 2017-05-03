@@ -47,6 +47,7 @@ class GameplayScreen : public Ess2D::IGameScreen {
     bool onBtnSpawnEntityClicked(const CEGUI::EventArgs &e);
     bool onBtnExitGameClicked(const CEGUI::EventArgs &e);
     bool onBtnFreezeGameClicked(const CEGUI::EventArgs &e);
+    bool onBtnReloadLevelClicked(const CEGUI::EventArgs &e);
 
   private:
     void processInput(float deltaTime);
@@ -54,11 +55,14 @@ class GameplayScreen : public Ess2D::IGameScreen {
 
     Game* _game = nullptr;
 
-    float _scrollSpeed = 10.0f;
+    float _targetWidth = 1280.0f;
+    float _scrollSpeed = 7.0f;
+    std::string _levelName = "intro";
 
     bool _canPause = true;
     bool _isPaused = false;
     bool _isFreezed = true;
+    bool _reloadLevel = false;
 
     Ess2D::SpriteBatch _spriteBatch;
     Ess2D::Camera2D _camera;

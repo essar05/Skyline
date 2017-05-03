@@ -24,6 +24,7 @@ LevelSection::~LevelSection() {
 
 void LevelSection::update(float deltaTime) {
   EntityManager* entityManager = _game->getGameplayScreen()->getEntityManager();
+  Ess2D::Camera2D* camera = _game->getGameplayScreen()->getMainCamera();
   Level* level = _game->getGameplayScreen()->getLevel();
   Entity* entity;
 
@@ -43,7 +44,7 @@ void LevelSection::update(float deltaTime) {
     }
 
     //stop once we reach the first object that is not in viewport and it's not spawned. it means it is inactive atm because we haven't gotten there yet, so no reason to update any further since objects are sorted by their y position.
-    if(!entity->isSpawned() && !entity->inViewport()) {
+    if(!entity->isSpawned() && !entity->inViewport() && entity->getPosition().y > camera->getPosition().y) {
       break;
     }
 

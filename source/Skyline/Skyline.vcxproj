@@ -1,6 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="DebugNCP|Win32">
+      <Configuration>DebugNCP</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
@@ -23,6 +27,12 @@
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugNCP|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
@@ -36,6 +46,9 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugNCP|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -47,6 +60,14 @@
     <OutDir>$(SolutionDir)..\build\$(Configuration)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)..\build\obj\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugNCP|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(SolutionDir)..\lib\SDL2\include\;$(SolutionDir)..\lib\SDL2_Image\include\;$(SolutionDir)..\lib\glew\include\;$(SolutionDir)..\lib\freeglut\include\;$(SolutionDir)..\lib\glm\;$(SolutionDir)..\lib\freetype\include\;$(SolutionDir)Ess2D\Errors\;$(SolutionDir)Ess2D\;$(SolutionDir)..\lib\rapidjson\;$(SolutionDir)..\lib\box2d\include\;$(SolutionDir)..\lib\FMOD\lowlevel\include\;$(SolutionDir)..\lib\FMOD\studio\include\;$(SolutionDir)..\lib\CEGUI\include\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)..\build\$(Configuration)\Ess2D\;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)..\build\$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>$(SolutionDir)..\build\obj\$(Configuration)\$(ProjectName)\</IntDir>
+    <PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>$(SolutionDir)..\lib\SDL2\include\;$(SolutionDir)..\lib\SDL2_Image\include\;$(SolutionDir)..\lib\glew\include\;$(SolutionDir)..\lib\freeglut\include\;$(SolutionDir)..\lib\glm\;$(SolutionDir)..\lib\freetype\include\;$(SolutionDir)Ess2D;$(SolutionDir)Ess2D\Errors\;$(SolutionDir)..\lib\rapidjson\;$(SolutionDir)..\lib\box2d\include\;$(SolutionDir)..\lib\FMOD\lowlevel\include\;$(SolutionDir)..\lib\FMOD\studio\include\;$(SolutionDir)..\lib\CEGUI\include\;$(IncludePath)</IncludePath>
@@ -55,6 +76,31 @@
     <IntDir>$(SolutionDir)..\build\obj\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>Ess2D.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
+      <AdditionalOptions>/verbose:lib %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <PostBuildEvent>
+      <Command>cmd /c xcopy ".\Resources\Textures" "$(TargetDir)Textures\" /y /S
+cmd /c xcopy ".\Resources\Shaders" "$(TargetDir)Shaders\" /y /S
+cmd /c xcopy ".\Resources\Sounds" "$(TargetDir)Sounds\" /y /S
+cmd /c xcopy ".\Resources\GUI" "$(TargetDir)GUI\" /y /S
+cmd /c xcopy ".\Levels" "$(TargetDir)Levels\" /y /S</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugNCP|Win32'">
     <ClCompile>
       <PrecompiledHeader>
       </PrecompiledHeader>
