@@ -1,0 +1,5 @@
+<Imageset autoScaled="min" imagefile="SkylineHUD.png" name="SkylineHUD" nativeHorzRes="1280" nativeVertRes="720" version="2">
+    <Image height="267" name="pause_button" width="241" xPos="0" yPos="342" />
+    <Image height="342" name="points_powerup_lifes_05_life_indicator" width="486" xPos="486" yPos="342" />
+    <Image height="340" name="points_powerup_lifes" width="844" xPos="0" yPos="0" />
+</Imageset>

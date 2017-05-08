@@ -78,7 +78,7 @@ namespace Ess2D {
   }
 
   CEGUI::Window* GUI::loadLayout(const std::string& layout, const std::string& name) {
-    CEGUI::Window *newWindow = CEGUI::WindowManager::getSingleton().loadLayoutFromFile("GameMenu.layout");
+    CEGUI::Window *newWindow = CEGUI::WindowManager::getSingleton().loadLayoutFromFile(layout);
     _root->addChild(newWindow);
     return newWindow;
   }

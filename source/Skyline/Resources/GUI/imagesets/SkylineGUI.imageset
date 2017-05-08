@@ -1,0 +1,12 @@
+<Imageset autoScaled="vertical" imagefile="SkylineGUI.png" name="SkylineGUI" nativeHorzRes="1280" nativeVertRes="720" version="2">
+    <Image height="202" name="window_bottom" width="1524" xPos="0" yPos="1240" />
+    <Image height="890" name="window_middle_left" width="109" xPos="109" yPos="359" />
+    <Image height="890" name="window_middle_right" width="108" xPos="0" yPos="349" />
+    <Image height="350" name="window_top" width="1424" xPos="0" yPos="1443" />
+    <Image height="348" name="main_button_1" width="1132" xPos="0" yPos="0" />
+    <Image height="272" name="main_button_2" width="828" xPos="218" yPos="349" />
+    <Image height="300" name="main_button_3" width="800" xPos="218" yPos="622" />
+    <Image height="194" name="button_white" width="188" xPos="1915" yPos="971" />
+    <Image height="192" name="icon_exit" width="174" xPos="1725" yPos="392" />
+    <Image height="192" name="icon_arrow_right" width="174" xPos="1135" yPos="0" />
+</Imageset>

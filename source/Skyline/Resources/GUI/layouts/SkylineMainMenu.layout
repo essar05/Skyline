@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<GUILayout version="4" >
+    <Window type="DefaultWindow" name="MainMenuRoot" >
+        <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+        <Window type="Generic/Image" name="BackgroundImage" >
+            <Property name="Area" value="{{0,-2},{0,-108},{1,4},{2,-586}}" />
+            <Property name="Image" value="SkylineMainMenuBG/BG" />
+            <Property name="MaxSize" value="{{1,0},{2,0}}" />
+            <Property name="AspectMode" value="Shrink" />
+            <Property name="AspectRatio" value="1.33" />
+            <Property name="RiseOnClickEnabled" value="false" />
+            <Property name="MousePassThroughEnabled" value="true" />
+        </Window>
+        <Window type="DefaultWindow" name="StartGameContainer" >
+            <Property name="Area" value="{{0,476},{0,240},{1,-482},{1,-384}}" />
+            <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            <Property name="AlwaysOnTop" value="true" />
+            <Window type="Generic/Image" name="Image" >
+                <Property name="Area" value="{{0,0},{0,2},{0,398},{0,97}}" />
+                <Property name="Image" value="SkylineGUI/main_button_1" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="AspectMode" value="Shrink" />
+                <Property name="AspectRatio" value="3.25" />
+                <Property name="MouseInputPropagationEnabled" value="true" />
+            </Window>
+            <Window type="Generic/Image" name="Icon" >
+                <Property name="Area" value="{{0,17},{0,21},{0,77},{0,77}}" />
+                <Property name="Image" value="SkylineGUI/icon_arrow_right" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="AspectRatio" value="3.25" />
+                <Property name="MouseInputPropagationEnabled" value="true" />
+            </Window>
+            <Window type="Generic/Label" name="Label" >
+                <Property name="Area" value="{{0,80},{0,26},{0,288},{0,72}}" />
+                <Property name="Font" value="Neuropol-17" />
+                <Property name="Text" value="Start Game" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="NormalTextColour" value="FFFFFFFF" />
+                <Property name="MouseInputPropagationEnabled" value="true" />
+            </Window>
+        </Window>
+        <Window type="DefaultWindow" name="CreditsContainer" >
+            <Property name="Area" value="{{0,570},{0,338},{1,-509},{1,-308}}" />
+            <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            <Property name="AlwaysOnTop" value="true" />
+            <Window type="Generic/Image" name="Image" >
+                <Property name="Area" value="{{0,0},{0,2},{0,346},{0,71}}" />
+                <Property name="Image" value="SkylineGUI/main_button_2" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="AspectMode" value="Shrink" />
+                <Property name="AspectRatio" value="3" />
+                <Property name="MouseInputPropagationEnabled" value="true" />
+            </Window>
+            <Window type="Generic/Image" name="Icon" >
+                <Property name="Area" value="{{0,14},{0,19},{0,56},{0,56}}" />
+                <Property name="Image" value="SkylineIcons/question" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="AspectRatio" value="3" />
+                <Property name="MouseInputPropagationEnabled" value="true" />
+            </Window>
+            <Window type="Generic/Label" name="Label" >
+                <Property name="Area" value="{{0,67},{0,19},{0,195},{0,51}}" />
+                <Property name="Font" value="Neuropol-15" />
+                <Property name="Text" value="Credits" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="NormalTextColour" value="FFFFFFFF" />
+                <Property name="MouseInputPropagationEnabled" value="true" />
+            </Window>
+        </Window>
+        <Window type="DefaultWindow" name="ExitGameContainer" >
+            <Property name="Area" value="{{0,482},{0,413},{1,-544},{1,-203}}" />
+            <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            <Property name="AlwaysOnTop" value="true" />
+            <Window type="Generic/Image" name="Image" >
+                <Property name="Area" value="{{0,0},{0,2},{0,398},{0,97}}" />
+                <Property name="Image" value="SkylineGUI/main_button_3" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="AspectMode" value="Shrink" />
+                <Property name="AspectRatio" value="2.66" />
+                <Property name="MouseInputPropagationEnabled" value="true" />
+            </Window>
+            <Window type="Generic/Image" name="Icon" >
+                <Property name="Area" value="{{0,25},{0,28},{0,70},{0,73}}" />
+                <Property name="Image" value="SkylineGUI/icon_exit" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="AspectRatio" value="3.25" />
+                <Property name="MouseInputPropagationEnabled" value="true" />
+            </Window>
+            <Window type="Generic/Label" name="Label" >
+                <Property name="Area" value="{{0,69},{0,25},{0,277},{0,71}}" />
+                <Property name="Font" value="Neuropol-17" />
+                <Property name="Text" value="Quit Game" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="NormalTextColour" value="FFFFFFFF" />
+                <Property name="MouseInputPropagationEnabled" value="true" />
+            </Window>
+        </Window>
+        <Window type="Generic/Label" name="Copyright" >
+            <Property name="Area" value="{{0,0},{0,676},{0,300},{0,708}}" />
+            <Property name="Text" value="Platica Alexandru 2017" />
+            <Property name="Alpha" value="0.8" />
+            <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            <Property name="AlwaysOnTop" value="true" />
+            <Property name="NormalTextColour" value="FFFFFFFF" />
+            <Property name="HorizontalAlignment" value="Centre" />
+        </Window>
+        <Window type="Generic/Label" name="Logo" >
+            <Property name="Area" value="{{0,0},{0,88},{0,482},{0,227}}" />
+            <Property name="Font" value="SkylineLogo" />
+            <Property name="Text" value="Skyline £" />
+            <Property name="Alpha" value="0.8" />
+            <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            <Property name="AlwaysOnTop" value="true" />
+            <Property name="NormalTextColour" value="FFFFFFFF" />
+            <Property name="HorizontalAlignment" value="Centre" />
+        </Window>
+    </Window>
+</GUILayout>

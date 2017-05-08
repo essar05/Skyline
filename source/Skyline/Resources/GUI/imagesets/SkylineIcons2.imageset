@@ -1,0 +1,7 @@
+<Imageset autoScaled="vertical" imagefile="SkylineIcons2.png" name="SkylineIcons2" nativeHorzRes="1280" nativeVertRes="720" version="2">
+    <Image height="78" name="score" width="79" xPos="1" yPos="1" />
+    <Image height="78" name="target" width="79" xPos="81" yPos="1" />
+    <Image height="78" name="bomb" width="79" xPos="162" yPos="1" />
+    <Image height="78" name="time" width="79" xPos="243" yPos="2" />
+    <Image height="78" name="circle" width="79" xPos="321" yPos="1" />
+</Imageset>

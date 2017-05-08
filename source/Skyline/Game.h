@@ -30,9 +30,9 @@ class Game : public Ess2D::IGame {
 
     //settings
     float _maxFPS = 60.0f;
-    bool _debugMode = false;
+    bool _debugMode = true;
     bool _limitFPS = false;
-    bool _vSync = 0;
+    bool _vSync = true;
 
     float _width = 1280.0f;
     float _height = 720.0f;

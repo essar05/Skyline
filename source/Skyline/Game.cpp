@@ -22,7 +22,7 @@ void Game::addScreens() {
 
   _screenManager->addScreen(_mainMenuScreen);
   _screenManager->addScreen(_gameplayScreen);
-  _screenManager->setScreen(_gameplayScreen->getIndex());
+  _screenManager->setScreen(_mainMenuScreen->getIndex());
 }
 
 void Game::onInit() {
@@ -32,8 +32,7 @@ void Game::onInit() {
   _audioManager.loadBank("Sounds/Effects.bank", FMOD_STUDIO_LOAD_BANK_NORMAL);
 
   //temporarily disabled, cause it's very annoying when debugging (perhaps when playing too, lol)
-  /*_audioManager.playEvent("event:/music/heavyrain_david");
-  _audioManager.playEvent("event:/effects/ambience_ship");*/
+  _audioManager.playEvent("event:/music/heavyrain_david");
 }
 
 void Game::onExit() {
@@ -49,6 +48,7 @@ Game* Game::GetInstance() {
   if (instance == NULL) {
     instance = new Game();
   }
+  true;
   return instance;
 }
 

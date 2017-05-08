@@ -26,6 +26,7 @@ class Entity {
     void setVelocity(const glm::vec2& velocity);
     void setColor(const Ess2D::ColorRGBA8& color) { _color = color; }
     void setAngle(float angle);
+    void setHealth(float health);
 
     unsigned int getId() { return _id; }
     virtual int getType() { return ET_ENTITY; }
@@ -34,7 +35,7 @@ class Entity {
     glm::vec2 getDirection();
     float getWidth();
     float getHeight();
-    float getCollisionDamage() { return _collisionDamage; }
+    virtual float getCollisionDamage() { return _collisionDamage; }
     float getHealth() { return _health; }
     float getDepth() { return (float) _depth; }
     b2Body* getBody() { return _body;  }
@@ -46,6 +47,7 @@ class Entity {
     virtual void createB2Data();
     bool inViewport();
     float isSpawned();
+    bool isDead();
     void resetSmoothStates();
     void smoothStates(float timestepAccumulatorRatio);
     void spawn();

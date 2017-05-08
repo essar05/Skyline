@@ -51,6 +51,10 @@ void Entity::setAngle(float angle) {
   _body->SetTransform(_body->GetPosition(), glm::radians(angle));
 }
 
+void Entity::setHealth(float health) {
+  _health = health;
+}
+
 bool Entity::update(float deltaTime) {
   b2Vec2 velocity = _body->GetLinearVelocity();
   b2Vec2 force(0.0f, 0.0f), acceleration(0.0f, 0.0f);
@@ -68,6 +72,9 @@ bool Entity::update(float deltaTime) {
 
 void Entity::applyDamage(float damage) {
   _health -= damage;
+  if(_health < 0) {
+    _health = 0;
+  }
 }
 
 bool Entity::collidesWith(Entity* anotherEntity) {
@@ -182,6 +189,10 @@ void Entity::spawn() {
 
 float Entity::isSpawned() {
   return _isSpawned;
+}
+
+bool Entity::isDead() {
+  return _health <= 0;
 }
 
 glm::vec2 Entity::getPosition() {

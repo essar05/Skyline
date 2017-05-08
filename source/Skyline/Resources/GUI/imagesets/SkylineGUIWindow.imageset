@@ -1,0 +1,3 @@
+<Imageset autoScaled="vertical" imagefile="SkylineGUIWindow.png" name="SkylineGUIWindow" nativeHorzRes="1280" nativeVertRes="720" version="2">
+    <Image height="1398" name="SkyWindow" width="1610" xPos="0" yPos="0" />
+</Imageset>

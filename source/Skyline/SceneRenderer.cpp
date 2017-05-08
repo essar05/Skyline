@@ -41,6 +41,15 @@ void SceneRenderer::render() {
   game->getGameplayScreen()->getProjectileManager()->draw();
   game->getGameplayScreen()->getParticleManager()->draw();
 
+  if(game->getGameplayScreen()->isPaused()) {
+    Ess2D::Camera2D* camera = game->getGameplayScreen()->getMainCamera();
+
+    float cameraPosX = camera->getPosition().x - camera->getWorldScalar(game->getWidth()) / 2;
+    float cameraPosY = camera->getPosition().y - camera->getWorldScalar(game->getHeight()) / 2;
+
+    game->getGameplayScreen()->getSpriteBatch()->draw(glm::vec4(cameraPosX, cameraPosY, camera->getWorldScalar(game->getWidth()), camera->getWorldScalar(game->getHeight())), glm::vec4(0.0f, 0.0f, 1.0f, 1.0f), 0, Ess2D::ColorRGBA8(0, 0, 0, 180), 15000, 0.0f);
+  }
+
   game->getGameplayScreen()->getSpriteBatch()->end();
   game->getGameplayScreen()->getSpriteBatch()->render();
 

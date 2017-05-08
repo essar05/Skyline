@@ -25,7 +25,7 @@ private:
   void initThruster();
   void initProjectileSpawners();
 
-  float _fireRate = 8.0f;
+  float _fireRate = 1.0f;
   bool _isFiring = true;
   ProjectileSpawner _projectileSpawnerLeft;
   ProjectileSpawner _projectileSpawnerRight;

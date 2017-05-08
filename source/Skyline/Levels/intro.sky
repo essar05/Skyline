@@ -1,5 +1,6 @@
 {
   "defaultBackground": "Background/Background_Tilable.png",
+  "height": 10000,
   "sections": [
     {
       "width": 1280,
@@ -152,6 +153,111 @@
           "y": 4700,
 		  "velocityY": 0.0,
 		  "velocityX": 0.0
+        },
+		{
+          "type": "spaceshipB",
+          "xP": 0.5,
+          "y": 5500,
+		  "velocityY": 0.0,
+		  "velocityX": 0.0
+        },
+		{
+          "type": "spaceshipB",
+          "xP": 0.36,
+          "y": 5700,
+		  "velocityY": 0.0,
+		  "velocityX": 0.0
+        },
+		{
+          "type": "spaceshipB",
+          "xP": 0.59,
+          "y": 5770,
+		  "velocityY": 0.0,
+		  "velocityX": 0.0
+        },
+		{
+          "type": "spaceshipB",
+          "xP": 0.68,
+          "y": 5970,
+		  "velocityY": 0.0,
+		  "velocityX": 0.0
+        },
+		{
+          "type": "spaceshipB",
+          "xP": 0.36,
+          "y": 6020,
+		  "velocityY": 0.0,
+		  "velocityX": 0.0
+        },
+		{
+          "type": "spaceshipB",
+          "xP": 0.57,
+          "y": 6070,
+		  "velocityY": 0.0,
+		  "velocityX": 0.0
+        },
+		{
+          "type": "spaceshipB",
+          "xP": 0.45,
+          "y": 6200,
+		  "velocityY": 0.0,
+		  "velocityX": 0.0
+        },
+		{
+          "type": "spaceshipA",
+          "xP": 0.45,
+          "y": 6600,
+		  "velocityY": -1.0,
+		  "velocityX": -5.0
+        },
+		{
+          "type": "spaceshipA",
+          "xP": 0.55,
+          "y": 6600,
+		  "velocityY": -1.0,
+		  "velocityX": 5.0
+        },
+		{
+          "type": "spaceshipA",
+          "xP": 0.45,
+          "y": 6750,
+		  "velocityY": -1.0,
+		  "velocityX": -4.0
+        },
+		{
+          "type": "spaceshipA",
+          "xP": 0.55,
+          "y": 6750,
+		  "velocityY": -1.0,
+		  "velocityX": 4.0
+        },
+		{
+          "type": "spaceshipA",
+          "xP": 0.45,
+          "y": 6900,
+		  "velocityY": -1.0,
+		  "velocityX": -3.0
+        },
+		{
+          "type": "spaceshipA",
+          "xP": 0.55,
+          "y": 6900,
+		  "velocityY": -1.0,
+		  "velocityX": 3.0
+        },
+		{
+          "type": "spaceshipA",
+          "xP": 0.45,
+          "y": 7050,
+		  "velocityY": -1.0,
+		  "velocityX": -2.0
+        },
+		{
+          "type": "spaceshipA",
+          "xP": 0.55,
+          "y": 7050,
+		  "velocityY": -1.0,
+		  "velocityX": 2.0
         }
       ]
     }
@@ -190,12 +296,16 @@
       "y": 7000
     },
 	{
-      "textureName": "Background/Nebula_3.png",
-      "scale": 2.4,
-      "layer": 1,
-	  "displacement": 0.9,
-      "x": 700,
-      "y": 7000
+      "textureName": "Background/Red_Planet.png",
+      "scale": 1.0,
+      "layer": 3,
+	  "displacement": 0.5,
+      "x": 560,
+      "y": 8000
     }
+	
+	
+	
+	
   ]
 }

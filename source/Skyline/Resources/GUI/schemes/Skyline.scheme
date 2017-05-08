@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<GUIScheme version="5" name="Skyline">
+	<Imageset filename="SkylineHUD.imageset" />
+	<Imageset filename="SkylineGUI.imageset" />
+	<Imageset filename="SkylineIcons.imageset" />
+	<Imageset filename="SkylineIcons2.imageset" />
+	<Imageset filename="SkylineMainMenuBG.imageset" />
+	
+    <Font filename="SkylineLogo.font" />
+	<Font filename="Neuropol-15.font" />
+	<Font filename="Neuropol-17.font" />
+</GUIScheme>
+

@@ -31,6 +31,7 @@ class Level {
     void update(float deltaTime);
     void smoothStates();
     void resetSmoothStates();
+    bool isAtEnd();
 
     LevelSection* getSection(int index);
 
@@ -43,6 +44,7 @@ class Level {
     Game* _game;
     Player* _player;
 
+    float _end;
     float _height;
     float _width;
 

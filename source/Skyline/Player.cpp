@@ -198,6 +198,8 @@ bool Player::update(float deltaTime) {
   int projectilesSpawnedLeft = _projectileSpawnerLeft.update(deltaTime, _isFiring, Utils::toVec2(_body->GetPosition()) + _projectileSpawnerLeftPosition + glm::vec2(0.0f, 1.0f), glm::vec2(0.0f, 40.0f), _body->GetAngle());
   int projectilesSpawnedRight = _projectileSpawnerRight.update(deltaTime, _isFiring, Utils::toVec2(_body->GetPosition()) + _projectileSpawnerRightPosition + glm::vec2(0.0f, 1.0f), glm::vec2(0.0f, 40.0f), _body->GetAngle());
 
+  _game->getGameplayScreen()->addShotsFired(projectilesSpawnedLeft + projectilesSpawnedRight);
+
   if(projectilesSpawnedLeft > 0) {
     _muzzleLeftAnimationManager->play("MUZZLE");
     _muzzleLeftAnimationManager->getCurrent()->reset();
@@ -301,6 +303,9 @@ void Player::contact(Entity* e) {
   //not exactly elegant, but oh well.
   if(e->getType() == ET_ENTITY || e->getType() == ET_SPACESHIP_A || e->getType() == ET_SPACESHIP_B || e->getType() == ET_SPACESHIP_C || e->getType() == ET_SPACESHIP_D) {
     applyDamage(e->getCollisionDamage());
+
+    _game->getGameplayScreen()->addScore(50);
+    _game->getGameplayScreen()->addEnemyShot();
 
     _game->getGameplayScreen()->getEntityManager()->deleteEntity(e->getId(), true);
   }

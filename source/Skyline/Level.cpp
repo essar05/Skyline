@@ -48,6 +48,11 @@ Level::~Level() {
   //DELETE DECORATIONS !!!!!
 }
 
+bool Level::isAtEnd() {
+  Ess2D::Camera2D* camera = _game->getGameplayScreen()->getMainCamera();
+  return camera->getPosition().y >= camera->getWorldScalar(_end);
+}
+
 void Level::update(float deltaTime) {
   Ess2D::SpriteBatch* spriteBatch = _game->getGameplayScreen()->getSpriteBatch();
   Ess2D::Camera2D* camera = _game->getGameplayScreen()->getMainCamera();
@@ -231,6 +236,8 @@ void Level::load(std::string levelName) {
     std::string defaultBackground = document["defaultBackground"].GetString();
     this->setBackground( &(textureCache->getTexture("Textures/" + defaultBackground)) );
   }
+
+  _end = document["height"].GetInt();
 
   //LOAD SECTIONS
   if(!document.HasMember("sections") || !document["sections"].IsArray()) {

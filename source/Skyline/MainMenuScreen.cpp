@@ -21,37 +21,16 @@ void MainMenuScreen::build() {
   _gui.loadScheme("TaharezLook.scheme");
   _gui.loadScheme("AlfiskoSkin.scheme");
   _gui.loadScheme("Generic.scheme");
-  _gui.loadScheme("GameMenu.scheme");
+  _gui.loadScheme("Skyline.scheme");
   _gui.setFont("DejaVuSans-10");
 
   _gui.setMouseCursor("TaharezLook/MouseArrow");
   _gui.showMouseCursor();
-  
-  //create buttons
-  CEGUI::PushButton* btn_startGame = static_cast<CEGUI::PushButton*> (
-  _gui.createWidget("AlfiskoSkin/Button", glm::vec4(0.45f, 0.40f, 0.1f, 0.05f), glm::vec4(0.0f), "Btn_StartGame")
-  );
-  btn_startGame->setWantsMultiClickEvents(false);
-  btn_startGame->setText("Start Game");
 
-  CEGUI::PushButton* btn_credits = static_cast<CEGUI::PushButton*> (
-    _gui.createWidget("AlfiskoSkin/Button", glm::vec4(0.45f, 0.45f, 0.1f, 0.05f), glm::vec4(0.0f), "Btn_Credits")
-    );
-  btn_credits->setWantsMultiClickEvents(false);
-  btn_credits->setText("Credits");
-
-  CEGUI::PushButton* btn_exit = static_cast<CEGUI::PushButton*> (
-    _gui.createWidget("AlfiskoSkin/Button", glm::vec4(0.45f, 0.5f, 0.1f, 0.05f), glm::vec4(0.0f), "Btn_Exit")
-  );
-  btn_exit->setWantsMultiClickEvents(false);
-  btn_exit->setText("Exit");
-
-  //bind events
-  btn_startGame->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&MainMenuScreen::onBtnStartGameClicked, this));
-  btn_credits->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&MainMenuScreen::onBtnCreditsClicked, this));
-  btn_exit->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&MainMenuScreen::onBtnExitClicked, this));
-
-  //_gui.loadLayout("GameMenu.layout");
+  CEGUI::Window* menuRoot = _gui.loadLayout("SkylineMainMenu.layout");
+  menuRoot->getChild("StartGameContainer")->subscribeEvent(CEGUI::DefaultWindow::EventMouseClick, CEGUI::Event::Subscriber(&MainMenuScreen::onBtnStartGameClicked, this));
+  menuRoot->getChild("CreditsContainer")->subscribeEvent(CEGUI::DefaultWindow::EventMouseClick, CEGUI::Event::Subscriber(&MainMenuScreen::onBtnCreditsClicked, this));
+  menuRoot->getChild("ExitGameContainer")->subscribeEvent(CEGUI::DefaultWindow::EventMouseClick, CEGUI::Event::Subscriber(&MainMenuScreen::onBtnExitClicked, this));
 }
 
 void MainMenuScreen::destroy() {

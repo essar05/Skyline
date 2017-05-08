@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<GUILayout version="4" >
+    <Window type="Generic/Image" name="HUDRoot" >
+        <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+        <Property name="AutoRenderingSurface" value="true" />
+        <Property name="MousePassThroughEnabled" value="true" />
+        <Window type="DefaultWindow" name="PauseRoot" >
+            <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+            <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            <Property name="Visible" value="false" />
+            <Property name="MousePassThroughEnabled" value="true" />
+            <Window type="Generic/Image" name="WindowTop" >
+                <Property name="Area" value="{{0,429},{0,103},{0,874},{0,207}}" />
+                <Property name="Image" value="SkylineGUI/window_top" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            </Window>
+            <Window type="Generic/Label" name="Title" >
+                <Property name="Area" value="{{0,585},{0,150},{0,713},{0,182}}" />
+                <Property name="Font" value="Neuropol-17" />
+                <Property name="Text" value="PAUSED" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="NormalTextColour" value="FFFFFFFF" />
+            </Window>
+            <Window type="Generic/Image" name="WindowLeft" >
+                <Property name="Area" value="{{0,373},{0,201},{0,436},{0,445}}" />
+                <Property name="Image" value="SkylineGUI/window_middle_left" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            </Window>
+            <Window type="Generic/Image" name="WindowRight" >
+                <Property name="Area" value="{{0,866},{0,200},{0,929},{0,444}}" />
+                <Property name="Image" value="SkylineGUI/window_middle_right" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            </Window>
+            <Window type="Generic/Image" name="WindowBottom" >
+                <Property name="Area" value="{{0,395},{0,442},{0,872},{0,487}}" />
+                <Property name="Image" value="SkylineGUI/window_bottom" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            </Window>
+            <Window type="DefaultWindow" name="ContinueBtnContainer" >
+                <Property name="Area" value="{{0,427},{0,263},{1,-267},{1,-381}}" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Window type="Generic/Image" name="BtnIcon" >
+                    <Property name="Area" value="{{0,111},{0,3},{0,179},{0,71}}" />
+                    <Property name="Image" value="SkylineGUI/button_white" />
+                    <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                    <Property name="MouseInputPropagationEnabled" value="true" />
+                </Window>
+                <Window type="Generic/Image" name="Image" >
+                    <Property name="Area" value="{{0,115},{0,6},{0,173},{0,66}}" />
+                    <Property name="Image" value="SkylineGUI/icon_arrow_right" />
+                    <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                    <Property name="MouseInputPropagationEnabled" value="true" />
+                </Window>
+                <Window type="Generic/Label" name="Label" >
+                    <Property name="Area" value="{{0,201},{0,20},{0,373},{0,52}}" />
+                    <Property name="Font" value="Neuropol-15" />
+                    <Property name="Text" value="Continue" />
+                    <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                    <Property name="HorzFormatting" value="LeftAligned" />
+                    <Property name="NormalTextColour" value="FFFFFFFF" />
+                    <Property name="MouseInputPropagationEnabled" value="true" />
+                </Window>
+            </Window>
+            <Window type="DefaultWindow" name="QuitBtnContainer" >
+                <Property name="Area" value="{{0,428},{0,356},{1,-266},{1,-288}}" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Window type="Generic/Image" name="BtnIcon" >
+                    <Property name="Area" value="{{0,111},{0,3},{0,179},{0,71}}" />
+                    <Property name="Image" value="SkylineGUI/button_white" />
+                    <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                    <Property name="MousePassThroughEnabled" value="true" />
+                </Window>
+                <Window type="Generic/Image" name="Image" >
+                    <Property name="Area" value="{{0,115},{0,6},{0,173},{0,66}}" />
+                    <Property name="Image" value="SkylineGUI/icon_exit" />
+                    <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                    <Property name="MousePassThroughEnabled" value="true" />
+                </Window>
+                <Window type="Generic/Label" name="Label" >
+                    <Property name="Area" value="{{0,200},{0,18},{0,372},{0,50}}" />
+                    <Property name="Font" value="Neuropol-15" />
+                    <Property name="Text" value="Quit" />
+                    <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                    <Property name="HorzFormatting" value="LeftAligned" />
+                    <Property name="NormalTextColour" value="FFFFFFFF" />
+                    <Property name="MousePassThroughEnabled" value="true" />
+                </Window>
+            </Window>
+        </Window>
+        <Window type="DefaultWindow" name="Default" >
+            <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+            <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            <Property name="MousePassThroughEnabled" value="true" />
+            <Window type="Generic/Image" name="PauseButton" >
+                <Property name="Area" value="{{0,1166},{0,-2},{0,1294},{0,126}}" />
+                <Property name="Image" value="SkylineHUD/pause_button" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="AspectMode" value="Shrink" />
+                <Property name="AspectRatio" value="0.9" />
+            </Window>
+            <Window type="Generic/Image" name="Life" >
+                <Property name="Area" value="{{0,0},{0,-2},{0,433},{0,162}}" />
+                <Property name="Image" value="SkylineHUD/points_powerup_lifes" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="AspectMode" value="Shrink" />
+                <Property name="AspectRatio" value="2.48" />
+                <Window type="Generic/Label" name="HP" >
+                    <Property name="Area" value="{{0,48},{0,60},{0,123},{0,96}}" />
+                    <Property name="Font" value="Neuropol-15" />
+                    <Property name="Text" value="100%" />
+                    <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                    <Property name="NormalTextColour" value="FFFFFFFF" />
+                </Window>
+                <Window type="Generic/Label" name="Score" >
+                    <Property name="Area" value="{{0,158},{0,55},{0,348},{0,91}}" />
+                    <Property name="Font" value="Neuropol-17" />
+                    <Property name="Text" value="0" />
+                    <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                    <Property name="HorzFormatting" value="RightAligned" />
+                    <Property name="NormalTextColour" value="FFFFFFFF" />
+                </Window>
+            </Window>
+            <Window type="Generic/Image" name="HeartIcon3" >
+                <Property name="Area" value="{{0,305},{0,12},{0,532},{0,179}}" />
+                <Property name="Image" value="SkylineHUD/points_powerup_lifes_05_life_indicator" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            </Window>
+            <Window type="Generic/Image" name="HeartIcon2" >
+                <Property name="Area" value="{{0,286},{0,12},{0,513},{0,179}}" />
+                <Property name="Image" value="SkylineHUD/points_powerup_lifes_05_life_indicator" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            </Window>
+            <Window type="Generic/Image" name="HeartIcon1" >
+                <Property name="Area" value="{{0,267},{0,12},{0,494},{0,179}}" />
+                <Property name="Image" value="SkylineHUD/points_powerup_lifes_05_life_indicator" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            </Window>
+        </Window>
+        <Window type="DefaultWindow" name="VictoryRoot" >
+            <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+            <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            <Property name="Visible" value="false" />
+            <Property name="MousePassThroughEnabled" value="true" />
+            <Window type="Generic/Image" name="WindowTop" >
+                <Property name="Area" value="{{0,271},{0,67},{0,1029},{0,203}}" />
+                <Property name="Image" value="SkylineGUI/window_top" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            </Window>
+            <Window type="Generic/Label" name="Title" >
+                <Property name="Area" value="{{0,588},{0,131},{0,716},{0,163}}" />
+                <Property name="Font" value="Neuropol-17" />
+                <Property name="Text" value="VICTORY" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="NormalTextColour" value="FFFFFFFF" />
+            </Window>
+            <Window type="Generic/Image" name="WindowLeft" >
+                <Property name="Area" value="{{0,203},{0,197},{0,280},{0,524}}" />
+                <Property name="Image" value="SkylineGUI/window_middle_left" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            </Window>
+            <Window type="Generic/Image" name="WindowLeft2" >
+                <Property name="Area" value="{{0,1020},{0,197},{0,1097},{0,522}}" />
+                <Property name="Image" value="SkylineGUI/window_middle_right" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            </Window>
+            <Window type="Generic/Image" name="WindowBottom" >
+                <Property name="Area" value="{{0,218},{0,510},{0,1030},{0,646}}" />
+                <Property name="Image" value="SkylineGUI/window_bottom" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            </Window>
+            <Window type="DefaultWindow" name="ContinueBtnContainer" >
+                <Property name="Area" value="{{0,356},{0,531},{1,-666},{1,-113}}" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Window type="Generic/Image" name="BtnIcon" >
+                    <Property name="Area" value="{{0,0},{0,8},{0,68},{0,76}}" />
+                    <Property name="Image" value="SkylineGUI/button_white" />
+                    <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                    <Property name="MouseInputPropagationEnabled" value="true" />
+                </Window>
+                <Window type="Generic/Image" name="Image" >
+                    <Property name="Area" value="{{0,4},{0,11},{0,62},{0,71}}" />
+                    <Property name="Image" value="SkylineGUI/icon_arrow_right" />
+                    <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                    <Property name="MouseInputPropagationEnabled" value="true" />
+                </Window>
+                <Window type="Generic/Label" name="Label" >
+                    <Property name="Area" value="{{0,90},{0,29},{0,262},{0,61}}" />
+                    <Property name="Font" value="Neuropol-15" />
+                    <Property name="Text" value="Continue" />
+                    <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                    <Property name="NormalTextColour" value="FFFFFFFF" />
+                    <Property name="MouseInputPropagationEnabled" value="true" />
+                </Window>
+            </Window>
+            <Window type="DefaultWindow" name="QuitBtnContainer" >
+                <Property name="Area" value="{{0,686},{0,534},{1,-307},{1,-110}}" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Window type="Generic/Image" name="BtnIcon" >
+                    <Property name="Area" value="{{0,8},{0,5},{0,76},{0,73}}" />
+                    <Property name="Image" value="SkylineGUI/button_white" />
+                    <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                    <Property name="MousePassThroughEnabled" value="true" />
+                </Window>
+                <Window type="Generic/Image" name="Image" >
+                    <Property name="Area" value="{{0,12},{0,8},{0,70},{0,68}}" />
+                    <Property name="Image" value="SkylineGUI/icon_exit" />
+                    <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                    <Property name="MousePassThroughEnabled" value="true" />
+                </Window>
+                <Window type="Generic/Label" name="Label" >
+                    <Property name="Area" value="{{0,98},{0,26},{0,270},{0,58}}" />
+                    <Property name="Font" value="Neuropol-15" />
+                    <Property name="Text" value="Quit" />
+                    <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                    <Property name="NormalTextColour" value="FFFFFFFF" />
+                    <Property name="MousePassThroughEnabled" value="true" />
+                </Window>
+            </Window>
+            <Window type="Generic/Label" name="ScoreLabel" >
+                <Property name="Area" value="{{0,427},{0,255},{0,588},{0,287}}" />
+                <Property name="Font" value="Neuropol-15" />
+                <Property name="Text" value="Score:" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="HorzFormatting" value="LeftAligned" />
+                <Property name="NormalTextColour" value="FFFFFFFF" />
+            </Window>
+            <Window type="Generic/Label" name="AccuracyLabel" >
+                <Property name="Area" value="{{0,427},{0,303},{0,588},{0,335}}" />
+                <Property name="Font" value="Neuropol-15" />
+                <Property name="Text" value="Accuracy:" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="HorzFormatting" value="LeftAligned" />
+                <Property name="NormalTextColour" value="FFFFFFFF" />
+            </Window>
+            <Window type="Generic/Label" name="EnemiesShotLabel" >
+                <Property name="Area" value="{{0,426},{0,348},{0,705},{0,380}}" />
+                <Property name="Font" value="Neuropol-15" />
+                <Property name="Text" value="Enemies Shot:" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="HorzFormatting" value="LeftAligned" />
+                <Property name="NormalTextColour" value="FFFFFFFF" />
+            </Window>
+            <Window type="Generic/Label" name="GameTimeLabel" >
+                <Property name="Area" value="{{0,426},{0,391},{0,705},{0,423}}" />
+                <Property name="Font" value="Neuropol-15" />
+                <Property name="Text" value="Game Time:" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="HorzFormatting" value="LeftAligned" />
+                <Property name="NormalTextColour" value="FFFFFFFF" />
+            </Window>
+            <Window type="Generic/Image" name="ScoreIcon" >
+                <Property name="Area" value="{{0,387},{0,257},{0,420},{0,290}}" />
+                <Property name="Image" value="SkylineIcons2/score" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            </Window>
+            <Window type="Generic/Image" name="AccuracyIcon" >
+                <Property name="Area" value="{{0,386},{0,304},{0,419},{0,337}}" />
+                <Property name="Image" value="SkylineIcons2/target" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            </Window>
+            <Window type="Generic/Image" name="EnemiesShotIcon" >
+                <Property name="Area" value="{{0,386},{0,348},{0,419},{0,381}}" />
+                <Property name="Image" value="SkylineIcons2/bomb" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            </Window>
+            <Window type="Generic/Image" name="GameTimeIcon" >
+                <Property name="Area" value="{{0,386},{0,392},{0,419},{0,425}}" />
+                <Property name="Image" value="SkylineIcons2/time" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            </Window>
+            <Window type="Generic/Label" name="ScoreValue" >
+                <Property name="Area" value="{{0,736},{0,257},{0,897},{0,289}}" />
+                <Property name="Font" value="Neuropol-17" />
+                <Property name="Text" value="0" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="HorzFormatting" value="RightAligned" />
+                <Property name="NormalTextColour" value="FFFFFFFF" />
+            </Window>
+            <Window type="Generic/Label" name="AccuracyValue" >
+                <Property name="Area" value="{{0,737},{0,306},{0,898},{0,338}}" />
+                <Property name="Font" value="Neuropol-17" />
+                <Property name="Text" value="0" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="HorzFormatting" value="RightAligned" />
+                <Property name="NormalTextColour" value="FFFFFFFF" />
+            </Window>
+            <Window type="Generic/Label" name="EnemiesShotValue" >
+                <Property name="Area" value="{{0,737},{0,351},{0,898},{0,383}}" />
+                <Property name="Font" value="Neuropol-17" />
+                <Property name="Text" value="0" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="HorzFormatting" value="RightAligned" />
+                <Property name="NormalTextColour" value="FFFFFFFF" />
+            </Window>
+            <Window type="Generic/Label" name="GameTimeValue" >
+                <Property name="Area" value="{{0,737},{0,394},{0,898},{0,426}}" />
+                <Property name="Font" value="Neuropol-17" />
+                <Property name="Text" value="0" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="HorzFormatting" value="RightAligned" />
+                <Property name="NormalTextColour" value="FFFFFFFF" />
+            </Window>
+        </Window>
+        <Window type="DefaultWindow" name="GameOverRoot" >
+            <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+            <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            <Property name="Visible" value="false" />
+            <Property name="MousePassThroughEnabled" value="true" />
+            <Window type="Generic/Image" name="WindowTop" >
+                <Property name="Area" value="{{0,271},{0,67},{0,1029},{0,203}}" />
+                <Property name="Image" value="SkylineGUI/window_top" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            </Window>
+            <Window type="Generic/Label" name="Title" >
+                <Property name="Area" value="{{0,529},{0,131},{0,773},{0,163}}" />
+                <Property name="Font" value="Neuropol-17" />
+                <Property name="Text" value="GAME OVER" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="NormalTextColour" value="FFFFFFFF" />
+            </Window>
+            <Window type="Generic/Image" name="WindowLeft" >
+                <Property name="Area" value="{{0,203},{0,197},{0,280},{0,524}}" />
+                <Property name="Image" value="SkylineGUI/window_middle_left" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            </Window>
+            <Window type="Generic/Image" name="WindowLeft2" >
+                <Property name="Area" value="{{0,1020},{0,197},{0,1097},{0,522}}" />
+                <Property name="Image" value="SkylineGUI/window_middle_right" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            </Window>
+            <Window type="Generic/Image" name="WindowBottom" >
+                <Property name="Area" value="{{0,218},{0,510},{0,1030},{0,646}}" />
+                <Property name="Image" value="SkylineGUI/window_bottom" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            </Window>
+            <Window type="DefaultWindow" name="RestartBtnContainer" >
+                <Property name="Area" value="{{0,356},{0,531},{1,-666},{1,-113}}" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Window type="Generic/Image" name="BtnIcon" >
+                    <Property name="Area" value="{{0,0},{0,8},{0,68},{0,76}}" />
+                    <Property name="Image" value="SkylineGUI/button_white" />
+                    <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                    <Property name="MouseInputPropagationEnabled" value="true" />
+                </Window>
+                <Window type="Generic/Image" name="Image" >
+                    <Property name="Area" value="{{0,4},{0,11},{0,62},{0,71}}" />
+                    <Property name="Image" value="SkylineGUI/icon_arrow_right" />
+                    <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                    <Property name="MouseInputPropagationEnabled" value="true" />
+                </Window>
+                <Window type="Generic/Label" name="Label" >
+                    <Property name="Area" value="{{0,90},{0,29},{0,262},{0,61}}" />
+                    <Property name="Font" value="Neuropol-15" />
+                    <Property name="Text" value="Restart" />
+                    <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                    <Property name="NormalTextColour" value="FFFFFFFF" />
+                    <Property name="MouseInputPropagationEnabled" value="true" />
+                </Window>
+            </Window>
+            <Window type="DefaultWindow" name="QuitBtnContainer" >
+                <Property name="Area" value="{{0,686},{0,534},{1,-307},{1,-110}}" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Window type="Generic/Image" name="BtnIcon" >
+                    <Property name="Area" value="{{0,8},{0,5},{0,76},{0,73}}" />
+                    <Property name="Image" value="SkylineGUI/button_white" />
+                    <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                    <Property name="MousePassThroughEnabled" value="true" />
+                </Window>
+                <Window type="Generic/Image" name="Image" >
+                    <Property name="Area" value="{{0,12},{0,8},{0,70},{0,68}}" />
+                    <Property name="Image" value="SkylineGUI/icon_exit" />
+                    <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                    <Property name="MousePassThroughEnabled" value="true" />
+                </Window>
+                <Window type="Generic/Label" name="Label" >
+                    <Property name="Area" value="{{0,98},{0,26},{0,270},{0,58}}" />
+                    <Property name="Font" value="Neuropol-15" />
+                    <Property name="Text" value="Quit" />
+                    <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                    <Property name="NormalTextColour" value="FFFFFFFF" />
+                    <Property name="MousePassThroughEnabled" value="true" />
+                </Window>
+            </Window>
+            <Window type="Generic/Label" name="ScoreLabel" >
+                <Property name="Area" value="{{0,427},{0,255},{0,588},{0,287}}" />
+                <Property name="Font" value="Neuropol-15" />
+                <Property name="Text" value="Score:" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="HorzFormatting" value="LeftAligned" />
+                <Property name="NormalTextColour" value="FFFFFFFF" />
+            </Window>
+            <Window type="Generic/Label" name="AccuracyLabel" >
+                <Property name="Area" value="{{0,427},{0,303},{0,588},{0,335}}" />
+                <Property name="Font" value="Neuropol-15" />
+                <Property name="Text" value="Accuracy:" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="HorzFormatting" value="LeftAligned" />
+                <Property name="NormalTextColour" value="FFFFFFFF" />
+            </Window>
+            <Window type="Generic/Label" name="EnemiesShotLabel" >
+                <Property name="Area" value="{{0,426},{0,348},{0,705},{0,380}}" />
+                <Property name="Font" value="Neuropol-15" />
+                <Property name="Text" value="Enemies Shot:" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="HorzFormatting" value="LeftAligned" />
+                <Property name="NormalTextColour" value="FFFFFFFF" />
+            </Window>
+            <Window type="Generic/Label" name="GameTimeLabel" >
+                <Property name="Area" value="{{0,426},{0,391},{0,705},{0,423}}" />
+                <Property name="Font" value="Neuropol-15" />
+                <Property name="Text" value="Game Time:" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="HorzFormatting" value="LeftAligned" />
+                <Property name="NormalTextColour" value="FFFFFFFF" />
+            </Window>
+            <Window type="Generic/Image" name="ScoreIcon" >
+                <Property name="Area" value="{{0,387},{0,257},{0,420},{0,290}}" />
+                <Property name="Image" value="SkylineIcons2/score" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            </Window>
+            <Window type="Generic/Image" name="AccuracyIcon" >
+                <Property name="Area" value="{{0,386},{0,304},{0,419},{0,337}}" />
+                <Property name="Image" value="SkylineIcons2/target" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            </Window>
+            <Window type="Generic/Image" name="EnemiesShotIcon" >
+                <Property name="Area" value="{{0,386},{0,348},{0,419},{0,381}}" />
+                <Property name="Image" value="SkylineIcons2/bomb" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            </Window>
+            <Window type="Generic/Image" name="GameTimeIcon" >
+                <Property name="Area" value="{{0,386},{0,392},{0,419},{0,425}}" />
+                <Property name="Image" value="SkylineIcons2/time" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            </Window>
+            <Window type="Generic/Label" name="ScoreValue" >
+                <Property name="Area" value="{{0,736},{0,257},{0,897},{0,289}}" />
+                <Property name="Font" value="Neuropol-17" />
+                <Property name="Text" value="0" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="HorzFormatting" value="RightAligned" />
+                <Property name="NormalTextColour" value="FFFFFFFF" />
+            </Window>
+            <Window type="Generic/Label" name="AccuracyValue" >
+                <Property name="Area" value="{{0,737},{0,306},{0,898},{0,338}}" />
+                <Property name="Font" value="Neuropol-17" />
+                <Property name="Text" value="0" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="HorzFormatting" value="RightAligned" />
+                <Property name="NormalTextColour" value="FFFFFFFF" />
+            </Window>
+            <Window type="Generic/Label" name="EnemiesShotValue" >
+                <Property name="Area" value="{{0,737},{0,351},{0,898},{0,383}}" />
+                <Property name="Font" value="Neuropol-17" />
+                <Property name="Text" value="0" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="HorzFormatting" value="RightAligned" />
+                <Property name="NormalTextColour" value="FFFFFFFF" />
+            </Window>
+            <Window type="Generic/Label" name="GameTimeValue" >
+                <Property name="Area" value="{{0,737},{0,394},{0,898},{0,426}}" />
+                <Property name="Font" value="Neuropol-17" />
+                <Property name="Text" value="0" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="HorzFormatting" value="RightAligned" />
+                <Property name="NormalTextColour" value="FFFFFFFF" />
+            </Window>
+        </Window>
+    </Window>
+</GUILayout>

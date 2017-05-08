@@ -1,0 +1,3 @@
+<Imageset autoScaled="vertical" imagefile="SkylineMainMenuBG.jpg" name="SkylineMainMenuBG" nativeHorzRes="1280" nativeVertRes="720" version="2">
+    <Image height="1534" name="BG" width="2046" xPos="0" yPos="0" />
+</Imageset>

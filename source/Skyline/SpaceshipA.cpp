@@ -7,6 +7,8 @@ SpaceshipA::SpaceshipA(int textureId, glm::vec4 uv, float width, float height, g
   initAnimations();
   initThruster();
   initProjectileSpawners();
+
+  _collisionDamage = 50.0f;
 }
 
 SpaceshipA::~SpaceshipA() {

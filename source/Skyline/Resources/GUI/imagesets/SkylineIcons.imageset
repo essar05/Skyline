@@ -1,0 +1,10 @@
+<Imageset autoScaled="vertical" imagefile="SkylineIcons.png" name="SkylineIcons" nativeHorzRes="1280" nativeVertRes="720" version="2">
+    <Image height="146" name="magnet" width="146" xPos="0" yPos="0" />
+    <Image height="146" name="explosion" width="148" xPos="0" yPos="150" />
+    <Image height="146" name="shield" width="148" xPos="151" yPos="2" />
+    <Image height="146" name="question" width="148" xPos="152" yPos="150" />
+    <Image height="146" name="bomb" width="148" xPos="302" yPos="149" />
+    <Image height="146" name="cogs" width="148" xPos="301" yPos="2" />
+    <Image height="146" name="lines" width="148" xPos="451" yPos="3" />
+    <Image height="146" name="time" width="148" xPos="451" yPos="150" />
+</Imageset>

@@ -103,7 +103,6 @@ namespace Ess2D {
         case ScreenState::CHANGE_NEXT:
           _currentScreen->onExit();
           _currentScreen = _screenManager->moveNext();
-          std::cout << "change next";
           if(_currentScreen != nullptr) {
             _currentScreen->setRunning();
             _currentScreen->onEntry();

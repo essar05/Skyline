@@ -49,7 +49,7 @@ namespace Ess2D {
       WindowMode _windowMode = WindowMode::NORMAL;
       float _width = 1280.0f;
       float _height = 720.0f;
-      bool _vSync = 0;
+      bool _vSync = true;
 
       ScreenManager* _screenManager;
       IGameScreen* _currentScreen = nullptr;

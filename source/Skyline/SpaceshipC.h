@@ -20,12 +20,15 @@ protected:
 
   int getType() override { return ET_SPACESHIP_C; }
 
+protected:
+  float _collisionDamage = 50.0f;
+
 private:
   void initAnimations();
   void initThruster();
   void initProjectileSpawners();
 
-  float _fireRate = 8.0f;
+  float _fireRate = 1.0f;
   bool _isFiring = true;
   ProjectileSpawner _projectileSpawnerLeft;
   ProjectileSpawner _projectileSpawnerRight;

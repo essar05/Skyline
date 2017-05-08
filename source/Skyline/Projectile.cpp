@@ -63,6 +63,22 @@ void Projectile::contact(Entity* e) {
     && _source == ET_PLAYER
   ) { //todo change to ET_DAMAGE
     e->applyDamage(this->getDamage());
+
+    _game->getGameplayScreen()->addShotsHit(1);
+
+    if(e->isDead()) {
+      _game->getGameplayScreen()->addScore(50);
+      _game->getGameplayScreen()->addEnemyShot();
+    }
+
+    _game->getGameplayScreen()->getProjectileManager()->deleteProjectile(this->getId(), true);
+  }
+
+  if(e->getType() == ET_PLAYER && 
+    (_source == ET_SPACESHIP_A || _source == ET_SPACESHIP_B || _source == ET_SPACESHIP_C || _source == ET_SPACESHIP_D || _source == ET_ENTITY)
+    ) {
+    e->applyDamage(this->getDamage());
+
     _game->getGameplayScreen()->getProjectileManager()->deleteProjectile(this->getId(), true);
   }
 }
