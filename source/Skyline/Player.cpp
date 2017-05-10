@@ -308,12 +308,17 @@ void Player::correctProjectileSpawnersPosition(const std::string& currentPlayerF
 void Player::contact(Entity* e) {
   //not exactly elegant, but oh well.
   if(e->getType() == ET_ENTITY || e->getType() == ET_SPACESHIP_A || e->getType() == ET_SPACESHIP_B || e->getType() == ET_SPACESHIP_C || e->getType() == ET_SPACESHIP_D) {
-    applyDamage(e->getCollisionDamage());
+    if(e->isDead()) { //if it's dead, we don't care about this collision
+      return;
+    }
+    
+    applyDamage(e->getCollisionDamage()); //apply collision damage to player
+    e->setHealth(0); //kill entity
 
     _game->getGameplayScreen()->addScore(50);
     _game->getGameplayScreen()->addEnemyShot();
 
-    _game->getGameplayScreen()->getEntityManager()->deleteEntity(e->getId(), true);
+    _game->getGameplayScreen()->getEntityManager()->deleteEntity(e->getId(), true); //schedule deletion
   }
 
   if(e->getType() == ET_POWERUP) {

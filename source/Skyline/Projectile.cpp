@@ -96,9 +96,12 @@ void Projectile::contact(Entity* e) {
       e->getType() == ET_SPACESHIP_C || e->getType() == ET_SPACESHIP_D)
     && _source == ET_PLAYER
   ) { //todo change to ET_DAMAGE
-    e->applyDamage(this->getDamage());
-
     _game->getGameplayScreen()->addShotsHit(1);
+    if(e->isDead()) {
+      return;
+    }
+
+    e->applyDamage(this->getDamage());
 
     if(e->isDead()) {
       _game->getGameplayScreen()->addScore(50);

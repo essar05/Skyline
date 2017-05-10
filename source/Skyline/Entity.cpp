@@ -91,7 +91,8 @@ bool Entity::collidesWith(Entity* anotherEntity) {
 }
 
 bool Entity::inViewport() {
-  glm::vec2 viewportSize = _game->getGameplayScreen()->getMainCamera()->getWorldViewportSize();
+  glm::vec2 viewportSize = _game->getGameplayScreen()->getMainCamera()->getViewportSize() / _game->getGameplayScreen()->getMainCamera()->getScale();
+
   glm::vec2 cameraPosition = _game->getGameplayScreen()->getMainCamera()->getPosition() / _game->getGameplayScreen()->getMainCamera()->getZoom();
 
   return collidesWith(viewportSize.x, viewportSize.y, cameraPosition);

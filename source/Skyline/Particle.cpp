@@ -45,7 +45,6 @@ Particle::Particle(std::string type, float x, float y, float width, float height
     atlasMetaData = "Explosions/explosion6.json";
   }
 
-
   float scale = (float) (rand() % 100) / 100 + 1.0f; //RANDOM SCALING between 1.0f and 2.0f
 
   _width = width * scale;

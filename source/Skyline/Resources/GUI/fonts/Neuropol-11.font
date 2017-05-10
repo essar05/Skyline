@@ -1,2 +1,2 @@
 <?xml version="1.0" ?>
-<Font version="3" name="Neuropol-11" filename="neuropol.ttf" type="FreeType" size="11" nativeHorzRes="1280" nativeVertRes="720" autoScaled="vertical"/>
+<Font version="3" name="Neuropol-11" filename="neuropol.ttf" type="FreeType" size="11" nativeHorzRes="1280" nativeVertRes="720" autoScaled="false"/>

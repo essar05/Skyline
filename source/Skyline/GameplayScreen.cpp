@@ -33,6 +33,8 @@ void GameplayScreen::onExit() {
 }
 
 void GameplayScreen::build() {
+  srand(time(NULL));
+
   _entityManager = new EntityManager;
   _projectileManager = new ProjectileManager;
 

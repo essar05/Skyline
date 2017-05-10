@@ -44,7 +44,7 @@ void LevelSection::update(float deltaTime) {
     }
 
     //stop once we reach the first object that is not in viewport and it's not spawned. it means it is inactive atm because we haven't gotten there yet, so no reason to update any further since objects are sorted by their y position.
-    if(!entity->isSpawned() && !entity->inViewport() && entity->getPosition().y > camera->getPosition().y) {
+    if(!entity->isSpawned() && !entity->inViewport() && entity->getPosition().y > camera->getPosition().y / camera->getZoom()) {
       break;
     }
 

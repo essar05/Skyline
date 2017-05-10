@@ -14,11 +14,12 @@
             <Property name="MousePassThroughEnabled" value="true" />
         </Window>
         <Window type="DefaultWindow" name="StartGameContainer" >
-            <Property name="Area" value="{{0,476},{0,240},{1,-482},{1,-384}}" />
+            <Property name="Area" value="{{0,0},{0.32,0},{0,360},{0.32,98}}" />
             <Property name="MaxSize" value="{{1,0},{1,0}}" />
             <Property name="AlwaysOnTop" value="true" />
+            <Property name="HorizontalAlignment" value="Centre" />
             <Window type="Generic/Image" name="Image" >
-                <Property name="Area" value="{{0,0},{0,2},{0,398},{0,97}}" />
+                <Property name="Area" value="{{0,0},{0,0},{0,398},{0,97}}" />
                 <Property name="Image" value="SkylineGUI/main_button_1" />
                 <Property name="MaxSize" value="{{1,0},{1,0}}" />
                 <Property name="AspectMode" value="Shrink" />
@@ -42,11 +43,12 @@
             </Window>
         </Window>
         <Window type="DefaultWindow" name="CreditsContainer" >
-            <Property name="Area" value="{{0,570},{0,338},{1,-509},{1,-308}}" />
+            <Property name="Area" value="{{0,0},{0.32,90},{0,210},{0.32,160}}" />
             <Property name="MaxSize" value="{{1,0},{1,0}}" />
             <Property name="AlwaysOnTop" value="true" />
+            <Property name="HorizontalAlignment" value="Centre" />
             <Window type="Generic/Image" name="Image" >
-                <Property name="Area" value="{{0,0},{0,2},{0,346},{0,71}}" />
+                <Property name="Area" value="{{0,0},{0,0},{0,346},{0,71}}" />
                 <Property name="Image" value="SkylineGUI/main_button_2" />
                 <Property name="MaxSize" value="{{1,0},{1,0}}" />
                 <Property name="AspectMode" value="Shrink" />
@@ -70,9 +72,10 @@
             </Window>
         </Window>
         <Window type="DefaultWindow" name="ExitGameContainer" >
-            <Property name="Area" value="{{0,482},{0,413},{1,-544},{1,-203}}" />
+            <Property name="Area" value="{{0,-40},{0.32,155},{0,220},{0.32,253}}" />
             <Property name="MaxSize" value="{{1,0},{1,0}}" />
             <Property name="AlwaysOnTop" value="true" />
+            <Property name="HorizontalAlignment" value="Centre" />
             <Window type="Generic/Image" name="Image" >
                 <Property name="Area" value="{{0,0},{0,2},{0,398},{0,97}}" />
                 <Property name="Image" value="SkylineGUI/main_button_3" />
@@ -98,12 +101,13 @@
             </Window>
         </Window>
         <Window type="Generic/Label" name="Copyright" >
-            <Property name="Area" value="{{0,0},{0,676},{0,300},{0,708}}" />
+            <Property name="Area" value="{{0,0},{0,-30},{0,300},{0,2}}" />
             <Property name="Text" value="Platica Alexandru 2017" />
             <Property name="Alpha" value="0.8" />
             <Property name="MaxSize" value="{{1,0},{1,0}}" />
             <Property name="AlwaysOnTop" value="true" />
             <Property name="NormalTextColour" value="FFFFFFFF" />
+            <Property name="VerticalAlignment" value="Bottom" />
             <Property name="HorizontalAlignment" value="Centre" />
         </Window>
         <Window type="Generic/Label" name="Logo" >

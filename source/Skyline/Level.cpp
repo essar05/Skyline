@@ -50,7 +50,7 @@ Level::~Level() {
 
 bool Level::isAtEnd() {
   Ess2D::Camera2D* camera = _game->getGameplayScreen()->getMainCamera();
-  return camera->getPosition().y >= camera->getWorldScalar(_end);
+  return camera->getPosition().y / camera->getZoom() >= camera->getWorldScalar(_end);
 }
 
 void Level::update(float deltaTime) {

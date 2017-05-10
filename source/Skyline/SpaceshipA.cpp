@@ -113,6 +113,7 @@ void SpaceshipA::draw() {
 void SpaceshipA::die() {
   if(_body != nullptr) { //THE least elegant way. 
     b2Vec2 position = _body->GetPosition();
+
     int explosionIndex = rand() % 6 + 1;
     _game->getGameplayScreen()->getParticleManager()->spawn("explosion" + std::to_string(explosionIndex), position.x, position.y, _width, _height, (float)_depth - 1, 1.5f / 60.0f);
     _game->getGameplayScreen()->getPowerupManager()->spawn(position.x, position.y);
