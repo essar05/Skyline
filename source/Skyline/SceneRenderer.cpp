@@ -40,6 +40,7 @@ void SceneRenderer::render() {
   game->getGameplayScreen()->getLevel()->draw();
   game->getGameplayScreen()->getProjectileManager()->draw();
   game->getGameplayScreen()->getParticleManager()->draw();
+  game->getGameplayScreen()->getPowerupManager()->draw();
 
   if(game->getGameplayScreen()->isPaused()) {
     Ess2D::Camera2D* camera = game->getGameplayScreen()->getMainCamera();

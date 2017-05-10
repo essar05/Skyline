@@ -42,7 +42,7 @@ bool SpaceshipC::update(float deltaTime) {
   _projectileSpawnerLeftPosition = Utils::rotatePoint(_projectileSpawnerLeftPosition, glm::vec2(0.0f, 0.0f), _body->GetAngle());
   _projectileSpawnerRightPosition = Utils::rotatePoint(_projectileSpawnerRightPosition, glm::vec2(0.0f, 0.0f), _body->GetAngle());
 
-  glm::vec2 projectileVelocity = glm::vec2(0.0f, 40.0f);
+  glm::vec2 projectileVelocity = glm::vec2(0.0f, 1.0f);
   projectileVelocity = Utils::rotatePoint(projectileVelocity, glm::vec2(0.0f, 0.0f), _body->GetAngle());
 
   glm::vec2 positionCorrectionLeft = Utils::rotatePoint(glm::vec2(-0.05f, 0.5f), glm::vec2(0.0f, 0.0f), _body->GetAngle());
@@ -112,7 +112,8 @@ void SpaceshipC::draw() {
 void SpaceshipC::die() {
   if(_body != nullptr) { //THE least elegant way. 
     b2Vec2 position = _body->GetPosition();
-    _game->getGameplayScreen()->getParticleManager()->spawn("explosion1", position.x, position.y, _width, _height, _depth - 1, 1.0f / 60.0f);
+    int explosionIndex = rand() % 6 + 1;
+    _game->getGameplayScreen()->getParticleManager()->spawn("explosion" + std::to_string(explosionIndex), position.x, position.y, _width, _height, _depth - 1, 1.0f / 60.0f);
   }
 }
 
@@ -215,8 +216,13 @@ void SpaceshipC::initThruster() {
 void SpaceshipC::initProjectileSpawners() {
   _projectileSpawnerLeft = ProjectileSpawner(_fireRate, glm::vec2(0.4f, 0.7f), 40.0f);
   _projectileSpawnerLeft.setSource(this->getType());
+  _projectileSpawnerLeft.setVelocity(15.0f);
+  _projectileSpawnerLeft.setSkin("bullet_violet");
+
   _projectileSpawnerRight = ProjectileSpawner(_fireRate, glm::vec2(0.4f, 0.7f), 40.0f);
   _projectileSpawnerRight.setSource(this->getType());
+  _projectileSpawnerRight.setVelocity(15.0f);
+  _projectileSpawnerRight.setSkin("bullet_violet");
 
   Ess2D::TextureAtlas * muzzleAtlas = _game->getGameplayScreen()->getTextureCache()->getAtlas("Textures/muzzle.png", "Textures/muzzle.json");
 

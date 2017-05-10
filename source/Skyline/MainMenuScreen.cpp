@@ -19,10 +19,9 @@ int MainMenuScreen::getPreviousScreenIndex() const {
 void MainMenuScreen::build() {
   _gui.init("GUI");
   _gui.loadScheme("TaharezLook.scheme");
-  _gui.loadScheme("AlfiskoSkin.scheme");
   _gui.loadScheme("Generic.scheme");
   _gui.loadScheme("Skyline.scheme");
-  _gui.setFont("DejaVuSans-10");
+  _gui.setFont("Neuropol-11");
 
   _gui.setMouseCursor("TaharezLook/MouseArrow");
   _gui.showMouseCursor();
@@ -31,6 +30,13 @@ void MainMenuScreen::build() {
   menuRoot->getChild("StartGameContainer")->subscribeEvent(CEGUI::DefaultWindow::EventMouseClick, CEGUI::Event::Subscriber(&MainMenuScreen::onBtnStartGameClicked, this));
   menuRoot->getChild("CreditsContainer")->subscribeEvent(CEGUI::DefaultWindow::EventMouseClick, CEGUI::Event::Subscriber(&MainMenuScreen::onBtnCreditsClicked, this));
   menuRoot->getChild("ExitGameContainer")->subscribeEvent(CEGUI::DefaultWindow::EventMouseClick, CEGUI::Event::Subscriber(&MainMenuScreen::onBtnExitClicked, this));
+
+  menuRoot->getChild("StartGameContainer")->subscribeEvent(CEGUI::DefaultWindow::EventMouseEntersArea, CEGUI::Event::Subscriber(&MainMenuScreen::onBtnStartGameMouseOver, this));
+  menuRoot->getChild("StartGameContainer")->subscribeEvent(CEGUI::DefaultWindow::EventMouseLeavesArea, CEGUI::Event::Subscriber(&MainMenuScreen::onBtnStartGameMouseOut, this));
+  menuRoot->getChild("CreditsContainer")->subscribeEvent(CEGUI::DefaultWindow::EventMouseEntersArea, CEGUI::Event::Subscriber(&MainMenuScreen::onBtnCreditsMouseOver, this));
+  menuRoot->getChild("CreditsContainer")->subscribeEvent(CEGUI::DefaultWindow::EventMouseLeavesArea, CEGUI::Event::Subscriber(&MainMenuScreen::onBtnCreditsMouseOut, this));
+  menuRoot->getChild("ExitGameContainer")->subscribeEvent(CEGUI::DefaultWindow::EventMouseEntersArea, CEGUI::Event::Subscriber(&MainMenuScreen::onBtnExitGameMouseOver, this));
+  menuRoot->getChild("ExitGameContainer")->subscribeEvent(CEGUI::DefaultWindow::EventMouseLeavesArea, CEGUI::Event::Subscriber(&MainMenuScreen::onBtnExitGameMouseOut, this));
 }
 
 void MainMenuScreen::destroy() {
@@ -81,4 +87,38 @@ bool MainMenuScreen::onBtnCreditsClicked(const CEGUI::EventArgs &e) {
 bool MainMenuScreen::onBtnExitClicked(const CEGUI::EventArgs &e) {
   _currentState = Ess2D::ScreenState::EXIT_APPLICATION;
   return true;
+}
+
+bool MainMenuScreen::onBtnStartGameMouseOver(const CEGUI::EventArgs &e) {
+  toggleMainMenuButtonHover("MainMenuRoot/StartGameContainer/Label", true);
+  return true;
+}
+
+bool MainMenuScreen::onBtnStartGameMouseOut(const CEGUI::EventArgs &e) {
+  toggleMainMenuButtonHover("MainMenuRoot/StartGameContainer/Label", false);
+  return true;
+}
+
+bool MainMenuScreen::onBtnCreditsMouseOver(const CEGUI::EventArgs &e) {
+  toggleMainMenuButtonHover("MainMenuRoot/CreditsContainer/Label", true);
+  return true;
+}
+
+bool MainMenuScreen::onBtnCreditsMouseOut(const CEGUI::EventArgs &e) {
+  toggleMainMenuButtonHover("MainMenuRoot/CreditsContainer/Label", false);
+  return true;
+}
+
+bool MainMenuScreen::onBtnExitGameMouseOver(const CEGUI::EventArgs &e) {
+  toggleMainMenuButtonHover("MainMenuRoot/ExitGameContainer/Label", true);
+  return true;
+}
+
+bool MainMenuScreen::onBtnExitGameMouseOut(const CEGUI::EventArgs &e) {
+  toggleMainMenuButtonHover("MainMenuRoot/ExitGameContainer/Label", false);
+  return true;
+}
+
+void MainMenuScreen::toggleMainMenuButtonHover(const std::string& elementName, bool isHovering) {
+  _gui.getRootWindow()->getChild(elementName)->setProperty("NormalTextColour", isHovering ? _buttonHoverColor : _buttonNormalColor);
 }

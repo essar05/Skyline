@@ -14,6 +14,7 @@
 #include "PostProcessing.h"
 #include "ScreenIndices.h"
 #include "ParticleManager.h"
+#include "PowerupManager.h"
 
 class Level;
 class ProjectileManager;
@@ -46,6 +47,7 @@ class GameplayScreen : public Ess2D::IGameScreen {
     void addShotsHit(int shots);
     void addEnemyShot();
     void addGameTime(float deltaTime);
+    void addHealth(float health);
 
     Ess2D::SpriteBatch* getSpriteBatch();
     Ess2D::Camera2D* getMainCamera();
@@ -55,6 +57,7 @@ class GameplayScreen : public Ess2D::IGameScreen {
     ProjectileManager* getProjectileManager();
     SceneRenderer* getSceneRenderer();
     ParticleManager* getParticleManager();
+    PowerupManager* getPowerupManager();
 
     bool onBtnExitGameClicked(const CEGUI::EventArgs &e);
     bool onBtnFreezeGameClicked(const CEGUI::EventArgs &e);
@@ -108,6 +111,7 @@ class GameplayScreen : public Ess2D::IGameScreen {
     EntityManager* _entityManager;
     ProjectileManager* _projectileManager;
     ParticleManager _particleManager;
+    PowerupManager _powerupManager;
 
 };
 

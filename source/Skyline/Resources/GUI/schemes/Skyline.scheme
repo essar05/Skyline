@@ -7,6 +7,7 @@
 	<Imageset filename="SkylineMainMenuBG.imageset" />
 	
     <Font filename="SkylineLogo.font" />
+	<Font filename="Neuropol-11.font" />
 	<Font filename="Neuropol-15.font" />
 	<Font filename="Neuropol-17.font" />
 </GUIScheme>

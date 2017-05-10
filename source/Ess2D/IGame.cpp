@@ -12,7 +12,7 @@ namespace Ess2D {
 
   void IGame::boot() {
     std::cout << "Booting from " << SDL_GetBasePath() << std::endl;
-
+    
     init();
     _state = GameState::RUNNING;
   }

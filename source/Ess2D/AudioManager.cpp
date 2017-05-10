@@ -89,6 +89,26 @@ namespace Ess2D {
     _errorCheck( _fmod->update() );
   }
 
+  FMOD::Studio::EventInstance* AudioManager::getEvent(const std::string &eventName) {
+    auto it = _eventInstances.find(eventName);
+    if(it == _eventInstances.end()) {
+      return nullptr;
+    }
+
+    return it->second;
+  }
+
+  void AudioManager::setMasterVolume(float volume) {
+    FMOD::Studio::Bus* masterBus;
+    _errorCheck(_fmod->getBus("bus:/", &masterBus));
+
+    if(volume > 1.0f) {
+      volume = 1.0f;
+    }
+
+    _errorCheck(masterBus->setVolume(volume));
+  }
+
   void AudioManager::_errorCheck(FMOD_RESULT result) {
     if (result != FMOD_OK) {
       throw ERuntimeException("FMOD Error: " + std::string(FMOD_ErrorString(result)));

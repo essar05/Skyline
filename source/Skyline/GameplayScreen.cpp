@@ -62,6 +62,8 @@ void GameplayScreen::build() {
   _textureCache.getAtlas("Textures/Explosions/explosion3.png", "Textures/Explosions/explosion3.json");
   _textureCache.getAtlas("Textures/Explosions/explosion4.png", "Textures/Explosions/explosion4.json");
   _textureCache.getAtlas("Textures/Explosions/explosion5.png", "Textures/Explosions/explosion5.json");
+  _textureCache.getAtlas("Textures/Explosions/explosion6.png", "Textures/Explosions/explosion6.json");
+  _textureCache.getAtlas("Textures/powerups.png", "Textures/powerups.json");
 
   initUI();
 }
@@ -129,6 +131,7 @@ void GameplayScreen::update(float deltaTime, int simulationSteps) {
         _entityManager->deleteQueuedEntities();
         _projectileManager->deleteQueuedProjectiles();
         _particleManager.update(deltaTime);
+        _powerupManager.update(deltaTime);
 
         _game->getGameplayScreen()->addGameTime(deltaTime);
 
@@ -241,6 +244,18 @@ void GameplayScreen::processInput(float deltaTime) {
   }
 }
 
+void GameplayScreen::addHealth(float health) {
+  if(_lives == 3) {
+    _level->getPlayer()->setHealth(100);
+  } else if(_lives == 2) {
+    _lives = 3;
+    _gui.getRootWindow()->getChild("HUDRoot/Default/HeartIcon3")->setVisible(true);
+  } else if(_lives == 1) {
+    _lives = 2;
+    _gui.getRootWindow()->getChild("HUDRoot/Default/HeartIcon2")->setVisible(true);
+  }
+}
+
 bool GameplayScreen::onBtnExitGameClicked(const CEGUI::EventArgs &e) {
   _currentState = Ess2D::ScreenState::EXIT_APPLICATION;
   return true;
@@ -300,6 +315,7 @@ void GameplayScreen::resume() {
 void GameplayScreen::restartLevel(bool resetCamera) {
   _isPaused = false;
 
+  _powerupManager.cleanup();
   _particleManager.cleanup();
 
   delete _level;
@@ -332,10 +348,9 @@ void GameplayScreen::restartLevel(bool resetCamera) {
 void GameplayScreen::initUI() {
   _gui.init("GUI");
   _gui.loadScheme("TaharezLook.scheme");
-  _gui.loadScheme("AlfiskoSkin.scheme");
   _gui.loadScheme("Generic.scheme");
   _gui.loadScheme("Skyline.scheme");
-  _gui.setFont("DejaVuSans-10");
+  _gui.setFont("Neuropol-11");
 
   _gui.setMouseCursor("TaharezLook/MouseArrow");
   _gui.showMouseCursor();
@@ -452,3 +467,4 @@ Level* GameplayScreen::getLevel() { return _level; }
 ProjectileManager* GameplayScreen::getProjectileManager() { return _projectileManager; }
 SceneRenderer* GameplayScreen::getSceneRenderer() { return _sceneRenderer; }
 ParticleManager* GameplayScreen::getParticleManager() { return &_particleManager; }
+PowerupManager* GameplayScreen::getPowerupManager() { return &_powerupManager; }

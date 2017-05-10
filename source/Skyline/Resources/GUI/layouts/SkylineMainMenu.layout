@@ -89,8 +89,8 @@
                 <Property name="MouseInputPropagationEnabled" value="true" />
             </Window>
             <Window type="Generic/Label" name="Label" >
-                <Property name="Area" value="{{0,69},{0,25},{0,277},{0,71}}" />
-                <Property name="Font" value="Neuropol-17" />
+                <Property name="Area" value="{{0,62},{0,25},{0,270},{0,71}}" />
+                <Property name="Font" value="Neuropol-15" />
                 <Property name="Text" value="Quit Game" />
                 <Property name="MaxSize" value="{{1,0},{1,0}}" />
                 <Property name="NormalTextColour" value="FFFFFFFF" />

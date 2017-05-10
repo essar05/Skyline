@@ -5,10 +5,16 @@
 Player::Player() : Player(0, glm::vec4(0.0f), 0.0f, 0.0f, glm::vec2(0.0f, 0.0f)) { }
 
 Player::Player(int textureId, glm::vec4 uv, float width, float height, glm::vec2 position) : Entity(textureId, uv, width, height, position) {
-  _projectileSpawnerLeft = ProjectileSpawner(8.0f, glm::vec2(0.5f, 0.9f), 40.0f);
+  _projectileSpawnerLeft = ProjectileSpawner(_fireRate, glm::vec2(0.3f, 0.7f), 40.0f);
   _projectileSpawnerLeft.setSource(this->getType());
-  _projectileSpawnerRight = ProjectileSpawner(8.0f, glm::vec2(0.5f, 0.9f), 40.0f);
+  _projectileSpawnerLeft.setPlaySound(true);
+  _projectileSpawnerLeft.setSkin("bullet_orange");
+  _projectileSpawnerLeft.setVelocity(40.0f);
+  _projectileSpawnerRight = ProjectileSpawner(_fireRate, glm::vec2(0.3f, 0.7f), 40.0f);
   _projectileSpawnerRight.setSource(this->getType());
+  _projectileSpawnerRight.setPlaySound(true);
+  _projectileSpawnerRight.setSkin("bullet_orange");
+  _projectileSpawnerRight.setVelocity(40.0f);
 
   // SPACESHIP
   Ess2D::TextureAtlas * playerAtlas = _game->getGameplayScreen()->getTextureCache()->getAtlas("Textures/player.png", "Textures/player.json");
@@ -195,8 +201,8 @@ bool Player::update(float deltaTime) {
 
   correctProjectileSpawnersPosition(_animationManager->getCurrent()->getCurrentFrame());
 
-  int projectilesSpawnedLeft = _projectileSpawnerLeft.update(deltaTime, _isFiring, Utils::toVec2(_body->GetPosition()) + _projectileSpawnerLeftPosition + glm::vec2(0.0f, 1.0f), glm::vec2(0.0f, 40.0f), _body->GetAngle());
-  int projectilesSpawnedRight = _projectileSpawnerRight.update(deltaTime, _isFiring, Utils::toVec2(_body->GetPosition()) + _projectileSpawnerRightPosition + glm::vec2(0.0f, 1.0f), glm::vec2(0.0f, 40.0f), _body->GetAngle());
+  int projectilesSpawnedLeft = _projectileSpawnerLeft.update(deltaTime, _isFiring, Utils::toVec2(_body->GetPosition()) + _projectileSpawnerLeftPosition + glm::vec2(0.0f, 1.0f), glm::vec2(0.0f, 1.0f), _body->GetAngle());
+  int projectilesSpawnedRight = _projectileSpawnerRight.update(deltaTime, _isFiring, Utils::toVec2(_body->GetPosition()) + _projectileSpawnerRightPosition + glm::vec2(0.0f, 1.0f), glm::vec2(0.0f, 1.0f), _body->GetAngle());
 
   _game->getGameplayScreen()->addShotsFired(projectilesSpawnedLeft + projectilesSpawnedRight);
 
@@ -308,6 +314,21 @@ void Player::contact(Entity* e) {
     _game->getGameplayScreen()->addEnemyShot();
 
     _game->getGameplayScreen()->getEntityManager()->deleteEntity(e->getId(), true);
+  }
+
+  if(e->getType() == ET_POWERUP) {
+    Powerup* powerup = static_cast <Powerup*> (e);
+    std::string powerupType = powerup->getPowerupType();
+
+    if(powerupType == "hp") {
+      _game->getGameplayScreen()->addHealth(100);
+    } else if(powerupType == "score") {
+      _game->getGameplayScreen()->addScore(50);
+    } else if(powerupType == "dmg") {
+      applyDamage(50);
+    }
+
+    powerup->setHealth(0);
   }
 }
 

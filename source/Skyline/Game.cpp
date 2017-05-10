@@ -10,7 +10,20 @@
 #include "Utils.h"
 #include <chrono>*/
 
-Game::Game() {}
+Game::Game() {
+  _title = "Skyline";
+
+  _maxFPS = 60.0f;
+  _debugMode = false;
+  _limitFPS = false;
+  _vSync = true;
+
+  _width = 1280.0f;
+  _height = 720.0f;
+  _windowMode = Ess2D::WindowMode::NORMAL;
+
+  loadConfig();
+}
 
 Game::~Game() {}
 
@@ -33,6 +46,8 @@ void Game::onInit() {
 
   //temporarily disabled, cause it's very annoying when debugging (perhaps when playing too, lol)
   _audioManager.playEvent("event:/music/heavyrain_david");
+
+  _audioManager.setMasterVolume(_volume);
 }
 
 void Game::onExit() {
@@ -42,6 +57,48 @@ void Game::onExit() {
 
 void Game::onUpdate() {
   _audioManager.update();
+}
+
+void Game::loadConfig() {
+  std::ifstream fileStream("config.json");
+  std::string jsonData;
+
+  if(!fileStream.is_open()) {
+    return;
+  }
+
+  fileStream.seekg(0, std::ios::end);
+  jsonData.reserve((unsigned int)fileStream.tellg());
+  fileStream.seekg(0, std::ios::beg);
+
+  jsonData.assign((std::istreambuf_iterator<char>(fileStream)), std::istreambuf_iterator<char>());
+
+  rapidjson::Document document;
+  document.Parse(jsonData.c_str());
+
+  if(!document.IsObject()) return;
+
+  if(document.HasMember("width") && document["width"].IsInt() && document["width"].GetInt() >= 800) {
+    _width = (float)document["width"].GetInt();
+  }
+
+  if(document.HasMember("height") && document["height"].IsInt() && document["height"].GetInt() >= 600) {
+    _height = (float)document["height"].GetInt();
+  }
+
+  if(document.HasMember("fullscreen") && document["fullscreen"].IsBool()) {
+    if(document["fullscreen"].GetBool()) {
+      _windowMode = Ess2D::WindowMode::FULLSCREEN;
+    }
+  }
+
+  if(document.HasMember("vSync") && document["vSync"].IsBool()) {
+    this->_vSync = document["vSync"].GetBool();
+  }
+
+  if(document.HasMember("masterVolume") && document["masterVolume"].IsNumber()) {
+    _volume = document["masterVolume"].GetDouble();
+  }
 }
 
 Game* Game::GetInstance() {

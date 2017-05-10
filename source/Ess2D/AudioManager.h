@@ -15,6 +15,10 @@ namespace Ess2D {
       void loadEvent(const std::string &eventName);
       void playEvent(const std::string &eventName, bool newInstance = false);
       void stopEvent(const std::string &eventName, bool immediate);
+      FMOD::Studio::EventInstance* getEvent(const std::string &eventName);
+      void setMasterVolume(float volume);
+      
+      void _errorCheck(FMOD_RESULT result);
 
     private:
       FMOD::Studio::System* _fmod;
@@ -24,7 +28,6 @@ namespace Ess2D {
       std::map <std::string, FMOD::Studio::EventDescription*> _events;
       std::map <std::string, FMOD::Studio::EventInstance*> _eventInstances;
 
-      void _errorCheck(FMOD_RESULT result);
   };
 
 }

@@ -16,17 +16,18 @@ class Projectile : public Entity {
     float getDamage() { return _damage; }
     int getType() override { return ET_PROJECTILE; }
     void contact(Entity* e) override;
+    void setSkin(const std::string& skinName);
 
     void draw();
 
   protected:
-    void createFixtures() override;
+    virtual void createFixtures() override;
     int _depth = 8999;
 
   private:
     int _source; //1 -> player, 2 -> enemies;
     float _damage;
-    Ess2D::AnimationManager* _animationManager;
+    Ess2D::AnimationManager* _animationManager = nullptr;
 
 };
 

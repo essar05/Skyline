@@ -25,7 +25,7 @@ class SpaceshipA : public Entity {
     void initThruster();
     void initProjectileSpawners();
 
-    float _fireRate = 1.0f;
+    float _fireRate = 0.7f;
     bool _isFiring = true;
     ProjectileSpawner _projectileSpawnerLeft;
     ProjectileSpawner _projectileSpawnerRight;

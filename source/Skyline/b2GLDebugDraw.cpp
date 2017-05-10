@@ -142,7 +142,7 @@ void b2GLDebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const 
   GLuint vbo;
   glGenBuffers(1, &vbo);
 
-  glBindBuffer(GL_LINE_LOOP, vbo);
+  glBindBuffer(GL_ARRAY_BUFFER, vbo);
   glBufferData(GL_ARRAY_BUFFER, sizeof(vert) * vertexCount * 6, vert, GL_DYNAMIC_DRAW);
   delete [] vert;
 

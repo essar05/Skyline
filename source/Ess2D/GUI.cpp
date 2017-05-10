@@ -1,6 +1,13 @@
 #include "GUI.h"
 #include <SDL_timer.h>
 
+class NoLogger: public CEGUI::Logger {
+  void logEvent(const CEGUI::String&, CEGUI::LoggingLevel) { }
+  void setLogFilename(const CEGUI::String&, bool) { }
+};
+
+NoLogger nL;
+
 namespace Ess2D {
 
   GUI::GUI() {}

@@ -30,11 +30,22 @@ class MainMenuScreen : public Ess2D::IGameScreen {
     bool onBtnCreditsClicked(const CEGUI::EventArgs &e);
     bool onBtnExitClicked(const CEGUI::EventArgs &e);
 
+    bool onBtnStartGameMouseOver(const CEGUI::EventArgs &e);
+    bool onBtnStartGameMouseOut(const CEGUI::EventArgs &e);
+    bool onBtnCreditsMouseOver(const CEGUI::EventArgs &e);
+    bool onBtnCreditsMouseOut(const CEGUI::EventArgs &e);
+    bool onBtnExitGameMouseOver(const CEGUI::EventArgs &e);
+    bool onBtnExitGameMouseOut(const CEGUI::EventArgs &e);
+
   private:
     void processInput(float deltaTime);
+    void toggleMainMenuButtonHover(const std::string& elementName, bool isHovering);
 
     Game* _game = nullptr;
     Ess2D::GUI _gui;
+
+    std::string _buttonHoverColor = "FF52A3B2";
+    std::string _buttonNormalColor = "FFFFFFFF";
 
 };
 

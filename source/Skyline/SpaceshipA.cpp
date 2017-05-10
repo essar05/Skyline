@@ -44,7 +44,7 @@ bool SpaceshipA::update(float deltaTime) {
   _projectileSpawnerLeftPosition = Utils::rotatePoint(_projectileSpawnerLeftPosition, glm::vec2(0.0f, 0.0f), _body->GetAngle());
   _projectileSpawnerRightPosition = Utils::rotatePoint(_projectileSpawnerRightPosition, glm::vec2(0.0f, 0.0f), _body->GetAngle());
 
-  glm::vec2 projectileVelocity = glm::vec2(0.0f, 40.0f);
+  glm::vec2 projectileVelocity = glm::vec2(0.0f, 1.0f);
   projectileVelocity = Utils::rotatePoint(projectileVelocity, glm::vec2(0.0f, 0.0f), _body->GetAngle());
 
   glm::vec2 positionCorrection = Utils::rotatePoint(glm::vec2(0.0f, 0.5f), glm::vec2(0.0f, 0.0f), _body->GetAngle());
@@ -113,7 +113,9 @@ void SpaceshipA::draw() {
 void SpaceshipA::die() {
   if(_body != nullptr) { //THE least elegant way. 
     b2Vec2 position = _body->GetPosition();
-    _game->getGameplayScreen()->getParticleManager()->spawn("explosion5", position.x, position.y, _width, _height, (float)_depth - 1, 1.5f / 60.0f);
+    int explosionIndex = rand() % 6 + 1;
+    _game->getGameplayScreen()->getParticleManager()->spawn("explosion" + std::to_string(explosionIndex), position.x, position.y, _width, _height, (float)_depth - 1, 1.5f / 60.0f);
+    _game->getGameplayScreen()->getPowerupManager()->spawn(position.x, position.y);
   }
 }
 
@@ -217,10 +219,14 @@ void SpaceshipA::initThruster() {
 }
 
 void SpaceshipA::initProjectileSpawners() {
-  _projectileSpawnerLeft = ProjectileSpawner(_fireRate, glm::vec2(0.4f, 0.7f), 40.0f);
+  _projectileSpawnerLeft = ProjectileSpawner(_fireRate, glm::vec2(0.4f, 0.7f), 20.0f);
   _projectileSpawnerLeft.setSource(this->getType());
-  _projectileSpawnerRight = ProjectileSpawner(_fireRate, glm::vec2(0.4f, 0.7f), 40.0f);
+  _projectileSpawnerLeft.setSkin("bullet_violet");
+  _projectileSpawnerLeft.setVelocity(7.0f);
+  _projectileSpawnerRight = ProjectileSpawner(_fireRate, glm::vec2(0.4f, 0.7f), 20.0f);
   _projectileSpawnerRight.setSource(this->getType());
+  _projectileSpawnerRight.setSkin("bullet_violet");
+  _projectileSpawnerRight.setVelocity(7.0f);
 
   Ess2D::TextureAtlas * muzzleAtlas = _game->getGameplayScreen()->getTextureCache()->getAtlas("Textures/muzzle.png", "Textures/muzzle.json");
 

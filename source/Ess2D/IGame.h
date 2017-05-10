@@ -45,11 +45,11 @@ namespace Ess2D {
       bool _debugMode = false;
       bool _limitFPS = false;
 
-      std::string _title = "Ess2D Game";
-      WindowMode _windowMode = WindowMode::NORMAL;
-      float _width = 1280.0f;
-      float _height = 720.0f;
-      bool _vSync = true;
+      std::string _title;
+      WindowMode _windowMode;
+      float _width;
+      float _height;
+      bool _vSync;
 
       ScreenManager* _screenManager;
       IGameScreen* _currentScreen = nullptr;
