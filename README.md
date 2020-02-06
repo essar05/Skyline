@@ -2,13 +2,12 @@
 
 #### About
 
-A 2D vertical scrolling fighter plane game implemented in C++. Rendering is done with OpenGL 3. I'm also writing a simple 2D engine which I'm hoping will power future 2D projects.
+A 2D vertical scrolling space battle game implemented in C++. Rendering is done with OpenGL 3. Main lis used: SDL2, Glew, Box2D, CEGUI, FMOD, rapidjson.
 
-It's my first shot at proper game development from scratch. I've made a few games previously, but they were done with software rendering and they were at the basic level of Pong clones and such.
-I hope to learn some bare basics in 2D and have a few complete projects before I move on to engines like Unreal or Unity and start doing some real 3D development.
+Huge thanks to https://www.youtube.com/user/makinggameswithben, without whom I wouldn't have been able to code this.
 
 I do this for educational purposes and, of course, for fun !
 
 #### How to build
 
-Nothing special to say, I've included all the dependencies needed. It should be as simple as opening the solution file in Visual Studio 2015, building and running.
+Nothing special to say, I've included all the dependencies needed. It should be as simple as opening the solution file in Visual Studio, building and running.
