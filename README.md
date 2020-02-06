@@ -2,7 +2,7 @@
 
 #### About
 
-A 2D vertical scrolling space battle game implemented in C++. Rendering is done with OpenGL 3. Main lis used: SDL2, Glew, Box2D, CEGUI, FMOD, rapidjson.
+A 2D vertical scrolling space battle game implemented in C++. Rendering is done with OpenGL 3. Main libs used: SDL2, Glew, Box2D, CEGUI, FMOD, rapidjson.
 
 Huge thanks to https://www.youtube.com/user/makinggameswithben, without whom I wouldn't have been able to code this.
 
